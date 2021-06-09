@@ -1,11 +1,5 @@
 # PREREQUISITES
 
-**Linux Distributions**
-
-[Bagua](https://github.com/BaguaSys/Bagua) is tested on the following:
-* [CentOS](https://www.centos.org/)
-* [Ubuntu](https://www.ubuntu.com/)
-
 **CUDA**
 
 To install Bagua, make sure you have a [CUDA-capable](https://developer.nvidia.com/zh-cn/cuda-zone) system, and install the CUDA version suited to your machine. Often, the latest CUDA version is better.
