@@ -1,8 +1,8 @@
 # Run
 
-Bagua use a built-in module `bagua.distributed.launch` to launch jobs, which has similar usage with Pytorh `torch.distributed.launch`.
+Bagua has a built-in tool `bagua.distributed.launch` to launch jobs, whose usage is similar to Pytorch `torch.distributed.launch`.
 
-The following shows how to start distributed training on single node and multiple nodes.
+We introduce how to start distributed training in the following sections.
 
 ## Single-Node multi-process training
 

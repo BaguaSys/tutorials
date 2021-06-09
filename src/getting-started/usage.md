@@ -1,6 +1,6 @@
-# Prepare the Code
+# Migrate from your existing single GPU training code
 
-To use `Bagua`, you need make the following change on your training code:
+To use `Bagua`, you need make the following changes on your training code:
 
 First, import bagua and make your script distributed aware:
 
