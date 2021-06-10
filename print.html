@@ -247,7 +247,7 @@ model, optimizer = bagua.bagua_init(
 <h2 id="hang-when-running-a-distributed-program"><a class="header" href="#hang-when-running-a-distributed-program">Hang when running a distributed program</a></h2>
 <p>You can try to check whether the machine has multiple network cards, and use command <code>NCCL_SOCKET_IFNAME=network card name (such as eth01)</code> to specify the network card. Card information can be determined by command <code>ls /sys/class/net/</code>.</p>
 <h2 id="after-increasing-batch-size-by-distributed-training-model-perfomance-decreases"><a class="header" href="#after-increasing-batch-size-by-distributed-training-model-perfomance-decreases">After increasing batch size by distributed training, model perfomance decreases</a></h2>
-<p>We provid some tricks you can try:</p>
+<p>Some tricks you can try:</p>
 <ol>
 <li>Train more epochs and increase the number of training iterations to 0.2-0.3 times more than the original.</li>
 <li>Scale the learning rate. If the total batch size of distributed training is increased by N times compared with the original, the learning rate (lr) of multi-machine multi-card training should also increased by N times and becomes N*lr.</li>
