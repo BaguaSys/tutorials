@@ -2,7 +2,7 @@
 
 Bagua is a self-developed GPU distributed training communication framework developed by Kuaishou technology. It aims to provide a system abstraction that is both flexible and modular to support state-of-the-art system relaxation techniques of distributed training which has integrated **<font size=4>allreduce algorithm</font>**, **<font size=4>decentralized algorithm</font>**, **<font size=4>asynchronous communication</font>**, **<font size=4>quantitative communication</font>** and other technologies. Its effectiveness has been verified in various scenarios including VGG-16 and ResNet-50 on ImageNet, Bert Large on SQuAD and multiple business applications in our company. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. In a production cluster with up to 16 machines (128 GPUs), Bagua can outperform PyTorch-DDP, Horovod and BytePS in the end-to-end training time by a significant margin (up to **1.95×**) across a diverse range of tasks. Its main architecture is shown as below:
 
-![avatar](./bagua.png)
+![avatar](./figures/architecture.png)
 
 Compared with the industry's open source framework Horovod, PyTorch DDP, and Byteps, we made two technical contributions.
 
