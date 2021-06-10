@@ -4,10 +4,10 @@
 
 A1: Usually this is caused by the NCCL version conflict，update your torch==1.7.0 and torchvision==0.8.0.
 
-**Q2: Error when installing rust:   "error: could not rename component file from '/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '/root/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'
+**Q2: Error when installing rust:   "error: could not rename component file from '~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '~/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'
 error: caused by: other os error."**
 
-A2: Clean the original installation record first by `rm -rf /root/.rustup` and reinstall.
+A2: Clean the original installation record first by `rm -rf ~/.rustup` and reinstall.
 
 **Q3: Out of memory when using the Quantize algorithm.**
 
