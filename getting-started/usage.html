@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/usage.html" class="active"><strong aria-hidden="true">2.2.</strong> Usage</a></li></ol></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">3.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">3.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">3.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/usage.html" class="active"><strong aria-hidden="true">3.2.</strong> Usage</a></li></ol></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">4.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,61 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="migrate-from-your-existing-single-gpu-training-code"><a class="header" href="#migrate-from-your-existing-single-gpu-training-code">Migrate from your existing single GPU training code</a></h1>
-<p>To use <code>Bagua</code>, you need make the following changes on your training code:</p>
-<p>First, import bagua and make your script distributed aware:</p>
-<pre><code class="language-python">import bagua.torch_api as bagua
-torch.cuda.set_device(bagua.get_local_rank())
-bagua.init_process_group()
-</code></pre>
-<p>Then, use torch's distributed sampler for your data loader:</p>
-<pre><code class="language-python">train_dataset = ...
-test_dataset = ...
-
-train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset,
-    num_replicas=bagua.get_world_size(), rank=bagua.get_rank())
-
-train_loader = torch.utils.data.DataLoader(
-    train_dataset,
-    batch_size=batch_size,
-    shuffle=(train_sampler is None),
-    sampler=train_sampler,
-)
-
-test_loader = torch.utils.data.DataLoader(test_dataset, ...)
-</code></pre>
-<p>Finally, wrap you model and optimizer with bagua by adding one line of code to your original script:</p>
-<pre><code class="language-python"># define your model and optimizer
-model = ...
-model = model.cuda()
-optimizer = ...
-
-# wrap your model and optimizer with bagua
-model, optimizer = bagua.bagua_init(
-    model, optimizer, distributed_algorithm=&quot;allreduce&quot;
-)
-</code></pre>
-<p>More examples can be found <a href="https://github.com/BaguaSys/examples">here</a>.</p>
-<h1 id="launch-job"><a class="header" href="#launch-job">Launch job</a></h1>
-<p>Bagua has a built-in tool <code>bagua.distributed.launch</code> to launch jobs, whose usage is similar to Pytorch <code>torch.distributed.launch</code>.</p>
-<p>We introduce how to start distributed training in the following sections.</p>
-<h2 id="single-node-multi-process-training"><a class="header" href="#single-node-multi-process-training">Single node multi-process training</a></h2>
-<pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 \
-  your_training_script.py (--arg1 --arg2 ...)
-</code></pre>
-<h2 id="multi-node-multi-process-training-eg-two-nodes"><a class="header" href="#multi-node-multi-process-training-eg-two-nodes">Multi-node multi-process training (e.g. two nodes)</a></h2>
-<p><strong>Node 1</strong>: <em>(IP: 192.168.1.1, and has a free port: 1234)</em></p>
-<pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=0 --master_addr=&quot;192.168.1.1&quot; --master_port=1234  your_training_script.py (--arg1 --arg2 ...)
-</code></pre>
-<p><strong>Node 2</strong>:</p>
-<pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr=&quot;192.168.1.1&quot; --master_port=1234 your_training_script.py (--arg1 --arg2 ...)
-</code></pre>
-<blockquote>
-<p><em>Tips</em>:</p>
-<p>If you need some preprocessing work, you can include them in your bash script and launch job by adding <code>--no_python</code> to your command.</p>
-<pre><code class="language-shell">python -m bagua.distributed.launch --no_python --nproc_per_node=8 bash your_bash_script.sh
-</code></pre>
-</blockquote>
+                        <h1 id="usage"><a class="header" href="#usage">Usage</a></h1>
 
                     </main>
 
