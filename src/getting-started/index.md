@@ -1,3 +1,3 @@
 # Getting Started
 
-Let’s start your Bagua journey!
+Let’s start our Bagua journey!
