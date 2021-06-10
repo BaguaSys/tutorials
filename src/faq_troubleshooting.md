@@ -26,7 +26,7 @@ Some tricks you can try:
 1. Train more epochs and increase the number of training iterations to 0.2-0.3 times more than the original.
 2. Scale the learning rate. If the total batch size of distributed training is increased by N times compared with the original, the learning rate (lr) of multi-machine multi-card training should also increased by N times and becomes N*lr.
 3. Learning rate warmup. Perform a Gradual learning rate warmup for several epochs (see also [Accurate, Large Minibatch SGD:
-Training ImageNet in 1 Hour](https://arxiv.org/pdf/1706.02677.pdf).)
+Training ImageNet in 1 Hour](https://arxiv.org/pdf/1706.02677.pdf)).
 
 ## The loss drops slowly when using the decentralized algorithm
 
