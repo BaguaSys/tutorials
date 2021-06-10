@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="algorithms/decentralized.html"><strong aria-hidden="true">4.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="algorithms/decentralized.html"><strong aria-hidden="true">4.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li><li class="chapter-item expanded "><a href="faq_troubleshooting.html"><strong aria-hidden="true">5.</strong> FAQ and Troubleshooting</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -166,7 +166,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>Bagua introduction.</p>
+<p>Bagua is a distributed training utility developed by Kuaishou Technology and DS3 Lab. It aims to provide a system abstraction that is both flexible and performant to support state-of-the-art system relaxation techniques of distributed training. Currently it has integrated primitives like <strong>Centralized Synchronous Communication (AllReduce)</strong>, <strong>Decentralized Synchronous Communication</strong>, <strong>Low Precision Communication</strong> and many more. Its effectiveness has been verified in various scenarios, including VGG-16 and ResNet-50 on ImageNet, Bert Large on SQuAD and many industrial applications at Kuaishou. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. Researchers can easily develop new distributed training algorithms based on bagua, <em>without sacrificing system performance</em>.</p>
 <h1 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h1>
 <p>To install Bagua, the following should be installed as prerequisites:</p>
 <ul>
@@ -234,6 +234,27 @@ model, optimizer = bagua.bagua_init(
 </code></pre>
 </blockquote>
 <h1 id="algorithms"><a class="header" href="#algorithms">Algorithms</a></h1>
+<h1 id="frequently-asked-questions-and-troubleshooting"><a class="header" href="#frequently-asked-questions-and-troubleshooting">Frequently Asked Questions and Troubleshooting</a></h1>
+<h2 id="nccl_error_invalid_argument"><a class="header" href="#nccl_error_invalid_argument"><code>NCCL_ERROR_INVALID_ARGUMENT</code></a></h2>
+<p>Usually this is caused by the library version conflict, try updating to <code>torch&gt;=1.7.0</code>.</p>
+<h2 id="error-when-installing-rust"><a class="header" href="#error-when-installing-rust">Error when installing rust</a></h2>
+<p>If you see some error like the message below, just clean the original installation record first by <code>rm -rf /root/.rustup</code> and reinstall.</p>
+<pre><code class="language-shell">$ error: could not rename component file from '/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '/root/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'error: caused by: other os error.
+</code></pre>
+<h2 id="out-of-memory-when-using-the-quantize-algorithm"><a class="header" href="#out-of-memory-when-using-the-quantize-algorithm">Out of memory when using the quantize algorithm</a></h2>
+<p>The quantize algorithm compresses the communication content and requires a certain amount of additional memory. Reduce the batch size appropriately.</p>
+<h2 id="hang-when-running-a-distributed-program"><a class="header" href="#hang-when-running-a-distributed-program">Hang when running a distributed program</a></h2>
+<p>You can try to check whether the machine has multiple network cards, and use command <code>NCCL_SOCKET_IFNAME=network card name (such as eth01)</code> to specify the network card. Card information can be determined by command <code>ls /sys/class/net/</code>.</p>
+<h2 id="after-increasing-batch-size-by-distributed-training-model-perfomance-decreases"><a class="header" href="#after-increasing-batch-size-by-distributed-training-model-perfomance-decreases">After increasing batch size by distributed training, model perfomance decreases</a></h2>
+<p>We provid some tricks you can try:</p>
+<ol>
+<li>Train more epochs and increase the number of training iterations to 0.2-0.3 times more than the original.</li>
+<li>Scale the learning rate. If the total batch size of distributed training is increased by N times compared with the original, the learning rate (lr) of multi-machine multi-card training should also increased by N times and becomes N*lr.</li>
+<li>Learning rate warmup. Perform a Gradual learning rate warmup for several epochs (see also <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, Large Minibatch SGD:
+Training ImageNet in 1 Hour</a>.)</li>
+</ol>
+<h2 id="the-loss-drops-slowly-when-using-the-decentralized-algorithm"><a class="header" href="#the-loss-drops-slowly-when-using-the-decentralized-algorithm">The loss drops slowly when using the decentralized algorithm</a></h2>
+<p>Decentralized algorithms often need a larger learning rate compared to other algorithms.</p>
 
                     </main>
 
