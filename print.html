@@ -252,7 +252,7 @@ model, optimizer = bagua.bagua_init(
 <li>Train more epochs and increase the number of training iterations to 0.2-0.3 times more than the original.</li>
 <li>Scale the learning rate. If the total batch size of distributed training is increased by N times compared with the original, the learning rate (lr) of multi-machine multi-card training should also increased by N times and becomes N*lr.</li>
 <li>Learning rate warmup. Perform a Gradual learning rate warmup for several epochs (see also <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, Large Minibatch SGD:
-Training ImageNet in 1 Hour</a>.)</li>
+Training ImageNet in 1 Hour</a>).</li>
 </ol>
 <h2 id="the-loss-drops-slowly-when-using-the-decentralized-algorithm"><a class="header" href="#the-loss-drops-slowly-when-using-the-decentralized-algorithm">The loss drops slowly when using the decentralized algorithm</a></h2>
 <p>Decentralized algorithms often need a larger learning rate compared to other algorithms.</p>
