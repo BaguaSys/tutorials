@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.1.</strong> Introduction</a></li></ol></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/usage.html" class="active"><strong aria-hidden="true">2.2.</strong> Usage</a></li><li class="chapter-item expanded "><a href="../getting-started/run.html"><strong aria-hidden="true">2.3.</strong> Run</a></li></ol></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">3.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">3.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../getting-started/installation.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/usage.html" class="active"><strong aria-hidden="true">2.2.</strong> Usage</a></li></ol></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">3.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">3.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -198,6 +198,26 @@ model, optimizer = bagua.bagua_init(
 )
 </code></pre>
 <p>More examples can be found <a href="https://github.com/BaguaSys/examples">here</a>.</p>
+<h1 id="launch-job"><a class="header" href="#launch-job">Launch job</a></h1>
+<p>Bagua has a built-in tool <code>bagua.distributed.launch</code> to launch jobs, whose usage is similar to Pytorch <code>torch.distributed.launch</code>.</p>
+<p>We introduce how to start distributed training in the following sections.</p>
+<h2 id="single-node-multi-process-training"><a class="header" href="#single-node-multi-process-training">Single node multi-process training</a></h2>
+<pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 \
+  your_training_script.py (--arg1 --arg2 ...)
+</code></pre>
+<h2 id="multi-node-multi-process-training-eg-two-nodes"><a class="header" href="#multi-node-multi-process-training-eg-two-nodes">Multi-node multi-process training (e.g. two nodes)</a></h2>
+<p><strong>Node 1</strong>: <em>(IP: 192.168.1.1, and has a free port: 1234)</em></p>
+<pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=0 --master_addr=&quot;192.168.1.1&quot; --master_port=1234  your_training_script.py (--arg1 --arg2 ...)
+</code></pre>
+<p><strong>Node 2</strong>:</p>
+<pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr=&quot;192.168.1.1&quot; --master_port=1234 your_training_script.py (--arg1 --arg2 ...)
+</code></pre>
+<blockquote>
+<p><em>Tips</em>:</p>
+<p>If you need some preprocessing work, you can include them in your bash script and launch job by adding <code>--no_python</code> to your command.</p>
+<pre><code class="language-shell">python -m bagua.distributed.launch --no_python --nproc_per_node=8 bash your_bash_script.sh
+</code></pre>
+</blockquote>
 
                     </main>
 
@@ -210,7 +230,7 @@ model, optimizer = bagua.bagua_init(
                         
 
                         
-                            <a rel="next" href="../getting-started/run.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../algorithms/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -228,7 +248,7 @@ model, optimizer = bagua.bagua_init(
                 
 
                 
-                    <a rel="next" href="../getting-started/run.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../algorithms/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
