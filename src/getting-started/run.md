@@ -4,14 +4,14 @@ Bagua has a built-in tool `bagua.distributed.launch` to launch jobs, whose usage
 
 We introduce how to start distributed training in the following sections.
 
-## Single-Node multi-process training
+## Single node multi-process training
 
 ```shell
 $ python -m bagua.distributed.launch --nproc_per_node=8 \
   your_training_script.py (--arg1 --arg2 ...)
 ```
 
-## Multi-Node multi-process training (e.g. two nodes)
+## Multi-node multi-process training (e.g. two nodes)
 
 **Node 1**: *(IP: 192.168.1.1, and has a free port: 1234)*
 ```shell
