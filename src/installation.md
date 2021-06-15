@@ -1,7 +1,7 @@
 # Prerequisites
 
 To install Bagua, the following should be installed as prerequisites:
-* [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit)
+* [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit), minimum version 10.1
 * [PyTorch](https://pytorch.org/get-started/locally/)
 * [Rust Compiler](https://www.rust-lang.org/tools/install)
 
