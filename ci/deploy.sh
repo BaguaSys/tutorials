@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mv -f book/* .
+mv -f book/html/* .
 
 git init
 git config user.name "Bagua GitHub Action"

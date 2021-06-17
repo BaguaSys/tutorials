@@ -2,3 +2,10 @@
 title = "Bagua Tutorials"
 description = "Guide on how to use Bagua, a deep learning distributed training framework"
 author = "Kuaishou AI Platform & DS3 Lab <admin@mail.xrlian.com>"
+
+[output.linkcheck]
+
+[output.html]
+follow-web-links = true
+traverse-parent-directories = false
+warning-policy = "error"
