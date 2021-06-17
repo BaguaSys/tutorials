@@ -10,11 +10,11 @@ To install Bagua, the following should be installed as prerequisites:
 Install release version:
 
 ```shell
-pip install bagua
+python3 -m pip install bagua
 ```
 
 Install develop version:
 
 ```shell
-pip install git+https://github.com/BaguaSys/bagua.git
+python3 -m pip install git+https://github.com/BaguaSys/bagua.git
 ```
