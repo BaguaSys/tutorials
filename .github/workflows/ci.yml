@@ -26,6 +26,10 @@ jobs:
         with:
           command: install
           args: mdbook-linkcheck
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: mdbook-open-on-gh
       - run: ./mdbook test
       - run: ./mdbook build
 
@@ -44,5 +48,9 @@ jobs:
         with:
           command: install
           args: mdbook-linkcheck
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: mdbook-open-on-gh
       - run: ./mdbook build
       - run: ./ci/deploy.sh
