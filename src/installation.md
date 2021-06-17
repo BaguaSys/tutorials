@@ -7,4 +7,14 @@ To install Bagua, the following should be installed as prerequisites:
 
 # Installation
 
-# Building from source
+Install release version:
+
+```shell
+pip install bagua
+```
+
+Install develop version:
+
+```shell
+pip install git+https://github.com/BaguaSys/bagua.git
+```
