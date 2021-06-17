@@ -16,12 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install `mdbook`
-        run: curl -L "https://github.com/rust-lang/mdBook/releases/download/v0.4.10/mdbook-v0.4.10-x86_64-unknown-linux-gnu.tar.gz" \
-          | tar xvz
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: --git https://github.com/MatheusRich/mdBook.git mdbook
       - uses: actions-rs/cargo@v1
         with:
           command: install
@@ -30,20 +31,21 @@ jobs:
         with:
           command: install
           args: mdbook-open-on-gh
-      - run: ./mdbook test
-      - run: ./mdbook build
+      - run: mdbook test
+      - run: mdbook build
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install `mdbook`
-        run: curl -L "https://github.com/rust-lang/mdBook/releases/download/v0.4.10/mdbook-v0.4.10-x86_64-unknown-linux-gnu.tar.gz" \
-          | tar xvz
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: --git https://github.com/MatheusRich/mdBook.git mdbook
       - uses: actions-rs/cargo@v1
         with:
           command: install
@@ -52,5 +54,5 @@ jobs:
         with:
           command: install
           args: mdbook-open-on-gh
-      - run: ./mdbook build
+      - run: mdbook build
       - run: ./ci/deploy.sh
