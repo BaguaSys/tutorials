@@ -1,4 +1,4 @@
-# Prerequisites
+# Installation
 
 To install Bagua, besides your deep learning framework (like [PyTorch](https://pytorch.org/get-started/locally/)
 ), you need the following libraries installed on your system:
@@ -12,7 +12,7 @@ We provide an automatic installation script for Linux. Just run the following co
 curl -Ls https://raw.githubusercontent.com/BaguaSys/bagua/master/install.sh | sudo bash
 ```
 
-# Installation
+If you already installed the dependencies, you can install bagua python package with the following commands:
 
 Install release version:
 
