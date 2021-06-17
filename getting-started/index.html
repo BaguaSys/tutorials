@@ -165,7 +165,7 @@
                     <main>
                         <h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
 <p>Let’s start our Bagua journey!</p>
-<h1 id="migrate-from-your-existing-single-gpu-training-code"><a class="header" href="#migrate-from-your-existing-single-gpu-training-code">Migrate from your existing single GPU training code</a></h1>
+<h2 id="migrate-from-your-existing-single-gpu-training-code"><a class="header" href="#migrate-from-your-existing-single-gpu-training-code">Migrate from your existing single GPU training code</a></h2>
 <p>To use <code>Bagua</code>, you need make the following changes on your training code:</p>
 <p>First, import bagua and make your script distributed aware:</p>
 <pre><code class="language-python">import bagua.torch_api as bagua
@@ -200,14 +200,14 @@ model, optimizer = bagua.bagua_init(
 )
 </code></pre>
 <p>More examples can be found <a href="https://github.com/BaguaSys/examples">here</a>.</p>
-<h1 id="launch-job"><a class="header" href="#launch-job">Launch job</a></h1>
+<h2 id="launch-job"><a class="header" href="#launch-job">Launch job</a></h2>
 <p>Bagua has a built-in tool <code>bagua.distributed.launch</code> to launch jobs, whose usage is similar to Pytorch <code>torch.distributed.launch</code>.</p>
 <p>We introduce how to start distributed training in the following sections.</p>
-<h2 id="single-node-multi-process-training"><a class="header" href="#single-node-multi-process-training">Single node multi-process training</a></h2>
+<h3 id="single-node-multi-process-training"><a class="header" href="#single-node-multi-process-training">Single node multi-process training</a></h3>
 <pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 \
   your_training_script.py (--arg1 --arg2 ...)
 </code></pre>
-<h2 id="multi-node-multi-process-training-eg-two-nodes"><a class="header" href="#multi-node-multi-process-training-eg-two-nodes">Multi-node multi-process training (e.g. two nodes)</a></h2>
+<h3 id="multi-node-multi-process-training-eg-two-nodes"><a class="header" href="#multi-node-multi-process-training-eg-two-nodes">Multi-node multi-process training (e.g. two nodes)</a></h3>
 <p><strong>Node 1</strong>: <em>(IP: 192.168.1.1, and has a free port: 1234)</em></p>
 <pre><code class="language-shell">$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=0 --master_addr=&quot;192.168.1.1&quot; --master_port=1234  your_training_script.py (--arg1 --arg2 ...)
 </code></pre>
