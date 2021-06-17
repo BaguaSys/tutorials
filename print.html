@@ -175,12 +175,15 @@
 <li><a href="https://bagua.readthedocs.io/">Bagua API Documentation</a></li>
 </ul>
 <h1 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h1>
-<p>To install Bagua, the following should be installed as prerequisites:</p>
+<p>To install Bagua, besides your deep learning framework (like <a href="https://pytorch.org/get-started/locally/">PyTorch</a>
+), you need the following libraries installed on your system:</p>
 <ul>
-<li><a href="https://developer.nvidia.com/cuda-toolkit">CUDA Toolkit</a>, with CUDA version &gt;= 10.1</li>
-<li><a href="https://pytorch.org/get-started/locally/">PyTorch</a></li>
+<li><a href="https://developer.nvidia.com/cuda-downloads">CUDA Toolkit</a>, with CUDA version &gt;= 10.1</li>
 <li><a href="https://www.rust-lang.org/tools/install">Rust Compiler</a></li>
 </ul>
+<p>We provide an automatic installation script for Linux. Just run the following command to install all dependencies and Bagua:</p>
+<pre><code class="language-python">curl -Ls https://raw.githubusercontent.com/BaguaSys/bagua/master/install.sh | sudo bash
+</code></pre>
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <p>Install release version:</p>
 <pre><code class="language-shell">python3 -m pip install bagua

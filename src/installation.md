@@ -1,9 +1,16 @@
 # Prerequisites
 
-To install Bagua, the following should be installed as prerequisites:
-* [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit), with CUDA version >= 10.1
-* [PyTorch](https://pytorch.org/get-started/locally/)
+To install Bagua, besides your deep learning framework (like [PyTorch](https://pytorch.org/get-started/locally/)
+), you need the following libraries installed on your system:
+
+* [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads), with CUDA version >= 10.1
 * [Rust Compiler](https://www.rust-lang.org/tools/install)
+
+We provide an automatic installation script for Linux. Just run the following command to install all dependencies and Bagua:
+
+```python
+curl -Ls https://raw.githubusercontent.com/BaguaSys/bagua/master/install.sh | sudo bash
+```
 
 # Installation
 
