@@ -14,3 +14,4 @@ follow-web-links = true
 traverse-parent-directories = false
 warning-policy = "error"
 git-repository-url = "https://github.com/BaguaSys/tutorials"
+additional-css = ["open-in.css"]
