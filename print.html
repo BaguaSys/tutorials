@@ -252,6 +252,8 @@ Training ImageNet in 1 Hour</a>).</li>
 </ol>
 <h2 id="the-loss-drops-slowly-when-using-the-decentralized-algorithm"><a class="header" href="#the-loss-drops-slowly-when-using-the-decentralized-algorithm">The loss drops slowly when using the decentralized algorithm</a></h2>
 <p>Decentralized algorithms often need a larger learning rate compared to other algorithms.</p>
+<h2 id="dataloader-sometimes-hang-when-num_workers--0"><a class="header" href="#dataloader-sometimes-hang-when-num_workers--0">Dataloader sometimes hang when <code>num_workers</code> &gt; 0</a></h2>
+<p>Add <code>torch.multiprocessing.set_start_method(&quot;forkserver&quot;)</code>. The default <code>&quot;fork&quot;</code> strategy is error prone by design. For more information, see <a href="https://pytorch.org/docs/stable/notes/multiprocessing.html#avoiding-and-fighting-deadlocks">PyTorch documentation</a>, and <a href="https://stackoverflow.com/questions/64095876/multiprocessing-fork-vs-spawn">StackOverflow</a>.</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/faq_troubleshooting.md">Edit this file on GitHub.</a></footer>
                     </main>
 
