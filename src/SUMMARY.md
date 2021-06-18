@@ -5,5 +5,5 @@
 * [Getting Started](./getting-started/index.md)
 * [Algorithms](./algorithms/index.md)
     * [Decentralized Parallel Stochastic Gradient](./algorithms/decentralized.md)
+* [Elastic Training](./elastic-training/index.md)
 * [FAQ and Troubleshooting](./faq_troubleshooting.md)
-
