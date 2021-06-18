@@ -16,11 +16,11 @@ If you already have required libraries installed on your system, you can install
 Install release version:
 
 ```shell
-python3 -m pip install bagua
+python3 -m pip install bagua -f https://repo.arrayfire.com/python/wheels/3.8.0/
 ```
 
 Install develop version:
 
 ```shell
-python3 -m pip install git+https://github.com/BaguaSys/bagua.git
+python3 -m pip install git+https://github.com/BaguaSys/bagua.git -f https://repo.arrayfire.com/python/wheels/3.8.0/
 ```
