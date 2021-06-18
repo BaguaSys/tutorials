@@ -17,8 +17,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install `mdbook`
-        run: curl -L "https://github.com/rust-lang/mdBook/releases/download/v0.4.7/mdbook-v0.4.7-x86_64-unknown-linux-gnu.tar.gz" \
+        run: curl -L "https://github.com/rust-lang/mdBook/releases/download/v0.4.10/mdbook-v0.4.10-x86_64-unknown-linux-gnu.tar.gz" \
           | tar xvz
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: mdbook-linkcheck
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: mdbook-open-on-gh
       - run: ./mdbook test
       - run: ./mdbook build
 
@@ -28,7 +39,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install `mdbook`
-        run: curl -L "https://github.com/rust-lang/mdBook/releases/download/v0.4.7/mdbook-v0.4.7-x86_64-unknown-linux-gnu.tar.gz" \
+        run: curl -L "https://github.com/rust-lang/mdBook/releases/download/v0.4.10/mdbook-v0.4.10-x86_64-unknown-linux-gnu.tar.gz" \
           | tar xvz
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: mdbook-linkcheck
+      - uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: mdbook-open-on-gh
       - run: ./mdbook build
       - run: ./ci/deploy.sh

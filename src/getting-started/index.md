@@ -2,7 +2,7 @@
 
 Let’s start our Bagua journey!
 
-# Migrate from your existing single GPU training code
+## Migrate from your existing single GPU training code
 
 To use `Bagua`, you need make the following changes on your training code:
 
@@ -49,20 +49,20 @@ model, optimizer = bagua.bagua_init(
 
 More examples can be found [here](https://github.com/BaguaSys/examples).
 
-# Launch job
+## Launch job
 
 Bagua has a built-in tool `bagua.distributed.launch` to launch jobs, whose usage is similar to Pytorch `torch.distributed.launch`.
 
 We introduce how to start distributed training in the following sections.
 
-## Single node multi-process training
+### Single node multi-process training
 
 ```shell
 $ python -m bagua.distributed.launch --nproc_per_node=8 \
   your_training_script.py (--arg1 --arg2 ...)
 ```
 
-## Multi-node multi-process training (e.g. two nodes)
+### Multi-node multi-process training (e.g. two nodes)
 
 **Node 1**: *(IP: 192.168.1.1, and has a free port: 1234)*
 ```shell

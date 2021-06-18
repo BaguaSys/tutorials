@@ -2,3 +2,16 @@
 title = "Bagua Tutorials"
 description = "Guide on how to use Bagua, a deep learning distributed training framework"
 author = "Kuaishou AI Platform & DS3 Lab <admin@mail.xrlian.com>"
+
+[preprocessor.open-git-repo]
+command = "mdbook-open-on-gh"
+renderer = ["html"]
+
+[output.linkcheck]
+
+[output.html]
+follow-web-links = true
+traverse-parent-directories = false
+warning-policy = "error"
+git-repository-url = "https://github.com/BaguaSys/tutorials"
+additional-css = ["open-in.css"]
