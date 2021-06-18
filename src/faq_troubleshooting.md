@@ -31,3 +31,7 @@ Training ImageNet in 1 Hour](https://arxiv.org/pdf/1706.02677.pdf)).
 ## The loss drops slowly when using the decentralized algorithm
 
 Decentralized algorithms often need a larger learning rate compared to other algorithms.
+
+## Dataloader sometimes hang when `num_workers` > 0
+
+Add `torch.multiprocessing.set_start_method("forkserver")`. The default `"fork"` strategy is error prone by design. For more information, see [PyTorch documentation](https://pytorch.org/docs/stable/notes/multiprocessing.html#avoiding-and-fighting-deadlocks), and [StackOverflow](https://stackoverflow.com/questions/64095876/multiprocessing-fork-vs-spawn).
