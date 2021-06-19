@@ -1,7 +1,7 @@
 # Summary
 
-* [Introduction](./src/introduction.md)
-* [Installation](./src/installation.md)
+* [Introduction](./introduction.md)
+* [Installation](./installation.md)
 * [Getting Started](./getting-started/index.md)
 * [Algorithms](./algorithms/index.md)
     * [QSGD](./algorithms/qsgd.md)
