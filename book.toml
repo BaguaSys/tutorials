@@ -7,6 +7,8 @@ author = "Kuaishou AI Platform & DS3 Lab <admin@mail.xrlian.com>"
 command = "mdbook-open-on-gh"
 renderer = ["html"]
 
+[preprocessor.katex]
+
 [output.linkcheck]
 
 [output.html]
