@@ -47,11 +47,11 @@ python -m bagua.distributed.run \
 
 Part of the node failure will not cause the job to fail, the job will wait for the node to recover.
 
-``HOST_NODE_ADDR``, in form <host>[:<port>] (e.g. node1.example.com:29400), specifies the node and
+``HOST_NODE_ADDR``, in form \<host\>[:\<port\>] (e.g. node1.example.com:29400), specifies the node and
 the port on which the C10d rendezvous backend should be instantiated and hosted. It can be any
 node in your training cluster, but ideally you should pick a node that has a high bandwidth.
 
-> If no port number is specified ``HOST_NODE_ADDR`` defaults to 29400.
+> If no port number is specified ``HOST_NODE_ADDR`` defaults to \<host\>:29400.
 
 
 **Elastic Training(min=1, max=4)**
