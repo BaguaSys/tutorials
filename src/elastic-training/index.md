@@ -43,7 +43,6 @@ python -m bagua.distributed.run \
         --rdzv_backend=c10d \
         --rdzv_endpoint=$HOST_NODE_ADDR \
         YOUR_TRAINING_SCRIPT.py (--arg1 ... train script args...)
-
 ```
 
 Part of the node failure will not cause the job to fail, the job will wait for the node to recover.
