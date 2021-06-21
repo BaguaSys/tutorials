@@ -8,7 +8,6 @@ command = "mdbook-open-on-gh"
 renderer = ["html"]
 
 [output.linkcheck]
-optional = true
 
 [output.html]
 follow-web-links = true

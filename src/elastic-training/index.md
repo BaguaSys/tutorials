@@ -2,7 +2,7 @@
 
 ## Introduction
 
-By applying [TorchElastic](https://github.com/pytorch/pytorch/tree/v1.9.0/torch/distributed/elastic), bagua can do elastic training. We usually use the capabilities of Elastic Training to solve the following two problems:
+By applying [TorchElastic](https://github.com/pytorch/pytorch/tree/v1.9.0/torch/distributed/elastic), bagua can do elastic training. We usually use the capabilities of Elastic Training to support the following two types of jobs:
 
 **Fault Tolerant Jobs**
 
@@ -10,7 +10,7 @@ Jobs that run on infrastructure where nodes get replaced frequently, either due 
 
 **Dynamic Capacity Management**
 
-Jobs that run on leased capacity that can be taken away at any time (e.g. AWS spot instances) or shared pools where the pool size can change dynamically based on demand.
+Jobs that run on preemptible resources that can be taken away at any time (e.g. AWS spot instances) or shared pools where the pool size can change dynamically based on demand.
 
 ## Quickstart
 
@@ -31,9 +31,9 @@ for train_loop():
 
 ### 2. Launch job
 
-You can launch Elastic Training job with `bagua.distributed.run`. For example:
+You can launch elastic training job with `bagua.distributed.run`. For example:
 
-**Fault tolerant (fixed sized number of workers, no elasticity)**
+**Fault tolerant (fixed number of workers, no elasticity)**
 
 ```bash
 python -m bagua.distributed.run \
@@ -65,12 +65,11 @@ python -m bagua.distributed.run \
         --rdzv_backend=c10d \
         --rdzv_endpoint=$HOST_NODE_ADDR \
         YOUR_TRAINING_SCRIPT.py (--arg1 ... train script args...)
-
 ```
 
-For this example, the training node can be dynamically adjusted from 1 to 4.
+For this example, the number of training nodes can be dynamically adjusted from 1 to 4.
 
 ## Reference
 
 1. [PYTORCH ELASTIC overview](https://pytorch.org/elastic/0.1.0rc2/overview.html)
-2. [torch.distributed.run API Doc](https://github.com/pytorch/pytorch/blob/v1.9.0/torch/distributed/run.py)
+2. [torch.distributed.run API Doc](https://github.com/BaguaSys/bagua/blob/master/bagua/distributed/run.py)
