@@ -8,7 +8,7 @@ Decentralized SGD is a data-parallel distributed learning algorithm that removes
 
 ## Decentralized training algorithms
 
-Currently, there are lots of decentralized training algorithms being proposed every now and then. These amazing works are focused on different aspects of the decentralized training, like peer selection, data compression, asynchronization and so on, and provide many promising insights. So far Bagua has incorporated one basic decentralized algorithm, i.e., **Decentralized SGD**. With Bagua's automatic system support to decentralization, we are expecting to see increasingly more decentralized algorithms being implemented in the near future.
+Currently, there are lots of decentralized training algorithms being proposed every now and then. These amazing works are focused on different aspects of the decentralized training, like peer selection, data compression, asynchronization and so on, and provide many promising insights. So far Bagua has incorporated one basic decentralized algorithm, i.e., **Decentralized SGD**. With Bagua's automatic system support for decentralization, we are expecting to see increasingly more decentralized algorithms being implemented in the near future.
 
 ## Decentralized SGD
 
