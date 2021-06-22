@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="algorithms/decentralized.html"><strong aria-hidden="true">4.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li><li class="chapter-item expanded "><a href="faq_troubleshooting.html"><strong aria-hidden="true">5.</strong> FAQ and Troubleshooting</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="algorithms/decentralized.html"><strong aria-hidden="true">4.1.</strong> Decentralized Parallel Stochastic Gradient</a></li></ol></li><li class="chapter-item expanded "><a href="elastic-training/index.html"><strong aria-hidden="true">5.</strong> Elastic Training</a></li><li class="chapter-item expanded "><a href="faq_troubleshooting.html"><strong aria-hidden="true">6.</strong> FAQ and Troubleshooting</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -232,6 +232,58 @@ model, optimizer = bagua.bagua_init(
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <p><span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">c</span></span></span></span></p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/decentralized.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="elastic-training"><a class="header" href="#elastic-training">Elastic Training</a></h1>
+<h2 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h2>
+<p>By applying <a href="https://github.com/pytorch/pytorch/tree/v1.9.0/torch/distributed/elastic">TorchElastic</a>, bagua can do elastic training. We usually use the capabilities of Elastic Training to support the following two types of jobs:</p>
+<p><strong>Fault Tolerant Jobs</strong></p>
+<p>Jobs that run on infrastructure where nodes get replaced frequently, either due to flaky hardware or by design. Or mission critical production grade jobs that need to be run with resilience to failures.</p>
+<p><strong>Dynamic Capacity Management</strong></p>
+<p>Jobs that run on preemptible resources that can be taken away at any time (e.g. AWS spot instances) or shared pools where the pool size can change dynamically based on demand.</p>
+<h2 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h2>
+<h3 id="1-make-your-program-recoverable"><a class="header" href="#1-make-your-program-recoverable">1. Make your program recoverable</a></h3>
+<p>Elastic training means that new nodes will be added during the training process. Your training program need to save the training status in time, so that the new joining process can join the training from the most recent state.</p>
+<p>For example:</p>
+<pre><code class="language-python">model = ...
+model.load_state_dict(torch.load(YOUR_CHECKPOINT_PATH))
+
+for train_loop():
+    ...
+    torch.save(model.state_dict(), YOUR_CHECKPOINT_PATH)
+</code></pre>
+<h3 id="2-launch-job"><a class="header" href="#2-launch-job">2. Launch job</a></h3>
+<p>You can launch elastic training job with <code>bagua.distributed.run</code>. For example:</p>
+<p><strong>Fault tolerant (fixed number of workers, no elasticity)</strong></p>
+<pre><code class="language-bash">python -m bagua.distributed.run \
+        --nnodes=NUM_NODES \
+        --nproc_per_node=NUM_TRAINERS \
+        --rdzv_id=JOB_ID \
+        --rdzv_backend=c10d \
+        --rdzv_endpoint=HOST_NODE_ADDR \
+        YOUR_TRAINING_SCRIPT.py (--arg1 ... train script args...)
+</code></pre>
+<p>Part of the node failure will not cause the job to fail, the job will wait for the node to recover.</p>
+<p><code>HOST_NODE_ADDR</code>, in form &lt;host&gt;[:&lt;port&gt;] (e.g. node1.example.com:29400), specifies the node and
+the port on which the C10d rendezvous backend should be instantiated and hosted. It can be any
+node in your training cluster, but ideally you should pick a node that has a high bandwidth.</p>
+<blockquote>
+<p>If no port number is specified <code>HOST_NODE_ADDR</code> defaults to &lt;host&gt;:29400.</p>
+</blockquote>
+<p><strong>Elastic Training(min=1, max=4)</strong></p>
+<pre><code class="language-bash">python -m bagua.distributed.run \
+        --nnodes=1:4 \
+        --nproc_per_node=NUM_TRAINERS \
+        --rdzv_id=JOB_ID \
+        --rdzv_backend=c10d \
+        --rdzv_endpoint=HOST_NODE_ADDR \
+        YOUR_TRAINING_SCRIPT.py (--arg1 ... train script args...)
+</code></pre>
+<p>For this example, the number of training nodes can be dynamically adjusted from 1 to 4.</p>
+<h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
+<ol>
+<li><a href="https://pytorch.org/elastic/0.1.0rc2/overview.html">PYTORCH ELASTIC overview</a></li>
+<li><a href="https://github.com/BaguaSys/bagua/blob/master/bagua/distributed/run.py">torch.distributed.run API Doc</a></li>
+</ol>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/elastic-training/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="frequently-asked-questions-and-troubleshooting"><a class="header" href="#frequently-asked-questions-and-troubleshooting">Frequently Asked Questions and Troubleshooting</a></h1>
 <h2 id="nccl_error_invalid_argument"><a class="header" href="#nccl_error_invalid_argument"><code>NCCL_ERROR_INVALID_ARGUMENT</code></a></h2>
 <p>Usually this is caused by the library version conflict, try updating to <code>torch&gt;=1.7.0</code>.</p>
