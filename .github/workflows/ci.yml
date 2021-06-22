@@ -17,8 +17,8 @@ jobs:
     container: ikzk/bagua-ci:latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./mdbook test
-      - run: ./mdbook build
+      - run: mdbook test
+      - run: mdbook build
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -26,5 +26,5 @@ jobs:
     container: ikzk/bagua-ci:latest
     steps:
       - uses: actions/checkout@v2
-      - run: ./mdbook build
+      - run: mdbook build
       - run: ./ci/deploy.sh
