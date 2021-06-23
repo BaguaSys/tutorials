@@ -4,8 +4,13 @@ To install Bagua, besides your deep learning framework (like [PyTorch](https://p
 
 * [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads), with CUDA version >= 10.1
 * [Rust Compiler](https://www.rust-lang.org/tools/install)
+* MPI (at least MPI 3.0)
+  * [Open MPI](https://www.open-mpi.org/)
+  * [MPICH](https://www.open-mpi.org/)
+* HWLOC (any recent version should work)
+* CMake 3.14 or later
 
-We provide an automatic installation script for Linux. Just run the following command to install above libraries and Bagua:
+We provide an automatic installation script for Ubuntu. Just run the following command to install above libraries（except for CUDA，you should always install CUDA manually） and Bagua:
 
 ```python
 curl -Ls https://raw.githubusercontent.com/BaguaSys/bagua/master/install.sh | sudo bash
