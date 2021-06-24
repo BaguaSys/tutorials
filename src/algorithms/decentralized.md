@@ -35,8 +35,6 @@ The communication overhead of decentralized SGD is highly related to the degree 
 ## Example
 
 
-## Benchmark
-
 
 
 
