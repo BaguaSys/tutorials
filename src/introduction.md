@@ -6,6 +6,6 @@ Currently bagua has integrated primitives like *Centralized Synchronous Communic
 
 # Links
 
-* [Bagua](https://github.com/BaguaSys/bagua)
+* [Bagua Github](https://github.com/BaguaSys/bagua)
 * [Bagua Tutorials](https://baguasys.github.io/tutorials)
 * [Bagua API Documentation](https://bagua.readthedocs.io/)
