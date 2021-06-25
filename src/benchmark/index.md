@@ -10,7 +10,7 @@ We use up to 16 servers for benchmarks, each of which is equipped with 8 NVIDIA 
     <img src="./figures/e2e_vgg16.png" width="201"/><img src="./figures/e2e_bert-large.png" width="200"/><img src="./figures/e2e_transformer.png" width="193"/>
 </center>
 
-The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use 128 GPUs (on 16 servers) to train VGG16 and BERT-Large, while 64 GPUs (on 8 servers) to train Transformer. Results show that Bagua can achieve up to 2 times of speedup over other systems even under the 100 Gbps fast network.
+The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use 128 GPUs (on 16 servers) to train VGG16 and BERT-Large, and 64 GPUs (on 8 servers) to train Transformer. Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.
 
 
 ## Scalability
@@ -32,7 +32,7 @@ By supporting a diverse collection of algorithms, Bagua provides users the flexi
     <figcaption>Epoch time of BERT-Large Finetune under different network conditions</figcaption>
 </center>
 
-This figure shows the epoch time of Bagua (with three algorithms) and other systems when the bandwidth has been changed from 100 Gbps to 1 Gbps, and the latency has been changed up to 5 ms. As we can see, when the interconnections are slower than the fast network that we previously adopted, Bagua can provide even more significant performance boost over the existing systems. Specifically, when the bandwidth is low, algorithms that require less amount of data transmission (e.g., 1bit-Adam, QSGD) outperform others. When the latency is getting high, algorithms that require fewer connections (e.g., decentralized SGD) tend to be degraded less than other methods. If keeping increasing the latency, we can observe that the decentralized SGD outperforms all others.
+This figure shows the epoch time of Bagua (with three algorithms) and other systems when the bandwidth has been changed from 100 Gbps to 1 Gbps, and the latency has been changed up to 5 ms. As we can see, when the interconnections are slower than the fast network that we previously adopted, Bagua can provide even more significant performance boost over the existing systems. Specifically, when the bandwidth is low, algorithms that require less amount of data transmission (e.g., 1bit-Adam, QSGD) outperform others. When the latency is getting high, algorithms that require fewer connections (e.g., decentralized SGD) tend to be degraded less than other methods. If we keep increasing the latency, we can observe that the decentralized SGD outperforms all others.
 
 
 
