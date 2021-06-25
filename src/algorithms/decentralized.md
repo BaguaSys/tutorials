@@ -31,8 +31,16 @@ The communication overhead of decentralized SGD is highly related to the degree 
 | Parameter Server      | $\mathcal{O}(1)$ | $\mathcal{O}(n)$ |
 | Decentralized SGD in Bagua | $\mathcal{O}(1)$ | $\mathcal{O}(1)$ |
 
+## Benchmark
+
+Given the optimal communication complexity of Decentralized SGD, it can be much faster than its centralized counterparts during the training, especially when the network is slow. We provide some benchmark results [here](../benchmark/index.md) to compare the performance of Decentralized SGD of Bagua with other SOTA systems.
+
 
 ## Example
+
+
+
+
 
 
 
