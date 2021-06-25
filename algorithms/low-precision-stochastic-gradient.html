@@ -158,8 +158,8 @@ each iteration of the training process, the gradient, whose size is equal to the
 model size, needs to be sent and received on each worker. Such communication
 cost soon becomes the training bottleneck in many scenarios. </p>
 <p>Bagua provides a built-in gradient compression algorithm, which compresses the
-gradient floats to 8bit bytes before communication, which saves 3/4 of the
-original cost.</p>
+gradient floats to 8bit bytes before communication. This saves 3/4 of the
+original cost. </p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/low-precision-stochastic-gradient.md">Edit this file on GitHub.</a></footer>
                     </main>
 
