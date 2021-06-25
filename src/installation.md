@@ -1,5 +1,7 @@
 # Installation
 
+## Install locally
+
 To install Bagua, besides your deep learning framework (like [PyTorch](https://pytorch.org/get-started/locally/)), you need the following dependencies installed on your system:
 
 * [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads), with CUDA version >= 10.1
@@ -27,3 +29,7 @@ Install develop version:
 ```shell
 python3 -m pip install git+https://github.com/BaguaSys/bagua.git -f https://repo.arrayfire.com/python/wheels/3.8.0/
 ```
+
+## Use Docker image
+
+We provide Docker image with Bagua installed based on official PyTorch images. You can find them on [DockerHub](https://hub.docker.com/r/baguasys/bagua).
