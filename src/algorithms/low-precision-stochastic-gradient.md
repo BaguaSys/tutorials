@@ -10,5 +10,5 @@ model size, needs to be sent and received on each worker. Such communication
 cost soon becomes the training bottleneck in many scenarios. 
 
 Bagua provides a built-in gradient compression algorithm, which compresses the
-gradient floats to 8bit bytes before communication, which saves 3/4 of the
-original cost.
+gradient floats to 8bit bytes before communication. This saves 3/4 of the
+original cost. 
