@@ -10,7 +10,7 @@ To install Bagua, besides your deep learning framework (like [PyTorch](https://p
 * HWLOC >= 2.0
 * CMake >= 3.19
 
-We provide an automatic installation script for Ubuntu. Just run the following command to install Bagua and above libraries （except for CUDA， you should always install CUDA by yourself）:
+We provide an automatic installation script for Ubuntu. Just run the following command to install Bagua and above libraries （except for CUDA, you should always install CUDA by yourself）:
 
 ```python
 curl -Ls https://raw.githubusercontent.com/BaguaSys/bagua/master/install.sh | sudo bash
