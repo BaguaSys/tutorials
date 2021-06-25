@@ -149,6 +149,20 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="more-optimizations"><a class="header" href="#more-optimizations">More Optimizations</a></h1>
+<p>Besides communication algorithms, Bagua supports many convenient tools to
+further accelerate your training workload. Currently we support:</p>
+<ol>
+<li>Generic fused optimizer, which fuse optimizer step operations for multiple
+layers, and it is generic because it can be applied to arbitrary PyTorch
+optimizer, in contrast to
+<a href="https://nvidia.github.io/apex/optimizers.html">apex</a>'s approach, where only
+some specific optimizers are implemented</li>
+<li>Load balanced data loader, which accelerates workloads such as NLP and speech
+where training samples are of different length. This dataloader distribute
+training samples in a way that each worker receives samples of similar
+length, so that they finish a batch in similar time, mitigating the straggler
+problem in distributed setups.</li>
+</ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/more-optimizations/index.md">Edit this file on GitHub.</a></footer>
                     </main>
 
