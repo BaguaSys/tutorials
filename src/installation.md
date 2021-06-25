@@ -18,15 +18,11 @@ curl -Ls https://raw.githubusercontent.com/BaguaSys/bagua/master/install.sh | su
 
 If you already have dependencies installed on your system, you can install the bagua python package only:
 
-Install release version:
-
 ```shell
+# release version
 python3 -m pip install bagua -f https://repo.arrayfire.com/python/wheels/3.8.0/
-```
 
-Install develop version:
-
-```shell
+# develop version (git master)
 python3 -m pip install git+https://github.com/BaguaSys/bagua.git -f https://repo.arrayfire.com/python/wheels/3.8.0/
 ```
 
