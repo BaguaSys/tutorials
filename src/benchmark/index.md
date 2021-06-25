@@ -6,19 +6,19 @@ We use up to 16 servers for benchmarks, each of which is equipped with 8 NVIDIA 
 
 ## End-to-end performance
 
-<center class="half">
-    <img src="../figures/e2e_vgg16.png" width="201"/><img src="../figures/e2e_bert-large.png" width="200"/><img src="../figures/e2e_transformer.png" width="193"/>
+<center>
+    <img src="./figures/e2e_vgg16.png" width="201"/><img src="./figures/e2e_bert-large.png" width="200"/><img src="./figures/e2e_transformer.png" width="193"/>
 </center>
 
-The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use 128 GPUs (on 16 servers) to train VGG16 and BERT-Large, while 64 GPUs (on 8 servers) to train Transformer. Results show that Bagua can achieve **XXX** times of speedup over other systems even under the 100 Gbps fast network.
+The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use 128 GPUs (on 16 servers) to train VGG16 and BERT-Large, while 64 GPUs (on 8 servers) to train Transformer. Results show that Bagua can achieve up to 2 times of speedup over other systems even under the 100 Gbps fast network.
 
 
 ## Scalability
 
 VGG16 is known as a task that is difficult to scale because of its high ratio of communication and computation. This figure shows the scalability of four systems on VGG16 with up to 128 GPUs. We can see that Bagua achieves obviously higher scaling efficiency than other systems.
 
-<center class="half">
-    <img src="../figures/scalability_vgg16.png" width="250"/>
+<center>
+    <img src="./figures/scalability_vgg16.png" width="250"/>
 </center>
 
 
@@ -27,8 +27,8 @@ VGG16 is known as a task that is difficult to scale because of its high ratio of
 By supporting a diverse collection of algorithms, Bagua provides users the flexibility to choose algorithms for different tasks and network conditions (in terms of latency and bandwidth). To understand behaviors of these algorithms under different network conditions, we manually change the bandwidth and latency of connections between servers and report the epoch time accordingly.
 
 
-<center class="half">
-    <img src="../figures/tradeoff_network_bert-large-bandwidth.png" width="247"/><img src="../figures/tradeoff_network_bert-large-latency.png" width="250"/>
+<center>
+    <img src="./figures/tradeoff_network_bert-large-bandwidth.png" width="247"/><img src="./figures/tradeoff_network_bert-large-latency.png" width="250"/>
     <figcaption>Epoch time of BERT-Large Finetune under different network conditions</figcaption>
 </center>
 
