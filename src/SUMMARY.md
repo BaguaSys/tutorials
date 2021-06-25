@@ -12,7 +12,5 @@
 * [Elastic Training](./elastic-training/index.md)
 * [Performance Autotuning](./performance-autotuning/index.md)
 * [More Optimizations](./more-optimizations/index.md)
-    * [Generic Fused Optimizer](./more-optimizations/generic-fused-optimizer.md)
-    * [Load Balanced Data Loader](./more-optimizations/load-balanced-data-loader.md)
 * [Kubernetes Integration](./kubernetes-integration/index.md)
 * [FAQ and Troubleshooting](./faq_troubleshooting.md)
