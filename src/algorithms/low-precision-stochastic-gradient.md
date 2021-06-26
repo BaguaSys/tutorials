@@ -25,6 +25,9 @@ and converges similar to full precision communication on most tasks:
 
 benchmark results XXX
 
+For comparison with other algorithms (may or may not be compression algorithms),
+refer to [benchmark page](../benchmark/index.html).
+
 ## Algorithm
 
 Bagua's built-in low precision stochastic gradient algorithm does the following
@@ -36,13 +39,13 @@ steps in each iteration. Assume we have $m$ nodes and each node has $n$ GPUs.
 3. The first GPU on $i$-th node quantize the gradient $G_i$ with a quantization
    function $Q(\cdot)$: $Q(G_i)$, for all $i$. Then each node exchange the
    quantized version between nodes so that each node has the average of all
-   $Q(G_i)$.
+   $Q(G_i)$
 4. The first GPU on each node broadcast the average of all $Q(G_i)$s to every
    other GPU on the same node, and all GPUs on all workers use this quantized
-   average to update model.
+   average to update model
    
 The quantization function $Q(\cdot)$ calculates the minimum value $x$ and
-maximum value $y$ of its input, and the split $[x, y]$ into equally spaced 256
+maximum value $y$ of its input, and the split $[x, y]$ into evenly spaced 256
 intervals. Then represent each element of its input by a 8bit integer
 representing which interval the original element is in.
 
