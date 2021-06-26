@@ -455,7 +455,7 @@ problem in distributed setups.</li>
 <p>Add <code>torch.multiprocessing.set_start_method(&quot;forkserver&quot;)</code>. The default <code>&quot;fork&quot;</code> strategy is error prone by design. For more information, see <a href="https://pytorch.org/docs/stable/notes/multiprocessing.html#avoiding-and-fighting-deadlocks">PyTorch documentation</a>, and <a href="https://stackoverflow.com/questions/64095876/multiprocessing-fork-vs-spawn">StackOverflow</a>.</p>
 <h2 id="error-when-installing-rust"><a class="header" href="#error-when-installing-rust">Error when installing Rust</a></h2>
 <p>If you see some error like the message below, just clean the original installation record first by <code>rm -rf /root/.rustup</code> and reinstall.</p>
-<pre><code class="language-shell"> error: could not rename component file from '/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '/root/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'error: caused by: other os error.
+<pre><code class="language-shell">error: could not rename component file from '/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '/root/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'error: caused by: other os error.
 </code></pre>
 <!-- ## Out of memory when using the quantize algorithm -->
 <!-- The quantize algorithm compresses the communication content and requires a certain amount of additional memory. Reduce the batch size appropriately. -->
@@ -464,18 +464,18 @@ problem in distributed setups.</li>
 use command <code>NCCL_SOCKET_IFNAME=network card name (such as eth01)</code> to specify
 the one you want to use (usually a physical one). Card information can be
 obtained by <code>ls /sys/class/net/</code>.</p>
-<h2 id="after-increasing-batch-size-by-distributed-training-model-perfomance-decreases"><a class="header" href="#after-increasing-batch-size-by-distributed-training-model-perfomance-decreases">After increasing batch size by distributed training, model perfomance decreases</a></h2>
-<p>Using a different algorithm has similar effect as using a different optimizer,
-so you need to retune your hyperparameters. Some tricks you can try:</p>
+<h2 id="model-accuracy-drops"><a class="header" href="#model-accuracy-drops">Model accuracy drops</a></h2>
+<p>Using a different algorithm or using more GPUs has similar effect as using a
+different optimizer, so you need to retune your hyperparameters. Some tricks you
+can try:</p>
 <ol>
-<li>Train more epochs and increase the number of training iterations to 0.2-0.3
-times more than the original.</li>
+<li>Train more epochs and increase the number of training iterations to
+0.2-0.3 times more than the original.</li>
 <li>Scale the learning rate. If the total batch size of distributed training is
-increased by N times compared with the original, the learning rate (lr) of
-multi-machine multi-card training should also increased by N times and
-becomes N*lr.</li>
-<li>Learning rate warmup. Perform a Gradual learning rate warmup for several
-epochs (see also <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, Large Minibatch SGD: Training ImageNet in 1
+increased by <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> times, the learning rate should also be increased by <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span>
+times to be <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal" style="margin-right:0.02778em;">r</span></span></span></span>.</li>
+<li>Performing a gradual learning rate warmup for several epochs often helps (see
+also <a href="https://arxiv.org/pdf/1706.02677.pdf">Accurate, Large Minibatch SGD: Training ImageNet in 1
 Hour</a>).</li>
 </ol>
 <!-- ## The loss drops slowly when using the decentralized algorithm -->
