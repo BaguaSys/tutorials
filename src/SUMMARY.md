@@ -5,7 +5,7 @@
 * [Getting Started](./getting-started/index.md)
 * [Algorithms](./algorithms/index.md)
     * [ByteGrad](./algorithms/bytegrad.md)
-    * [Decentralized Parallel Stochastic Gradient](./algorithms/decentralized.md)
+    * [Decentralized SGD](./algorithms/decentralized.md)
     * [1bit-Adam](./algorithms/1bit-adam.md)
 * [Benchmark Results](./benchmark/index.md)
 * [How to Create a New Algorithm](./how-to-create-a-new-algorithm/index.md)
