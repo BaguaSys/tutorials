@@ -4,7 +4,7 @@
 * [Installation](./installation.md)
 * [Getting Started](./getting-started/index.md)
 * [Algorithms](./algorithms/index.md)
-    * [Low Precision Stochastic Gradient](./algorithms/low-precision-stochastic-gradient.md)
+    * [ByteGrad](./algorithms/bytegrad.md)
     * [Decentralized Parallel Stochastic Gradient](./algorithms/decentralized.md)
     * [1bit-Adam](./algorithms/1bit-adam.md)
 * [Benchmark Results](./benchmark/index.md)
