@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Low Precision Stochastic Gradient - Bagua Tutorials</title>
+        <title>ByteGrad - Bagua Tutorials</title>
                 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/low-precision-stochastic-gradient.html" class="active"><strong aria-hidden="true">4.1.</strong> Low Precision Stochastic Gradient</a></li><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">4.2.</strong> Decentralized Parallel Stochastic Gradient</a></li><li class="chapter-item expanded "><a href="../algorithms/1bit-adam.html"><strong aria-hidden="true">4.3.</strong> 1bit-Adam</a></li></ol></li><li class="chapter-item expanded "><a href="../benchmark/index.html"><strong aria-hidden="true">5.</strong> Benchmark Results</a></li><li class="chapter-item expanded "><a href="../how-to-create-a-new-algorithm/index.html"><strong aria-hidden="true">6.</strong> How to Create a New Algorithm</a></li><li class="chapter-item expanded "><a href="../elastic-training/index.html"><strong aria-hidden="true">7.</strong> Elastic Training</a></li><li class="chapter-item expanded "><a href="../performance-autotuning/index.html"><strong aria-hidden="true">8.</strong> Performance Autotuning</a></li><li class="chapter-item expanded "><a href="../more-optimizations/index.html"><strong aria-hidden="true">9.</strong> More Optimizations</a></li><li class="chapter-item expanded "><a href="../kubernetes-integration/index.html"><strong aria-hidden="true">10.</strong> Kubernetes Integration</a></li><li class="chapter-item expanded "><a href="../faq_troubleshooting.html"><strong aria-hidden="true">11.</strong> FAQ and Troubleshooting</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/bytegrad.html" class="active"><strong aria-hidden="true">4.1.</strong> ByteGrad</a></li><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">4.2.</strong> Decentralized Parallel Stochastic Gradient</a></li><li class="chapter-item expanded "><a href="../algorithms/1bit-adam.html"><strong aria-hidden="true">4.3.</strong> 1bit-Adam</a></li></ol></li><li class="chapter-item expanded "><a href="../benchmark/index.html"><strong aria-hidden="true">5.</strong> Benchmark Results</a></li><li class="chapter-item expanded "><a href="../how-to-create-a-new-algorithm/index.html"><strong aria-hidden="true">6.</strong> How to Create a New Algorithm</a></li><li class="chapter-item expanded "><a href="../elastic-training/index.html"><strong aria-hidden="true">7.</strong> Elastic Training</a></li><li class="chapter-item expanded "><a href="../performance-autotuning/index.html"><strong aria-hidden="true">8.</strong> Performance Autotuning</a></li><li class="chapter-item expanded "><a href="../more-optimizations/index.html"><strong aria-hidden="true">9.</strong> More Optimizations</a></li><li class="chapter-item expanded "><a href="../kubernetes-integration/index.html"><strong aria-hidden="true">10.</strong> Kubernetes Integration</a></li><li class="chapter-item expanded "><a href="../faq_troubleshooting.html"><strong aria-hidden="true">11.</strong> FAQ and Troubleshooting</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -148,7 +148,7 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="low-precision-stochastic-gradient"><a class="header" href="#low-precision-stochastic-gradient">Low Precision Stochastic Gradient</a></h1>
+<h1 id="bytegrad"><a class="header" href="#bytegrad">ByteGrad</a></h1>
 <h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
 <p>Large scale distributed training requires significant communication cost, which
 is especially true for large models. For example in traditional synchronous
@@ -157,24 +157,24 @@ many libraries, such as <a href="https://github.com/horovod/horovod">Horovod</a>
 <a href="https://pytorch.org/tutorials/intermediate/ddp_tutorial.html">PyTorch DDP</a>), in
 each iteration of the training process, the gradient, whose size is equal to the
 model size, needs to be sent and received on each worker. Such communication
-cost soon becomes the training bottleneck in many scenarios. </p>
+cost soon becomes the training bottleneck in many scenarios.</p>
 <p>There are many <a href="https://awesomeopensource.com/project/chester256/Model-Compression-Papers?categoryPage=21">existing
 papers</a>
 about how to apply model/gradient compression to save this communication cost.
-Bagua provides a built-in gradient compression algorithm, which compresses the
-gradient floats to 8bit bytes before communication. This saves 3/4 of the
-original cost. It implements high accuracy min-max quantization operator with
-optimized CUDA kernels, and hierarchical communication. This makes it much
-faster than other compression implementations in existing frameworks (such as
-<a href="https://pytorch.org/docs/stable/ddp_comm_hooks.html#powersgd-communication-hook">PyTorch
+Bagua provides a built-in gradient compression algorithm called <strong>ByteGrad</strong>,
+which compresses the gradient floats to 8bit bytes before communication. This
+saves 3/4 of the original cost. It implements high accuracy min-max quantization
+operator with optimized CUDA kernels, and hierarchical communication. This makes
+it much faster than other compression implementations in existing frameworks
+(such as <a href="https://pytorch.org/docs/stable/ddp_comm_hooks.html#powersgd-communication-hook">PyTorch
 PowerSGD</a>)
 and converges similar to full precision communication on most tasks:</p>
 <p>benchmark results XXX</p>
 <p>For comparison with other algorithms (may or may not be compression algorithms),
 refer to <a href="../benchmark/index.html">benchmark page</a>.</p>
 <h2 id="algorithm"><a class="header" href="#algorithm">Algorithm</a></h2>
-<p>Bagua's built-in low precision stochastic gradient algorithm does the following
-steps in each iteration. Assume we have <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span> nodes and each node has <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> GPUs.</p>
+<p>ByteGrad does the following steps in each iteration. Assume we have <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">m</span></span></span></span> nodes
+and each node has <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> GPUs.</p>
 <ol>
 <li>Calculate gradient <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">ij</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> on the <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathnormal">i</span></span></span></span>-th node's <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span>-th GPU for all <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span></span></span></span></li>
 <li>The first GPU on each <em>node</em> does a reduce operation to compute the average
@@ -193,7 +193,7 @@ maximum value <span class="katex"><span class="katex-html" aria-hidden="true"><s
 intervals. Then represent each element of its input by a 8bit integer
 representing which interval the original element is in.</p>
 <h2 id="example-usage"><a class="header" href="#example-usage">Example usage</a></h2>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/low-precision-stochastic-gradient.md">Edit this file on GitHub.</a></footer>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/bytegrad.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
