@@ -58,7 +58,7 @@ We introduce how to start distributed training in the following sections.
 ### Single node multi-process training
 
 ```shell
-$ python -m bagua.distributed.launch --nproc_per_node=8 \
+python -m bagua.distributed.launch --nproc_per_node=8 \
   your_training_script.py (--arg1 --arg2 ...)
 ```
 
@@ -66,12 +66,12 @@ $ python -m bagua.distributed.launch --nproc_per_node=8 \
 
 **Node 1**: *(IP: 192.168.1.1, and has a free port: 1234)*
 ```shell
-$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=0 --master_addr="192.168.1.1" --master_port=1234  your_training_script.py (--arg1 --arg2 ...)
+python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=0 --master_addr="192.168.1.1" --master_port=1234  your_training_script.py (--arg1 --arg2 ...)
 ```
 
 **Node 2**:
 ```shell
-$ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr="192.168.1.1" --master_port=1234 your_training_script.py (--arg1 --arg2 ...)
+python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr="192.168.1.1" --master_port=1234 your_training_script.py (--arg1 --arg2 ...)
 ```
 
 > *Tips*:
