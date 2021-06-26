@@ -34,8 +34,9 @@ Bagua's built-in low precision stochastic gradient algorithm does the following
 steps in each iteration. Assume we have $m$ nodes and each node has $n$ GPUs.
 
 1. Calculate gradient $g_{ij}$ on the $i$-th node's $j$-th GPU for all $i,j$
-2. The first GPU on each **node** does a reduce operation to compute the average
-   of all GPUs' gradients **on the same node**, defined as $G_i$ for the $i$-th node
+2. The first GPU on each *node* does a reduce operation to compute the average
+   of all GPUs' gradients *on the same node*, defined as $G_i$ for the $i$-th
+   node
 3. The first GPU on $i$-th node quantize the gradient $G_i$ with a quantization
    function $Q(\cdot)$: $Q(G_i)$, for all $i$. Then each node exchange the
    quantized version between nodes so that each node has the average of all
