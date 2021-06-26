@@ -4,7 +4,4 @@ Fork the project and create new documentation in the `src` directory. Add new li
 
 ## How to preview your change
 
-```shell
-cargo install mdbook mdbook-linkcheck mdbook-katex mdbook-open-on-gh
-mdbook serve
-```
+Install [mdbook](https://github.com/rust-lang/mdBook) and [mdbook-linkcheck](https://github.com/Michael-F-Bryan/mdbook-linkcheck), run `mdbook serve`.
