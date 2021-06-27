@@ -4,6 +4,7 @@
 * [Installation](./installation.md)
 * [Getting Started](./getting-started/index.md)
 * [Algorithms](./algorithms/index.md)
+    * [Gradient AllReduce](./algorithms/gradient-allreduce.md)
     * [ByteGrad](./algorithms/bytegrad.md)
     * [Decentralized SGD](./algorithms/decentralized.md)
     * [1bit-Adam](./algorithms/1bit-adam.md)

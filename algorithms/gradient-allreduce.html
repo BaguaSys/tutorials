@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Getting Started - Bagua Tutorials</title>
+        <title>Gradient AllReduce - Bagua Tutorials</title>
                 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html" class="active"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/gradient-allreduce.html"><strong aria-hidden="true">4.1.</strong> Gradient AllReduce</a></li><li class="chapter-item expanded "><a href="../algorithms/bytegrad.html"><strong aria-hidden="true">4.2.</strong> ByteGrad</a></li><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">4.3.</strong> Decentralized SGD</a></li><li class="chapter-item expanded "><a href="../algorithms/1bit-adam.html"><strong aria-hidden="true">4.4.</strong> 1bit-Adam</a></li></ol></li><li class="chapter-item expanded "><a href="../benchmark/index.html"><strong aria-hidden="true">5.</strong> Benchmark Results</a></li><li class="chapter-item expanded "><a href="../how-to-create-a-new-algorithm/index.html"><strong aria-hidden="true">6.</strong> How to Create a New Algorithm</a></li><li class="chapter-item expanded "><a href="../elastic-training/index.html"><strong aria-hidden="true">7.</strong> Elastic Training</a></li><li class="chapter-item expanded "><a href="../performance-autotuning/index.html"><strong aria-hidden="true">8.</strong> Performance Autotuning</a></li><li class="chapter-item expanded "><a href="../more-optimizations/index.html"><strong aria-hidden="true">9.</strong> More Optimizations</a></li><li class="chapter-item expanded "><a href="../kubernetes-integration/index.html"><strong aria-hidden="true">10.</strong> Kubernetes Integration</a></li><li class="chapter-item expanded "><a href="../faq_troubleshooting.html"><strong aria-hidden="true">11.</strong> FAQ and Troubleshooting</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="../getting-started/index.html"><strong aria-hidden="true">3.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="../algorithms/index.html"><strong aria-hidden="true">4.</strong> Algorithms</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../algorithms/gradient-allreduce.html" class="active"><strong aria-hidden="true">4.1.</strong> Gradient AllReduce</a></li><li class="chapter-item expanded "><a href="../algorithms/bytegrad.html"><strong aria-hidden="true">4.2.</strong> ByteGrad</a></li><li class="chapter-item expanded "><a href="../algorithms/decentralized.html"><strong aria-hidden="true">4.3.</strong> Decentralized SGD</a></li><li class="chapter-item expanded "><a href="../algorithms/1bit-adam.html"><strong aria-hidden="true">4.4.</strong> 1bit-Adam</a></li></ol></li><li class="chapter-item expanded "><a href="../benchmark/index.html"><strong aria-hidden="true">5.</strong> Benchmark Results</a></li><li class="chapter-item expanded "><a href="../how-to-create-a-new-algorithm/index.html"><strong aria-hidden="true">6.</strong> How to Create a New Algorithm</a></li><li class="chapter-item expanded "><a href="../elastic-training/index.html"><strong aria-hidden="true">7.</strong> Elastic Training</a></li><li class="chapter-item expanded "><a href="../performance-autotuning/index.html"><strong aria-hidden="true">8.</strong> Performance Autotuning</a></li><li class="chapter-item expanded "><a href="../more-optimizations/index.html"><strong aria-hidden="true">9.</strong> More Optimizations</a></li><li class="chapter-item expanded "><a href="../kubernetes-integration/index.html"><strong aria-hidden="true">10.</strong> Kubernetes Integration</a></li><li class="chapter-item expanded "><a href="../faq_troubleshooting.html"><strong aria-hidden="true">11.</strong> FAQ and Troubleshooting</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -148,73 +148,37 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h1>
-<p>Let’s start our Bagua journey!</p>
-<h2 id="migrate-from-your-existing-single-gpu-training-code"><a class="header" href="#migrate-from-your-existing-single-gpu-training-code">Migrate from your existing single GPU training code</a></h2>
-<p>To use <code>Bagua</code>, you need make the following changes on your training code:</p>
-<p>First, import bagua and make your script distributed aware:</p>
-<pre><code class="language-python">import bagua.torch_api as bagua
-torch.cuda.set_device(bagua.get_local_rank())
-bagua.init_process_group()
-</code></pre>
-<p>Then, use torch's distributed sampler for your data loader:</p>
-<pre><code class="language-python">train_dataset = ...
-test_dataset = ...
-
-train_sampler = torch.utils.data.distributed.DistributedSampler(train_dataset,
-    num_replicas=bagua.get_world_size(), rank=bagua.get_rank())
-
-train_loader = torch.utils.data.DataLoader(
-    train_dataset,
-    batch_size=batch_size,
-    shuffle=(train_sampler is None),
-    sampler=train_sampler,
-)
-
-test_loader = torch.utils.data.DataLoader(test_dataset, ...)
-</code></pre>
-<p>Finally, wrap you model and optimizer with bagua by adding one line of code to your original script:</p>
-<pre><code class="language-python"># define your model and optimizer
-model = ...
-model = model.cuda()
-optimizer = ...
-
-# wrap your model and optimizer with bagua
-model, optimizer = bagua.bagua_init(
-    model, optimizer, distributed_algorithm=&quot;allreduce&quot;
-)
-</code></pre>
-<p>More examples can be found <a href="https://github.com/BaguaSys/examples">here</a>.</p>
-<h2 id="launch-job"><a class="header" href="#launch-job">Launch job</a></h2>
-<p>Bagua has a built-in tool <code>bagua.distributed.launch</code> to launch jobs, whose usage is similar to Pytorch <code>torch.distributed.launch</code>.</p>
-<p>We introduce how to start distributed training in the following sections.</p>
-<h3 id="single-node-multi-process-training"><a class="header" href="#single-node-multi-process-training">Single node multi-process training</a></h3>
-<pre><code class="language-shell">python -m bagua.distributed.launch --nproc_per_node=8 \
-  your_training_script.py (--arg1 --arg2 ...)
-</code></pre>
-<h3 id="multi-node-multi-process-training-eg-two-nodes"><a class="header" href="#multi-node-multi-process-training-eg-two-nodes">Multi-node multi-process training (e.g. two nodes)</a></h3>
-<p><strong>Node 1</strong>: <em>(IP: 192.168.1.1, and has a free port: 1234)</em></p>
-<pre><code class="language-shell">python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=0 --master_addr=&quot;192.168.1.1&quot; --master_port=1234  your_training_script.py (--arg1 --arg2 ...)
-</code></pre>
-<p><strong>Node 2</strong>:</p>
-<pre><code class="language-shell">python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=1 --master_addr=&quot;192.168.1.1&quot; --master_port=1234 your_training_script.py (--arg1 --arg2 ...)
-</code></pre>
-<blockquote>
-<p><em>Tips</em>:</p>
-<p>If you need some preprocessing work, you can include them in your bash script and launch job by adding <code>--no_python</code> to your command.</p>
-<pre><code class="language-shell">python -m bagua.distributed.launch --no_python --nproc_per_node=8 bash your_bash_script.sh
-</code></pre>
-</blockquote>
-<footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/getting-started/index.md">Edit this file on GitHub.</a></footer>
+<h1 id="gradient-allreduce"><a class="header" href="#gradient-allreduce">Gradient AllReduce</a></h1>
+<p>The Gradient AllReduce algorithm is a popular synchronous data-parallel
+distributed algorithm. It is the algorithm implemented in most existing
+solutions such as <a href="https://pytorch.org/tutorials/intermediate/ddp_tutorial.html">PyTorch
+DistributedDataParallel</a>,
+<a href="https://horovod.ai/">Horovod</a>, and <a href="https://www.tensorflow.org/guide/distributed_training">TensorFlow Mirrored
+Strategy</a>.</p>
+<p>With this algorithm, each worker does the following steps in each iteration.</p>
+<ol>
+<li>Compute the gradient using a minibatch.</li>
+<li>Compute the mean of the gradients on all workers by using the AllReduce
+collective.</li>
+<li>Update the model with the averaged gradient.</li>
+</ol>
+<p>In Bagua, this algorithm is supported via the <code>GradientAllReduce</code> algorithm
+class. The performance of the <code>GradientAllReduce</code> implementation in Bagua by
+default should be on par with PyTorch DDP and faster than Horovod in most cases.
+Bagua supports additional optimizations such as hierarchical communication that
+can be configured when instantiating the <code>GradientAllReduce</code> class. They can
+make Bagua faster than other implementations in certain scenarios, for example
+when the inter-machine network is a bottleneck.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/gradient-allreduce.md">Edit this file on GitHub.</a></footer>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="../installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="../algorithms/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="../algorithms/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="../algorithms/bytegrad.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -224,11 +188,11 @@ model, optimizer = bagua.bagua_init(
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="../installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="../algorithms/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="../algorithms/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="../algorithms/bytegrad.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>
