@@ -41,9 +41,13 @@ model = ...
 model = model.cuda()
 optimizer = ...
 
-# wrap your model and optimizer with bagua
-model, optimizer = bagua.bagua_init(
-    model, optimizer, distributed_algorithm="allreduce"
+# select your Bagua algorithm to use
+from bagua.torch_api.algorithms import gradient_allreduce
+algorithm = gradient_allreduce.GradientAllReduceAlgorithm()
+
+# wrap your model and optimizer with Bagua
+model = model.with_bagua(
+    [optimizer], algorithm
 )
 ```
 
