@@ -148,7 +148,62 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="kubernetes-integration"><a class="header" href="#kubernetes-integration">Kubernetes Integration</a></h1>
+<h1 id="kubernetes-operator-for-bagua-jobs"><a class="header" href="#kubernetes-operator-for-bagua-jobs">Kubernetes operator for Bagua jobs</a></h1>
+<p>This repository implements a kubernetes operator for Bagua distributed training job which supports static and elastic workloads. See <a href="https://github.com/BaguaSys/operator/blob/preonline/config/crd/bases/bagua.kuaishou.com_baguas.yaml">CRD definition</a>.</p>
+<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<ul>
+<li>Kubernetes &gt;= 1.16</li>
+<li>kubectl</li>
+</ul>
+<h3 id="installation"><a class="header" href="#installation">Installation</a></h3>
+<h4 id="run-the-operator-locally"><a class="header" href="#run-the-operator-locally">Run the operator locally</a></h4>
+<pre><code class="language-shell">
+git clone https://github.com/BaguaSys/operator.git
+cd operator
+
+# install crd
+kubectl apply -f config/crd/bases/bagua.kuaishou.com_baguas.yaml
+
+go run ./main.go
+</code></pre>
+<h4 id="deploy-the-operator"><a class="header" href="#deploy-the-operator">Deploy the operator</a></h4>
+<p>Install Bagua on an existing Kubernetes cluster.</p>
+<pre><code class="language-shell">kubectl apply -f https://raw.githubusercontent.com/BaguaSys/operator/master/deploy/deployment.yaml
+</code></pre>
+<p>Enjoy! Bagua will create resources in namespace <code>bagua</code>.</p>
+<h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
+<p>You can get demos in <code>config/samples</code>, and run as follows,</p>
+<ul>
+<li>static mode</li>
+</ul>
+<pre><code class="language-shell">
+kubectl apply -f config/samples/bagua_v1alpha1_bagua_static.yaml
+</code></pre>
+<p>Verify pods are running</p>
+<pre><code class="language-yaml">
+kubectl get pods
+
+NAME                           READY   STATUS    RESTARTS   AGE
+bagua-sample-static-master-0   1/1     Running   0          45s
+bagua-sample-static-worker-0   1/1     Running   0          45s
+bagua-sample-static-worker-1   1/1     Running   0          45s
+</code></pre>
+<ul>
+<li>elastic mode</li>
+</ul>
+<pre><code class="language-shell">
+kubectl apply -f config/samples/bagua_v1alpha1_bagua_elastic.yaml
+</code></pre>
+<p>Verify pods are running</p>
+<pre><code class="language-yaml">
+kubectl get pods
+
+NAME                            READY   STATUS    RESTARTS   AGE
+bagua-sample-elastic-etcd-0     1/1     Running   0          63s
+bagua-sample-elastic-worker-0   1/1     Running   0          63s
+bagua-sample-elastic-worker-1   1/1     Running   0          63s
+bagua-sample-elastic-worker-2   1/1     Running   0          63s
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/kubernetes-integration/index.md">Edit this file on GitHub.</a></footer>
                     </main>
 
