@@ -10,6 +10,20 @@ So far, Bagua has integrated primitives including
 
 Its effectiveness has been verified in various scenarios, including VGG and ResNet on ImageNet, Bert Large and many industrial applications at Kuaishou.
 
+# Performance
+
+<center>
+    <img src="./figures/scalability_vgg16.png" width="400"/>
+    <figcaption>The scalability of different systems on VGG16 with up to 128 GPUs.</figcaption>
+  
+    <img src="./figures/tradeoff_network_bert-large-bandwidth.png" width="300"/><img src="./figures/tradeoff_network_bert-large-latency.png" width="300"/>
+    <figcaption>Epoch time of BERT-Large Finetune under different network conditions for different systems.</figcaption>
+</center>
+
+For more comprehensive and up to date results, refer to [Bagua benchmark page](https://baguasys.github.io/tutorials/benchmark/index.html).
+
+# Cite Bagua
+
 # Links
 
 * [Bagua Github](https://github.com/BaguaSys/bagua)
