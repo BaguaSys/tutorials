@@ -1,8 +1,3 @@
----
-modified: 2021-07-01T06:38:23.018Z
-title: Performance Autotuning
----
-
 # Performance Autotuning
 
 Bagua comes with several adjustable hyperparameters that can affect runtime performance, including tensor fusion bucket size and hierarchical collective algorithms.
