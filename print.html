@@ -280,6 +280,16 @@ Bagua supports additional optimizations such as hierarchical communication that
 can be configured when instantiating the <code>GradientAllReduce</code> class. They can
 make Bagua faster than other implementations in certain scenarios, for example
 when the inter-machine network is a bottleneck.</p>
+<h2 id="example-usage"><a class="header" href="#example-usage">Example usage</a></h2>
+<p>A complete example of running Gradient AllReduce can be found at <a href="https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py">Bagua examples</a>
+with <code>--algorithm gradient_allreduce</code> command line argument.</p>
+<p>You need to initialize the Bagua algorithm with (see <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/gradient_allreduce/index.html">API documentation</a> for what parameters you can customize):</p>
+<pre><code class="language-python">from bagua.torch_api.algorithms import gradient_allreduce
+algorithm = gradient_allreduce.GradientAllReduceAlgorithm()
+</code></pre>
+<p>Then decorate your model with:</p>
+<pre><code class="language-python">model = model.with_bagua([optimizer], algorithm)
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/gradient-allreduce.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="bytegrad"><a class="header" href="#bytegrad">ByteGrad</a></h1>
 <h2 id="overview"><a class="header" href="#overview">Overview</a></h2>
@@ -325,7 +335,7 @@ average to update model</li>
 maximum value <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> of its input, and the split <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">]</span></span></span></span> into evenly spaced 256
 intervals. Then represent each element of its input by a 8bit integer
 representing which interval the original element is in.</p>
-<h2 id="example-usage"><a class="header" href="#example-usage">Example usage</a></h2>
+<h2 id="example-usage-1"><a class="header" href="#example-usage-1">Example usage</a></h2>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/bytegrad.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="decentralized-sgd"><a class="header" href="#decentralized-sgd">Decentralized SGD</a></h1>
 <h2 id="overview-of-decentralized-training"><a class="header" href="#overview-of-decentralized-training">Overview of decentralized training</a></h2>

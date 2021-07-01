@@ -169,6 +169,16 @@ Bagua supports additional optimizations such as hierarchical communication that
 can be configured when instantiating the <code>GradientAllReduce</code> class. They can
 make Bagua faster than other implementations in certain scenarios, for example
 when the inter-machine network is a bottleneck.</p>
+<h2 id="example-usage"><a class="header" href="#example-usage">Example usage</a></h2>
+<p>A complete example of running Gradient AllReduce can be found at <a href="https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py">Bagua examples</a>
+with <code>--algorithm gradient_allreduce</code> command line argument.</p>
+<p>You need to initialize the Bagua algorithm with (see <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/gradient_allreduce/index.html">API documentation</a> for what parameters you can customize):</p>
+<pre><code class="language-python">from bagua.torch_api.algorithms import gradient_allreduce
+algorithm = gradient_allreduce.GradientAllReduceAlgorithm()
+</code></pre>
+<p>Then decorate your model with:</p>
+<pre><code class="language-python">model = model.with_bagua([optimizer], algorithm)
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/gradient-allreduce.md">Edit this file on GitHub.</a></footer>
                     </main>
 
