@@ -14,6 +14,8 @@ Jobs that run on preemptible resources that can be taken away at any time (e.g. 
 
 ## Quickstart
 
+You can find a complete example at [Bagua examples](https://github.com/BaguaSys/examples/tree/main/elastic_training).
+
 ### 1. Make your program recoverable
 
 Elastic training means that new nodes will be added during the training process. Your training program need to save the training status in time, so that the new joining process can join the training from the most recent state.
