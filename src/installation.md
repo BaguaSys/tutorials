@@ -20,10 +20,10 @@ If you already have dependencies installed on your system, you can install the b
 
 ```bash
 # release version
-python3 -m pip install bagua -f https://repo.arrayfire.com/python/wheels/3.8.0/
+python3 -m pip install bagua
 
 # develop version (git master)
-python3 -m pip install git+https://github.com/BaguaSys/bagua.git -f https://repo.arrayfire.com/python/wheels/3.8.0/
+python3 -m pip install git+https://github.com/BaguaSys/bagua.git
 ```
 
 ## Use Docker image
