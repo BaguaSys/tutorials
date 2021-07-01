@@ -501,13 +501,11 @@ problem in distributed setups.</li>
 <p>This repository implements a kubernetes operator for Bagua distributed training job which supports static and elastic workloads. See <a href="https://github.com/BaguaSys/operator/blob/preonline/config/crd/bases/bagua.kuaishou.com_baguas.yaml">CRD definition</a>.</p>
 <h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
 <ul>
-<li>Kubernetes &gt;= 1.16</li>
-<li>kubectl</li>
+<li><a href="https://kubernetes.io/">Kubernetes</a> &gt;= 1.16</li>
 </ul>
 <h3 id="installation-1"><a class="header" href="#installation-1">Installation</a></h3>
 <h4 id="run-the-operator-locally"><a class="header" href="#run-the-operator-locally">Run the operator locally</a></h4>
-<pre><code class="language-shell">
-git clone https://github.com/BaguaSys/operator.git
+<pre><code class="language-shell">git clone https://github.com/BaguaSys/operator.git
 cd operator
 
 # install crd
@@ -521,31 +519,25 @@ go run ./main.go
 </code></pre>
 <p>Enjoy! Bagua will create resources in namespace <code>bagua</code>.</p>
 <h3 id="examples"><a class="header" href="#examples">Examples</a></h3>
-<p>You can get demos in <code>config/samples</code>, and run as follows,</p>
-<ul>
-<li>static mode</li>
-</ul>
-<pre><code class="language-shell">
-kubectl apply -f config/samples/bagua_v1alpha1_bagua_static.yaml
+<p>You can run demos in <code>config/samples</code>:</p>
+<h4 id="static-mode"><a class="header" href="#static-mode">Static mode</a></h4>
+<p>&quot;Static mode&quot; means running the Bagua distributed training job with fixed number of nodes, and no fault tolerance.</p>
+<pre><code class="language-shell">kubectl apply -f config/samples/bagua_v1alpha1_bagua_static.yaml
 </code></pre>
-<p>Verify pods are running</p>
-<pre><code class="language-yaml">
-kubectl get pods
+<p>Verify pods are running:</p>
+<pre><code class="language-yaml">kubectl get pods
 
 NAME                           READY   STATUS    RESTARTS   AGE
 bagua-sample-static-master-0   1/1     Running   0          45s
 bagua-sample-static-worker-0   1/1     Running   0          45s
 bagua-sample-static-worker-1   1/1     Running   0          45s
 </code></pre>
-<ul>
-<li>elastic mode</li>
-</ul>
-<pre><code class="language-shell">
-kubectl apply -f config/samples/bagua_v1alpha1_bagua_elastic.yaml
+<h4 id="elastic-mode"><a class="header" href="#elastic-mode">Elastic mode</a></h4>
+<p>&quot;Elastic mode&quot; means running the Bagua distributed training job in <a href="https://baguasys.github.io/tutorials/elastic-training/index.html">elastic mode</a>, which means the number of nodes can be dynamically adjusted, and the job is fault tolerant.</p>
+<pre><code class="language-shell">kubectl apply -f config/samples/bagua_v1alpha1_bagua_elastic.yaml
 </code></pre>
 <p>Verify pods are running</p>
-<pre><code class="language-yaml">
-kubectl get pods
+<pre><code class="language-yaml">kubectl get pods
 
 NAME                            READY   STATUS    RESTARTS   AGE
 bagua-sample-elastic-etcd-0     1/1     Running   0          63s
