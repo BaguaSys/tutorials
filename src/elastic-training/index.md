@@ -4,11 +4,11 @@
 
 By applying [TorchElastic](https://github.com/pytorch/pytorch/tree/v1.9.0/torch/distributed/elastic), bagua can do elastic training. We usually use the capabilities of Elastic Training to support the following two types of jobs:
 
-**Fault Tolerant Jobs**
+**Fault tolerant jobs**
 
 Jobs that run on infrastructure where nodes get replaced frequently, either due to flaky hardware or by design. Or mission critical production grade jobs that need to be run with resilience to failures.
 
-**Dynamic Capacity Management**
+**Dynamic capacity management**
 
 Jobs that run on preemptible resources that can be taken away at any time (e.g. AWS spot instances) or shared pools where the pool size can change dynamically based on demand.
 
@@ -56,7 +56,7 @@ node in your training cluster, but ideally you should pick a node that has a hig
 > If no port number is specified ``HOST_NODE_ADDR`` defaults to \<host\>:29400.
 
 
-**Elastic Training(min=1, max=4)**
+**Elastic training(min=1, max=4)**
 
 ```bash
 python -m bagua.distributed.run \
@@ -72,5 +72,5 @@ For this example, the number of training nodes can be dynamically adjusted from 
 
 ## Reference
 
-1. [PYTORCH ELASTIC overview](https://pytorch.org/elastic/0.1.0rc2/overview.html)
+1. [PyTorch Elastic overview](https://pytorch.org/elastic/0.1.0rc2/overview.html)
 2. [torch.distributed.run API Doc](https://github.com/BaguaSys/bagua/blob/master/bagua/distributed/run.py)
