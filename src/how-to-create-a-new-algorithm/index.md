@@ -34,8 +34,9 @@ Bagua provides a class called ``` Algorithm```. All a developer needs to do is t
 1. `__init__()`: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called `QAdamOptimizer`, which is a modified Adam optimizer available in Bagua. It also needs to know the warm-up steps defined by the user.
 
 ```python
-self.optimizer = qadam_optimizer
-self.warmup_steps = warmup_steps
+def __init__(self, qadam_optimizer, warmup_step):
+    self.optimizer = qadam_optimizer
+    self.warmup_steps = warmup_steps
 ```
 
 2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
@@ -65,12 +66,7 @@ return tensors
 
 ```python
 if self.optimizer.step_id < self.warmup_steps:
-    bucket.backend_bucket.append_centralized_synchronous_op(
-        bagua_module.bagua_global_communicator,
-        bagua_module.bagua_intra_node_communicator,
-        hierarchical=False,
-        average=True,
-    )
+    bucket.append_centralized_synchronous_op()
 else:
     def calculate_momentum(*args):
         with torch.cuda.stream(_get_global_state().get_communication_stream()):
@@ -78,12 +74,9 @@ else:
             for tensor in bucket.tensors:
                 tensor.mul_(beta1).add_(tensor._one_bit_grad, alpha=1 - beta1)
 
-    bucket.backend_bucket.append_python_op(calculate_momentum)
-    bucket.backend_bucket.append_centralized_synchronous_op(
-        bagua_module.bagua_inter_node_communicator,
-        bagua_module.bagua_intra_node_communicator,
-        hierarchical=self.hierarchical_reduce,
-        average=True,
+    bucket.append_python_op(calculate_momentum)
+    bucket.append_centralized_synchronous_op(
+        hierarchical=self.hierarchical,
         scattergather=True,
         compression="MinMaxUInt8",
     )
