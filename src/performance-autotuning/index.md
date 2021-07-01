@@ -18,7 +18,7 @@ In addition, the autotune system skips the first $W$ seconds to warmup.
 
 You can adjust $N$ with the `--autotune_max_samples` flag and adjust $T$ with the `--autotune_sampling_confidence_time` flag, adjust $W$ with the `--autotune_warmup_time`.
 
-## Logfile
+## Debugging
 
 The autotuning system dumps the tuning process in a file. The file path is specified by the parameter `--autotune_logfile`, and the default value is `/tmp/bagua_autotune.log`.
 
