@@ -1,26 +1,24 @@
 # Performance Autotuning
 
-Bagua comes with several adjustable hyperparameters that can affect runtime performance, including tensor fusion bucket size and hierarchical collective algorithms.
+Bagua comes with several adjustable hyperparameters for communication that can affect runtime performance. For example tensor fusion bucket size.
 
-Determining the best combination of these values to maximize performance (minimize time to convergence) can be a matter of trial-and-error, as many factors including model complexity, network bandwidth, GPU memory, etc. can all affect inputs per second throughput during training.
+Determining the best combination of these hyperparameters to maximize system performance can be a process of a lot of trial-and-error, as many factors including model complexity, network bandwidth, and GPU hardware can all affect the best parameter to choose.
 
-Bagua provides a mechanism to automate the process of selecting the best values for these hyperparameters called autotuning. The Bagua autotuning system uses Bayesian optimization to intelligently search through the space of parameter combinations during training. This feature can be enabled by setting the `--autotune_level=1` flag for `bagua.distributed.run`:
+Bagua provides a mechanism to automate this process of choosing the best values for these hyperparameters. The Bagua autotuning system uses Bayesian optimization to efficiently search through the space of hyperparameters. This feature can be enabled by providing the `--autotune_level=1` flag to `bagua.distributed.run`:
 
 ```bash
-python -m bagua.distributed.run --nproc_per_node 4 --auotune_level=1 python train.py
+python -m bagua.distributed.run --nproc_per_node ... --auotune_level=1 python train.py
 ```
 
-## Processing
+The main process of autotune is simple. The autotune system finds $N$ groups of hyperparameters through Bayesian optimization, and the hyperparameters are brought into the training to verify the performance, each group of hyperparameters takes $T$ seconds to verify. 
 
-The main process of autotune is simple. Autotuning system find N groups of hyperparameters through Bayesian, and the hyperparameters are brought into the training to verify the effect, each hyperparameter takes T seconds to verify. 
+Generally speaking, the larger the $N$ is, the larger the search space, and the more likely it is to find the best hyperparameters. The larger the $T$, the more accurate the measurement of the group of hyperparameters' performance.
 
-Generally speaking, the larger N is, the larger the search space, and the more likely it is to find the parameters you want. The larger the T, the more accurate the scoring.
+In addition, the autotune system skips the first $W$ seconds to warmup.
 
-In addition, due to the cold start, we will skip the sampling in the previous W seconds to prevent sampling distortion.
+You can adjust $N$ with the `--autotune_max_samples` flag and adjust $T$ with the `--autotune_sampling_confidence_time` flag, adjust $W$ with the `--autotune_warmup_time`.
 
-You can adjust N through the `--autotune_max_samples` flag and adjust T through the `--autotune_sampling_confidence_time` flag, adjust W through the `--autotune_warmup_time`.
-
-##  Logfile
+## Logfile
 
 The autotuning system dumps the tuning process in a file. The file path is specified by the parameter `--autotune_logfile`, and the default value is `/tmp/bagua_autotune.log`.
 
@@ -33,4 +31,4 @@ bucket_size_2p,is_hierarchical_reduce,score,train_iter
 29,True,1.0463204022477832,500
 ```
 
-`bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p`=23 means bucket_size is 8388608 bytes (2 ^ 23).
+`bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p`=23 means bucket_size is 8388608 bytes ($2^{23}$).
