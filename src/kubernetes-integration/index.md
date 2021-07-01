@@ -1,6 +1,6 @@
 # Kubernetes operator for Bagua jobs
 
-This repository implements a kubernetes operator for Bagua distributed training job which supports static and elastic workloads. See [CRD definition](https://github.com/BaguaSys/operator/blob/preonline/config/crd/bases/bagua.kuaishou.com_baguas.yaml).
+Bagua supports kubernetes with a dedicated [Bagua operator](https://github.com/BaguaSys/operator). This greatly simplifies deployments in modern computing cluster.
 
 ## Prerequisites
 
