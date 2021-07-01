@@ -410,9 +410,9 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">â€
 <h1 id="elastic-training"><a class="header" href="#elastic-training">Elastic Training</a></h1>
 <h2 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h2>
 <p>By applying <a href="https://github.com/pytorch/pytorch/tree/v1.9.0/torch/distributed/elastic">TorchElastic</a>, bagua can do elastic training. We usually use the capabilities of Elastic Training to support the following two types of jobs:</p>
-<p><strong>Fault Tolerant Jobs</strong></p>
+<p><strong>Fault tolerant jobs</strong></p>
 <p>Jobs that run on infrastructure where nodes get replaced frequently, either due to flaky hardware or by design. Or mission critical production grade jobs that need to be run with resilience to failures.</p>
-<p><strong>Dynamic Capacity Management</strong></p>
+<p><strong>Dynamic capacity management</strong></p>
 <p>Jobs that run on preemptible resources that can be taken away at any time (e.g. AWS spot instances) or shared pools where the pool size can change dynamically based on demand.</p>
 <h2 id="quickstart"><a class="header" href="#quickstart">Quickstart</a></h2>
 <p>You can find a complete example at <a href="https://github.com/BaguaSys/examples/tree/main/elastic_training">Bagua examples</a>.</p>
@@ -444,7 +444,7 @@ node in your training cluster, but ideally you should pick a node that has a hig
 <blockquote>
 <p>If no port number is specified <code>HOST_NODE_ADDR</code> defaults to &lt;host&gt;:29400.</p>
 </blockquote>
-<p><strong>Elastic Training(min=1, max=4)</strong></p>
+<p><strong>Elastic training(min=1, max=4)</strong></p>
 <pre><code class="language-bash">python -m bagua.distributed.run \
         --nnodes=1:4 \
         --nproc_per_node=NUM_TRAINERS \
@@ -456,7 +456,7 @@ node in your training cluster, but ideally you should pick a node that has a hig
 <p>For this example, the number of training nodes can be dynamically adjusted from 1 to 4.</p>
 <h2 id="reference"><a class="header" href="#reference">Reference</a></h2>
 <ol>
-<li><a href="https://pytorch.org/elastic/0.1.0rc2/overview.html">PYTORCH ELASTIC overview</a></li>
+<li><a href="https://pytorch.org/elastic/0.1.0rc2/overview.html">PyTorch Elastic overview</a></li>
 <li><a href="https://github.com/BaguaSys/bagua/blob/master/bagua/distributed/run.py">torch.distributed.run API Doc</a></li>
 </ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/elastic-training/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
