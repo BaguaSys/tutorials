@@ -150,8 +150,14 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>Bagua is a distributed training utility developed by Kuaishou Technology and DS3 Lab. It aims to provide a system abstraction that is both flexible and performant to support state-of-the-art system relaxation techniques of distributed training. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. Researchers can easily develop new distributed training algorithms based on bagua, <em>without sacrificing system performance</em>.</p>
-<p>Currently bagua has integrated primitives like <em>Centralized Synchronous Communication (AllReduce)</em>, <em>Decentralized Synchronous Communication</em>, <em>Low Precision Communication</em> and many more. Its effectiveness has been verified in various scenarios, including VGG-16 and ResNet-50 on ImageNet, Bert Large on SQuAD and many industrial applications at Kuaishou. </p>
+<p>Bagua is a distributed training utility developed by <a href="https://www.kuaishou.com/en">Kuaishou Technology</a> and <a href="https://ds3lab.inf.ethz.ch/">DS3 Lab@ETH</a>. Users can extend the training on a single GPU to multi-GPUs (may across multiple machines), with excellent speedup guarantee, by simply adding a few lines of code. Bagua also provides a flexible system abstraction that supports state-of-the-art system relaxation techniques of distributed training. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. Researchers can easily develop new distributed training algorithms based on bagua, without sacrificing system performance.</p>
+<p>So far, Bagua has integrated primitives including</p>
+<ul>
+<li>Centralized Synchronous Communication (AllReduce)</li>
+<li>Decentralized Synchronous Communication</li>
+<li>Low Precision Communication</li>
+</ul>
+<p>Its effectiveness has been verified in various scenarios, including VGG and ResNet on ImageNet, Bert Large and many industrial applications at Kuaishou.</p>
 <h1 id="links"><a class="header" href="#links">Links</a></h1>
 <ul>
 <li><a href="https://github.com/BaguaSys/bagua">Bagua Github</a></li>
