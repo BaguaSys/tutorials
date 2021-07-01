@@ -69,10 +69,9 @@ if self.optimizer.step_id < self.warmup_steps:
     bucket.append_centralized_synchronous_op()
 else:
     def calculate_momentum(*args):
-        with torch.cuda.stream(_get_global_state().get_communication_stream()):
-            beta1, beta2  = self.optimizer.param_groups[0]['betas']
-            for tensor in bucket.tensors:
-                tensor.mul_(beta1).add_(tensor._one_bit_grad, alpha=1 - beta1)
+        beta1, beta2  = self.optimizer.param_groups[0]['betas']
+        for tensor in bucket.tensors:
+            tensor.mul_(beta1).add_(tensor._one_bit_grad, alpha=1 - beta1)
 
     bucket.append_python_op(calculate_momentum)
     bucket.append_centralized_synchronous_op(
