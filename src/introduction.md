@@ -17,6 +17,8 @@ Its effectiveness has been verified in various scenarios, including VGG and ResN
     <figcaption>The scalability of different systems on VGG16 with up to 128 GPUs.</figcaption>
 </center>
 
+<br/>
+<br/>
 
 <center>
     <img src="./benchmark/figures/tradeoff_network_bert-large-bandwidth.png" width="350"/><img src="./benchmark/figures/tradeoff_network_bert-large-latency.png" width="350"/>
