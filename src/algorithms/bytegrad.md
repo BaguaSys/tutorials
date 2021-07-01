@@ -18,7 +18,7 @@ Bagua provides a built-in gradient compression algorithm called **ByteGrad**,
 which compresses the gradient floats to 8bit bytes before communication. This
 saves 3/4 of the original cost. It implements high accuracy min-max quantization
 operator with optimized CUDA kernels, and hierarchical communication. This makes
-it much faster than other compression implementations in existing frameworks
+it much faster (about 50% faster in our benchmark) than other compression implementations in existing frameworks
 (such as [PyTorch
 PowerSGD](https://pytorch.org/docs/stable/ddp_comm_hooks.html#powersgd-communication-hook))
 and in the same number of epochs ByteGrad converges similar to full precision algorithms on most tasks.
