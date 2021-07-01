@@ -2,13 +2,13 @@
 
 This repository implements a kubernetes operator for Bagua distributed training job which supports static and elastic workloads. See [CRD definition](https://github.com/BaguaSys/operator/blob/preonline/config/crd/bases/bagua.kuaishou.com_baguas.yaml).
 
-### Prerequisites
+## Prerequisites
 
 - [Kubernetes](https://kubernetes.io/) >= 1.16
 
-### Installation
+## Installation
 
-#### Run the operator locally
+### Run the operator locally
 
 ```shell
 git clone https://github.com/BaguaSys/operator.git
@@ -20,7 +20,7 @@ kubectl apply -f config/crd/bases/bagua.kuaishou.com_baguas.yaml
 go run ./main.go
 ```
 
-#### Deploy the operator
+### Deploy the operator
 
 Install Bagua on an existing Kubernetes cluster.
 
@@ -30,11 +30,11 @@ kubectl apply -f https://raw.githubusercontent.com/BaguaSys/operator/master/depl
 
 Enjoy! Bagua will create resources in namespace `bagua`.
 
-### Examples
+## Examples
 
 You can run demos in `config/samples`:
 
-#### Static mode
+### Static mode
 
 "Static mode" means running the Bagua distributed training job with fixed number of nodes, and no fault tolerance.
 
@@ -53,7 +53,7 @@ bagua-sample-static-worker-0   1/1     Running   0          45s
 bagua-sample-static-worker-1   1/1     Running   0          45s
 ```
 
-#### Elastic mode
+### Elastic mode
 
 "Elastic mode" means running the Bagua distributed training job in [elastic mode](https://baguasys.github.io/tutorials/elastic-training/index.html), which means the number of nodes can be dynamically adjusted, and the job is fault tolerant.
 
