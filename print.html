@@ -461,6 +461,25 @@ node in your training cluster, but ideally you should pick a node that has a hig
 </ol>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/elastic-training/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="performance-autotuning"><a class="header" href="#performance-autotuning">Performance Autotuning</a></h1>
+<p>Bagua comes with several adjustable hyperparameters that can affect runtime performance, including tensor fusion bucket size and hierarchical collective algorithms.</p>
+<p>Determining the best combination of these values to maximize performance (minimize time to convergence) can be a matter of trial-and-error, as many factors including model complexity, network bandwidth, GPU memory, etc. can all affect inputs per second throughput during training.</p>
+<p>Bagua provides a mechanism to automate the process of selecting the best values for these hyperparameters called autotuning. The Bagua autotuning system uses Bayesian optimization to intelligently search through the space of parameter combinations during training. This feature can be enabled by setting the <code>--autotune_level=1</code> flag for <code>bagua.distributed.run</code>:</p>
+<pre><code class="language-bash">python -m bagua.distributed.run --nproc_per_node 4 --auotune_level=1 python train.py
+</code></pre>
+<h2 id="processing"><a class="header" href="#processing">Processing</a></h2>
+<p>The main process of autotune is simple. Autotuning system find N groups of hyperparameters through Bayesian, and the hyperparameters are brought into the training to verify the effect, each hyperparameter takes T seconds to verify. </p>
+<p>Generally speaking, the larger N is, the larger the search space, and the more likely it is to find the parameters you want. The larger the T, the more accurate the scoring.</p>
+<p>In addition, due to the cold start, we will skip the sampling in the previous W seconds to prevent sampling distortion.</p>
+<p>You can adjust N through the <code>--autotune_max_samples</code> flag and adjust T through the <code>--autotune_sampling_confidence_time</code> flag, adjust W through the <code>--autotune_warmup_time</code>.</p>
+<h2 id="logfile"><a class="header" href="#logfile">Logfile</a></h2>
+<p>The autotuning system dumps the tuning process in a file. The file path is specified by the parameter <code>--autotune_logfile</code>, and the default value is <code>/tmp/bagua_autotune.log</code>.</p>
+<p>The file format is csv, each row is the hyperparameters and scoring of a round of iteration:</p>
+<pre><code class="language-csv">bucket_size_2p,is_hierarchical_reduce,score,train_iter
+23,False,1.4117491757441083,300
+15,True,1.1258082798810858,400
+29,True,1.0463204022477832,500
+</code></pre>
+<p><code>bucket_size_2p</code> is the power of 2 of the bucket size, for example <code>bucket_size_2p</code>=23 means bucket_size is 8388608 bytes (2 ^ 23).</p>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/performance-autotuning/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="more-optimizations"><a class="header" href="#more-optimizations">More Optimizations</a></h1>
 <p>Besides communication algorithms, Bagua supports many convenient tools to
