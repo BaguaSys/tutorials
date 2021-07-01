@@ -10,7 +10,7 @@ Bagua provides a mechanism to automate the process of selecting the best values 
 python -m bagua.distributed.run --nproc_per_node 4 --auotune_level=1 python train.py
 ```
 
-## Autotune processing
+## Processing
 
 The main process of autotune is simple. Autotuning system find N groups of hyperparameters through Bayesian, and the hyperparameters are brought into the training to verify the effect, each hyperparameter takes T seconds to verify. 
 
@@ -20,7 +20,7 @@ In addition, due to the cold start, we will skip the sampling in the previous W 
 
 You can adjust N through the `--autotune_max_samples` flag and adjust T through the `--autotune_sampling_confidence_time` flag, adjust W through the `--autotune_warmup_time`.
 
-## Autotune logfile
+##  Logfile
 
 The autotuning system dumps the tuning process in a file. The file path is specified by the parameter `--autotune_logfile`, and the default value is `/tmp/bagua_autotune.log`.
 
