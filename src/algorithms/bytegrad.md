@@ -51,3 +51,19 @@ intervals. Then represent each element of its input by a 8bit integer
 representing which interval the original element is in.
 
 ## Example usage
+
+A complete example of running ByteGrad can be found at [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
+with `--algorithm bytegrad` command line argument.
+
+You need to initialize the Bagua algorithm with (see [API documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/bytegrad/index.html) for what parameters you can customize):
+
+```python
+from bagua.torch_api.algorithms import bytegrad
+algorithm = bytegrad.ByteGradAlgorithm()
+```
+
+Then decorate your model with:
+
+```python
+model = model.with_bagua([optimizer], algorithm)
+```
