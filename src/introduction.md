@@ -10,7 +10,7 @@ So far, Bagua has integrated primitives including
 
 Its effectiveness has been verified in various scenarios, including VGG and ResNet on ImageNet, Bert Large and many industrial applications at Kuaishou.
 
-# Performance
+## Performance
 
 <center>
     <img src="./benchmark/figures/scalability_vgg16.png" width="350"/>
@@ -25,9 +25,9 @@ Its effectiveness has been verified in various scenarios, including VGG and ResN
 
 For more comprehensive and up to date results, refer to [Bagua benchmark page](https://baguasys.github.io/tutorials/benchmark/index.html).
 
-# Cite Bagua
+## Cite Bagua
 
-# Links
+## Links
 
 * [Bagua Github](https://github.com/BaguaSys/bagua)
 * [Bagua Tutorials](https://baguasys.github.io/tutorials)
