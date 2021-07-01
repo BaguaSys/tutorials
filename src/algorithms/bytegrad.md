@@ -21,9 +21,7 @@ operator with optimized CUDA kernels, and hierarchical communication. This makes
 it much faster than other compression implementations in existing frameworks
 (such as [PyTorch
 PowerSGD](https://pytorch.org/docs/stable/ddp_comm_hooks.html#powersgd-communication-hook))
-and converges similar to full precision communication on most tasks:
-
-benchmark results XXX
+and in the same number of epochs ByteGrad converges similar to full precision algorithms on most tasks.
 
 For comparison with other algorithms (may or may not be compression algorithms),
 refer to [benchmark page](../benchmark/index.html).
