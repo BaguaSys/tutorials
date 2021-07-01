@@ -16,6 +16,8 @@ Its effectiveness has been verified in various scenarios, including VGG and ResN
     <img src="./benchmark/figures/scalability_vgg16.png" width="350"/>
     <figcaption>The scalability of different systems on VGG16 with up to 128 GPUs.</figcaption>
 </center>
+
+
 <center>
     <img src="./benchmark/figures/tradeoff_network_bert-large-bandwidth.png" width="350"/><img src="./benchmark/figures/tradeoff_network_bert-large-latency.png" width="350"/>
     <figcaption>Epoch time of BERT-Large Finetune under different network conditions for different systems.</figcaption>
