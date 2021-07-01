@@ -76,7 +76,7 @@ else:
 
     bucket.append_python_op(calculate_momentum)
     bucket.append_centralized_synchronous_op(
-        hierarchical=self.hierarchical,
+        hierarchical=True,
         scattergather=True,
         compression="MinMaxUInt8",
     )
