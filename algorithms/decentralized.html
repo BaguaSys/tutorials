@@ -171,6 +171,15 @@
 <h2 id="benchmark"><a class="header" href="#benchmark">Benchmark</a></h2>
 <p>Given the optimal communication complexity of Decentralized SGD, it can be much faster than its centralized counterparts during the training, especially when the network is slow. We provide some benchmark results <a href="../benchmark/index.html">here</a> to compare the performance of Decentralized SGD of Bagua with other SOTA systems.</p>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>A complete example of running Decentralized SGD can be found at <a href="https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py">Bagua examples</a>
+with <code>--algorithm decentralized</code> command line argument.</p>
+<p>You need to initialize the Bagua algorithm with (see <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/decentralized/index.html">API documentation</a> for what parameters you can customize):</p>
+<pre><code class="language-python">from bagua.torch_api.algorithms import decentralized
+algorithm = decentralizedDecentralizedAlgorithm()
+</code></pre>
+<p>Then decorate your model with:</p>
+<pre><code class="language-python">model = model.with_bagua([optimizer], algorithm)
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/decentralized.md">Edit this file on GitHub.</a></footer>
                     </main>
 

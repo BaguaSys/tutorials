@@ -387,6 +387,15 @@ algorithm = bytegrad.ByteGradAlgorithm()
 <h2 id="benchmark"><a class="header" href="#benchmark">Benchmark</a></h2>
 <p>Given the optimal communication complexity of Decentralized SGD, it can be much faster than its centralized counterparts during the training, especially when the network is slow. We provide some benchmark results <a href="algorithms/../benchmark/index.html">here</a> to compare the performance of Decentralized SGD of Bagua with other SOTA systems.</p>
 <h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>A complete example of running Decentralized SGD can be found at <a href="https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py">Bagua examples</a>
+with <code>--algorithm decentralized</code> command line argument.</p>
+<p>You need to initialize the Bagua algorithm with (see <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/decentralized/index.html">API documentation</a> for what parameters you can customize):</p>
+<pre><code class="language-python">from bagua.torch_api.algorithms import decentralized
+algorithm = decentralizedDecentralizedAlgorithm()
+</code></pre>
+<p>Then decorate your model with:</p>
+<pre><code class="language-python">model = model.with_bagua([optimizer], algorithm)
+</code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/algorithms/decentralized.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="quantized-adam-qadam"><a class="header" href="#quantized-adam-qadam">Quantized Adam (QAdam)</a></h1>
 <h2 id="overview-1"><a class="header" href="#overview-1">Overview</a></h2>

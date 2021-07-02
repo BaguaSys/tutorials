@@ -38,8 +38,21 @@ Given the optimal communication complexity of Decentralized SGD, it can be much 
 
 ## Example
 
+A complete example of running Decentralized SGD can be found at [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
+with `--algorithm decentralized` command line argument.
 
+You need to initialize the Bagua algorithm with (see [API documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/decentralized/index.html) for what parameters you can customize):
 
+```python
+from bagua.torch_api.algorithms import decentralized
+algorithm = decentralizedDecentralizedAlgorithm()
+```
+
+Then decorate your model with:
+
+```python
+model = model.with_bagua([optimizer], algorithm)
+```
 
 
 
