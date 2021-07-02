@@ -2,7 +2,7 @@
 
 Thanks to the innovative design of Bagua, algorithm developers now can easily create, test and benchmark their distributed learning algorithms in a realistic system. Within Bagua, developers have the freedom to manipulate almost all the details regarding the data-parallel distributed training, including What to communicate, When to communicate, How to update the model and so on. Besides, algorithms incorporated in `Bagua` automatically benefit from our system optimizations, like memory management, execution management, communication/computation overlapping and so on, so that developers could take full advantage of the algorithm without a compromise caused by an inefficient implementation.
 
-In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this [paper](https://arxiv.org/pdf/2102.02888.pdf), as an example to describe how to create a new algorithm with Bagua. We also welcome contributions to add more builtin algorithms!
+In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this [paper](https://arxiv.org/pdf/2102.02888.pdf), as an example to describe how to create a new algorithm with Bagua. The complete code can be found in [Bagua repo](https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py). We also welcome contributions to add more builtin algorithms!
 
 Let's first summarize the updating rule of Q-Adam algorithm as follows: ($w$ is the warm-up steps)
 
