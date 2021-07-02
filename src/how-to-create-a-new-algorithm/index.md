@@ -2,7 +2,7 @@
 
 Thanks to the innovative design of Bagua, algorithm developers now can easily create, test and benchmark their distributed learning algorithms in a realistic system. Within Bagua, developers have the freedom to manipulate almost all the details regarding the data-parallel distributed training, including What to communicate, When to communicate, How to update the model and so on. Besides, algorithms incorporated in `Bagua` automatically benefit from our system optimizations, like memory management, execution management, communication/computation overlapping and so on, so that developers could take full advantage of the algorithm without a compromise caused by an inefficient implementation.
 
-In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this [paper](https://arxiv.org/pdf/2102.02888.pdf), as an example to describe how to create a new algorithm with Bagua. The complete code can be found [here](https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py). We also welcome contributions to add more builtin algorithms!
+In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this [paper](https://arxiv.org/pdf/2102.02888.pdf), as an example to describe how to create a new algorithm with Bagua. The complete code can be found [here](https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py). We also welcome contributions to add more built-in algorithms!
 
 Let's first summarize the updating rule of Q-Adam algorithm as follows: ($w$ is the warm-up steps)
 
@@ -31,22 +31,33 @@ To implement such an advanced distributed learning algorithm in any other popula
 
 Bagua provides a class called ``` Algorithm```. All a developer needs to do is to override pre-defined functions of this class as she wishes. (see [API document](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/index.html#bagua.torch_api.algorithms.Algorithm) for more detailed information). In this example of Q-Adam, we need to override six functions as follows:
 
-1. `__init__()`: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called `QAdamOptimizer`, which is a modified Adam optimizer available in Bagua. It also needs to know the warm-up steps defined by the user.
+1. `__init__()`: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called `QAdamOptimizer`, which is a specifically customized optimizer based on the Adam optimizer in order to meet the special updating rule of Q-Adam algorithm. Compared with the original Adam optimizer, the main difference of `QAdamOptimizer` is that, in the compression stage, communicating and updating $\textbf{m}$ are conducted by the Bagua backend, instead of the optimizer. Like all other optimizers in PyTorch, `QAdamOptimizer` needs to be initialized with model parameters. Besides, an extra argument `warmup_steps` decides how many steps of the warm-up stage. `QAdamAlgorithm` can be initialized simply by the `QAdamOptimizer`. 
 
 ```python
-def __init__(self, qadam_optimizer, warmup_step):
-    self.optimizer = qadam_optimizer
-    self.warmup_steps = warmup_steps
+from bagua.torch_api.algorithms import q_adam 
+optimizer = q_adam.QAdamOptimizer(
+    model.parameters(),
+    lr=1e-3,
+    warmup_steps=100
+)
 ```
 
-2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
+
+```python
+class QAdamAlgorithm(Algorithm):
+    def __init__(self, q_adam_optimizer):
+        self.optimizer = q_adam_optimizer
+        self.warmup_steps = self.optimizer.warmup_steps
+```
+
+1. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
 
 ```python
 def need_reset(self):
     return self.optimizer.step_id == self.warmup_steps
 ```
 
-3. ```init_tensors()```: This function defines what needs to be communicated by registering intended tensors into the Bagua backend. Note that a developer can register any tensors as she wants. Q-Adam needs to communication gradients or momentums, therefore, we register them according to the current stage.
+3. ```init_tensors()```: This function defines what needs to be communicated by registering intended tensors into the Bagua backend. Note that a developer can register any tensors as she wants. Q-Adam needs to communicate gradients or momentums, therefore, we register them according to the current stage.
 
 ```python
 tensors = []
@@ -82,7 +93,7 @@ else:
 
 ```
 
-6. ```init_backward_hook()```: `Bagua` backend will triger this function for each tensor when its gradient calculation is finished. Then the algorithm is responsible to mark corresponding tensors as ready for executing the predefined operations in the previous step.
+6. ```init_backward_hook()```: `Bagua` backend will trigger this function for each tensor when its gradient calculation is finished. Then the algorithm is responsible to mark corresponding tensors as ready for executing the predefined operations in the previous step.
 
 ```python
 def init_backward_hook(self, bagua_module: BaguaModule):
@@ -96,21 +107,11 @@ def init_backward_hook(self, bagua_module: BaguaModule):
 Now we can use our newly defined algorithm in the training! To try out your algorithm, simply initialize our new algorithm in the training script and provide it to the `with_bagua` interface. Enjoy!
 
 ```python
-optimizer = QAdamOptimizer(model.parameters())
-algorithm = QAdamAlgorithm(optimizer, warmup_steps=100))
+optimizer = QAdamOptimizer(
+    model.parameters(),
+    lr=1e-3,
+    warmup_steps=100
+)
+algorithm = QAdamAlgorithm(optimizer))
 model.with_bagua([optimizer], algorithm=algorithm)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
