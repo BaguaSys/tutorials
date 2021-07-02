@@ -7,7 +7,7 @@
     * [Gradient AllReduce](./algorithms/gradient-allreduce.md)
     * [ByteGrad](./algorithms/bytegrad.md)
     * [Decentralized SGD](./algorithms/decentralized.md)
-    * [1bit-Adam](./algorithms/1bit-adam.md)
+    * [QAdam](./algorithms/q-adam.md)
 * [Benchmark Results](./benchmark/index.md)
 * [How to Create a New Algorithm](./how-to-create-a-new-algorithm/index.md)
 * [Elastic Training](./elastic-training/index.md)
