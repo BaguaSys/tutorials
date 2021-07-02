@@ -32,3 +32,11 @@ bucket_size_2p,is_hierarchical_reduce,score,train_iter
 ```
 
 `bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p=23` means bucket_size is 8388608 bytes ($2^{23}$).
+
+## Case Study
+
+We also verified autotune system on real tasks, and achieved an 8.26% performance improvement on an real training task (about audio and video) in Kuaishou.
+
+Performance increase brought by the hyperparameters search:
+
+![](source/img/2021-07-02-15-48-59.png)
