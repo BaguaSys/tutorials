@@ -462,7 +462,7 @@ algorithm = QAdamAlgorithm(optimizer, hierarchical_reduce=True)
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/benchmark/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="how-to-create-a-new-algorithm"><a class="header" href="#how-to-create-a-new-algorithm">How to Create a New Algorithm</a></h1>
 <p>Thanks to the innovative design of Bagua, algorithm developers now can easily create, test and benchmark their distributed learning algorithms in a realistic system. Within Bagua, developers have the freedom to manipulate almost all the details regarding the data-parallel distributed training, including What to communicate, When to communicate, How to update the model and so on. Besides, algorithms incorporated in <code>Bagua</code> automatically benefit from our system optimizations, like memory management, execution management, communication/computation overlapping and so on, so that developers could take full advantage of the algorithm without a compromise caused by an inefficient implementation.</p>
-<p>In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this <a href="https://arxiv.org/pdf/2102.02888.pdf">paper</a>, as an example to describe how to create a new algorithm with Bagua. The complete code can be found <a href="https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py">here</a>. We also welcome contributions to add more builtin algorithms!</p>
+<p>In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this <a href="https://arxiv.org/pdf/2102.02888.pdf">paper</a>, as an example to describe how to create a new algorithm with Bagua. The complete code can be found <a href="https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py">here</a>. We also welcome contributions to add more built-in algorithms!</p>
 <p>Let's first summarize the updating rule of Q-Adam algorithm as follows: (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.02691em;">w</span></span></span></span> is the warm-up steps)</p>
 <ul>
 <li>
@@ -533,20 +533,28 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">â€
 <p>To implement such an advanced distributed learning algorithm in any other popular ML system is far from trivial. Basically, the developer has to hack deeply into the source code and break their fine-grained communication optimizations. As the result, it is likely that one cannot observe any speedup compared with the basic Allreduce operation, actually in most cases it's even slower. </p>
 <p>Bagua provides a class called <code> Algorithm</code>. All a developer needs to do is to override pre-defined functions of this class as she wishes. (see <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/index.html#bagua.torch_api.algorithms.Algorithm">API document</a> for more detailed information). In this example of Q-Adam, we need to override six functions as follows:</p>
 <ol>
-<li><code>__init__()</code>: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called <code>QAdamOptimizer</code>, which is a modified Adam optimizer available in Bagua. It also needs to know the warm-up steps defined by the user.</li>
+<li><code>__init__()</code>: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called <code>QAdamOptimizer</code>, which is a specifically customized optimizer based on the Adam optimizer in order to meet the special updating rule of Q-Adam algorithm. Compared with the original Adam optimizer, the main difference of <code>QAdamOptimizer</code> is that, in the compression stage, communicating and updating <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.44444em;vertical-align:0em;"></span><span class="mord text"><span class="mord textbf">m</span></span></span></span></span> are conducted by the Bagua backend, instead of the optimizer. Like all other optimizers in PyTorch, <code>QAdamOptimizer</code> needs to be initialized with model parameters. Besides, an extra argument <code>warmup_steps</code> decides how many steps of the warm-up stage. <code>QAdamAlgorithm</code> can be initialized simply by the <code>QAdamOptimizer</code>. </li>
 </ol>
-<pre><code class="language-python">def __init__(self, qadam_optimizer, warmup_step):
-    self.optimizer = qadam_optimizer
-    self.warmup_steps = warmup_steps
+<pre><code class="language-python">from bagua.torch_api.algorithms import q_adam 
+optimizer = q_adam.QAdamOptimizer(
+    model.parameters(),
+    lr=1e-3,
+    warmup_steps=100
+)
 </code></pre>
-<ol start="2">
+<pre><code class="language-python">class QAdamAlgorithm(Algorithm):
+    def __init__(self, q_adam_optimizer):
+        self.optimizer = q_adam_optimizer
+        self.warmup_steps = self.optimizer.warmup_steps
+</code></pre>
+<ol>
 <li><code>need_reset()</code>: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. <code>need_reset()</code> compares the current iteration with the warm-up steps, such that it can tell the <code>Bagua</code> backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.</li>
 </ol>
 <pre><code class="language-python">def need_reset(self):
     return self.optimizer.step_id == self.warmup_steps
 </code></pre>
 <ol start="3">
-<li><code>init_tensors()</code>: This function defines what needs to be communicated by registering intended tensors into the Bagua backend. Note that a developer can register any tensors as she wants. Q-Adam needs to communication gradients or momentums, therefore, we register them according to the current stage.</li>
+<li><code>init_tensors()</code>: This function defines what needs to be communicated by registering intended tensors into the Bagua backend. Note that a developer can register any tensors as she wants. Q-Adam needs to communicate gradients or momentums, therefore, we register them according to the current stage.</li>
 </ol>
 <pre><code class="language-python">tensors = []
 for param, name in parameters:
@@ -582,7 +590,7 @@ else:
 
 </code></pre>
 <ol start="6">
-<li><code>init_backward_hook()</code>: <code>Bagua</code> backend will triger this function for each tensor when its gradient calculation is finished. Then the algorithm is responsible to mark corresponding tensors as ready for executing the predefined operations in the previous step.</li>
+<li><code>init_backward_hook()</code>: <code>Bagua</code> backend will trigger this function for each tensor when its gradient calculation is finished. Then the algorithm is responsible to mark corresponding tensors as ready for executing the predefined operations in the previous step.</li>
 </ol>
 <pre><code class="language-python">def init_backward_hook(self, bagua_module: BaguaModule):
     def hook_momentum(parameter_name, parameter):
@@ -592,8 +600,12 @@ else:
     return hook_grad if self.optimizer.step_id &lt; self.warmup_steps else hook_momentum
 </code></pre>
 <p>Now we can use our newly defined algorithm in the training! To try out your algorithm, simply initialize our new algorithm in the training script and provide it to the <code>with_bagua</code> interface. Enjoy!</p>
-<pre><code class="language-python">optimizer = QAdamOptimizer(model.parameters())
-algorithm = QAdamAlgorithm(optimizer, warmup_steps=100))
+<pre><code class="language-python">optimizer = QAdamOptimizer(
+    model.parameters(),
+    lr=1e-3,
+    warmup_steps=100
+)
+algorithm = QAdamAlgorithm(optimizer))
 model.with_bagua([optimizer], algorithm=algorithm)
 </code></pre>
 <footer id="open-on-gh">Found a bug? <a href="https://github.com/BaguaSys/tutorials/edit/main/src/how-to-create-a-new-algorithm/index.md">Edit this file on GitHub.</a></footer><div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
