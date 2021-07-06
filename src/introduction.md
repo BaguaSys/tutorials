@@ -29,6 +29,17 @@ For more comprehensive and up to date results, refer to [Bagua benchmark page](h
 
 ## Cite Bagua
 
+```bibtex
+@misc{gan2021bagua,
+      title={BAGUA: Scaling up Distributed Learning with System Relaxations}, 
+      author={Shaoduo Gan and Xiangru Lian and Rui Wang and Jianbin Chang and Chengjun Liu and Hongmei Shi and Shengzhuo Zhang and Xianghong Li and Tengxu Sun and Jiawei Jiang and Binhang Yuan and Sen Yang and Ji Liu and Ce Zhang},
+      year={2021},
+      eprint={2107.01499},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+```
+
 ## Links
 
 * [Bagua Github](https://github.com/BaguaSys/bagua)
