@@ -6,10 +6,15 @@ Let’s start our Bagua journey!
 
 To use `Bagua`, you need make the following changes on your training code:
 
-First, import bagua and make your script distributed aware:
+First, import bagua:
 
 ```python
 import bagua.torch_api as bagua
+```
+
+Then initialize Bagua's process group:
+
+```python
 torch.cuda.set_device(bagua.get_local_rank())
 bagua.init_process_group()
 ```
