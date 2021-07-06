@@ -45,7 +45,7 @@ You need to initialize the Bagua algorithm with (see [API documentation](https:/
 
 ```python
 from bagua.torch_api.algorithms import decentralized
-algorithm = decentralizedDecentralizedAlgorithm()
+algorithm = decentralized.DecentralizedAlgorithm()
 ```
 
 Then decorate your model with:

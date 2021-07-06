@@ -175,7 +175,7 @@
 with <code>--algorithm decentralized</code> command line argument.</p>
 <p>You need to initialize the Bagua algorithm with (see <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/decentralized/index.html">API documentation</a> for what parameters you can customize):</p>
 <pre><code class="language-python">from bagua.torch_api.algorithms import decentralized
-algorithm = decentralizedDecentralizedAlgorithm()
+algorithm = decentralized.DecentralizedAlgorithm()
 </code></pre>
 <p>Then decorate your model with:</p>
 <pre><code class="language-python">model = model.with_bagua([optimizer], algorithm)
