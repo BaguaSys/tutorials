@@ -152,9 +152,11 @@
 <p>Let’s start our Bagua journey!</p>
 <h2 id="migrate-from-your-existing-single-gpu-training-code"><a class="header" href="#migrate-from-your-existing-single-gpu-training-code">Migrate from your existing single GPU training code</a></h2>
 <p>To use <code>Bagua</code>, you need make the following changes on your training code:</p>
-<p>First, import bagua and make your script distributed aware:</p>
+<p>First, import bagua:</p>
 <pre><code class="language-python">import bagua.torch_api as bagua
-torch.cuda.set_device(bagua.get_local_rank())
+</code></pre>
+<p>Then initialize Bagua's process group:</p>
+<pre><code class="language-python">torch.cuda.set_device(bagua.get_local_rank())
 bagua.init_process_group()
 </code></pre>
 <p>Then, use torch's distributed sampler for your data loader:</p>
