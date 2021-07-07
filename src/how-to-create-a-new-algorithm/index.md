@@ -63,9 +63,9 @@ def need_reset(self):
 tensors = []
 for param, name in parameters:
     if self.optimizer.step_id < self.warmup_steps:
-        registered_tensor = param.bagua_ensure_grad().to_bagua_tensor(name)
+        registered_tensor = param.bagua_ensure_grad().to_bagua_tensor(name, bagua_module.bagua_module_name)
     else:
-        registered_tensor = param.momentum.to_bagua_tensor(name)
+        registered_tensor = param.momentum.to_bagua_tensor(name, bagua_module.bagua_module_name)
     tensors.append(registered_tensor)
 return tensors
 ```
