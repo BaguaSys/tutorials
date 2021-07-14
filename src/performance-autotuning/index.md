@@ -39,7 +39,7 @@ For example, on a popular speech recognition task (aishell2), training with auto
 
 <center>
     <img src="./figures/performance_autotune.jpg" width="500"/>
-    <figcaption>Training performance improvement during the hyperparameter tuning process.</figcaption>
+    <figcaption>Training performance improvement during the hyperparameter tuning process</figcaption>
 </center>
 
 This figure shows the gradual increase in training performance during tuning. In
