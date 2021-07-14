@@ -37,6 +37,11 @@ bucket_size_2p,is_hierarchical_reduce,score,train_iter
 
 For example, on a popular speech recognition task (aishell2), training with autotune increased the throughput by 8.26% compared to the default mode.
 
-You can see the performance improvement throughout the tuning process (score is the data throughput GB/s within each process of the training system):
+<center>
+    <img src="./figures/mmu_performance_autotune_record.jpg" width="600"/>
+    <figcaption>Training performance improvement during the hyperparameter tuning process</figcaption>
+</center>
 
-![autotune procedure](figures/autotune_case1.png)
+This figure s drawn by the autotune log of the aishell2 task, records the gradual increase in training performance as the hyperparameters tuning.
+The horizontal axis is the time series, which is counted in units of training iterations.
+In this case, the hyperparameters are updated approximately every 100 iterations. The vertical axis is the data throughput of the training system.
