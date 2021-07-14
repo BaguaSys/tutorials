@@ -35,10 +35,10 @@ bucket_size_2p,is_hierarchical_reduce,score,train_iter
 
 ## Case study
 
-For example, on a popular speech recognition task (aishell2), training with autotune increased the throughput by 8.26% compared to the default mode.
+For example, on a popular speech recognition task (aishell2), training with autotune increased the throughput by 8.26%.
 
 <center>
-    <img src="./figures/performance_autotune.jpg" width="600"/>
+    <img src="./figures/performance_autotune.jpg" width="500"/>
     <figcaption>Training performance improvement during the hyperparameter tuning process</figcaption>
 </center>
 
