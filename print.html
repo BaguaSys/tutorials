@@ -693,10 +693,10 @@ node in your training cluster, but ideally you should pick a node that has a hig
 </code></pre>
 <p><code>bucket_size_2p</code> is the power of 2 of the bucket size, for example <code>bucket_size_2p=23</code> means bucket_size is 8388608 bytes (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">23</span></span></span></span></span></span></span></span></span></span></span></span>).</p>
 <h2 id="case-study"><a class="header" href="#case-study">Case study</a></h2>
-<p>For example, on a popular speech recognition task (aishell2), training with autotune increased the throughput by 8.26% compared to the default mode.</p>
+<p>For example, on a popular speech recognition task (aishell2), training with autotune increased the throughput by 8.26%.</p>
 <center>
-    <img src="performance-autotuning/./figures/performance_autotune.jpg" width="600"/>
-    <figcaption>Training performance improvement during the hyperparameter tuning process</figcaption>
+    <img src="performance-autotuning/./figures/performance_autotune.jpg" width="500"/>
+    <figcaption>Training performance improvement during the hyperparameter tuning process.</figcaption>
 </center>
 <p>This figure shows the gradual increase in training performance during tuning. In
 this experiment, the hyperparameters are changed approximately every 100
