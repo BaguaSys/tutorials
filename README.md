@@ -2,7 +2,7 @@ Bagua Tutorials
 ======
 [![tutorials](https://github.com/BaguaSys/tutorials/actions/workflows/tutorials.yml/badge.svg)](https://github.com/BaguaSys/tutorials/actions/workflows/tutorials.yml)
 
-Website: https://baguasys.github.io/tutorials/.
+Website: https://bagua-tutorials.kwai-seattle.com/.
 
 ## How to contribute
 
