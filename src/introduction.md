@@ -44,5 +44,5 @@ For more comprehensive and up to date results, refer to [Bagua benchmark page](h
 
 * [Bagua Github](https://github.com/BaguaSys/bagua)
 * [Bagua Examples](https://github.com/BaguaSys/examples)
-* [Bagua Tutorials](https://baguasys.github.io/tutorials)
+* [Bagua Tutorials](https://bagua-tutorials.kwai-seattle.com/)
 * [Bagua API Documentation](https://bagua.readthedocs.io/)
