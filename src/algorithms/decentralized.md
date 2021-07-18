@@ -28,14 +28,14 @@ The difference compression decentralized SGD follows the same assumptions with d
 2. Update the local model using local stochastic gradient and the weighted average of its connected peers' replicas, ${\bf x_{t+\frac{1}{2}}^{(i)}} = \sum_{j=1}^{n} W_{ij} {\bf x_{t+1}^{(i)}} - \gamma {\bf g_t^{(i)}}$.
 3. Compute the difference ${\bf z_{t}^{(i)} = x_{t+\frac{1}{2}}^{(i)} - x_{t}^{(i)}}$, and quantize it into $Q( {\bf z_{t}^{(i)}})$ with a quantization function $Q( \cdot )$.
 4. Update the local model,  ${\bf x_{t+1}^{(i)} = x_{t}^{(i)} + Q(z_{t}^{(i)})}$.
-5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas, ${\bf \hat x_{t+1}^{(j)} = x_{t}^{(j)} + Q(z_{t}^{(j)}) }$.
+5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas, ${\bf \hat x_{t+1}^{(j)} =\hat x_{t}^{(j)} + Q(z_{t}^{(j)}) }$.
 
 
 Since each worker need to store the model replicas of its connected peers, once the peers of a worker is determined, they should not be changed during the whole process.
 
 ## Communication overhead
 
-The communication overhead of decentralized SGD is highly related to the degree of network, i.e., the number of connections a worker has to other workers. Different topologies or strategies will lead to different degrees of the network. It's obvious that the Decentralized SGD algorithms we described before has a network degree of $k$, where $k$ is the number of peers for each worker. Therefore, in each iteration, a worker only needs to build $k$ connections with its peers, exchanging one time of the model size each. We compare the communication complexities of different communication patterns regarding the latency and bandwidth of the busiest node.
+The communication overhead of decentralized SGD is highly related to the degree of network, i.e., the number of connections a worker has to other workers. Different topologies or strategies will lead to different degrees of the network. It's obvious that the Decentralized SGD algorithms we described before have a network degree of $k$, where $k$ is the number of peers for each worker. Therefore, in each iteration, a worker only needs to build $k$ connections with its peers, exchanging one time of the model size each. We compare the communication complexities of different communication patterns regarding the latency and bandwidth of the busiest node.
 
 | Algorithm     | Latency complexity | Bandwidth complexity  |
 | :-------------: |:-------------:| :-----:|
