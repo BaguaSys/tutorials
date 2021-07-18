@@ -31,17 +31,19 @@ The difference compression decentralized SGD follows the same assumptions with d
 5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas, ${\bf \hat x_{t+1}^{(j)} = x_{t}^{(j)} + Q(z_{t}^{(j)}) }$.
 
 
-Since each node need to store the replicas of its connected peers' model, once the peers are selected, they should not be changed during the whole process.
+Since each worker need to store the model replicas of its connected peers, once the peers of a worker is determined, they should not be changed during the whole process.
 
 ## Communication overhead
 
-The communication overhead of decentralized SGD is highly related to the degree of network, i.e., the number of connections a worker has to other workers. Different topologies or strategies will lead to different degrees of the network. It's obvious that the Decentralized SGD algorithm we described before has a network degree of 1. Therefore, in each iteration, a worker only needs to build one connection with one worker to exchange one time of the model size. We compare the communication complexities of different communication patterns regarding the latency and bandwidth of the busiest node.
+The communication overhead of decentralized SGD is highly related to the degree of network, i.e., the number of connections a worker has to other workers. Different topologies or strategies will lead to different degrees of the network. It's obvious that the Decentralized SGD algorithms we described before has a network degree of $k$, where $k$ is the number of peers for each worker. Therefore, in each iteration, a worker only needs to build $k$ connections with its peers, exchanging one time of the model size each. We compare the communication complexities of different communication patterns regarding the latency and bandwidth of the busiest node.
 
 | Algorithm     | Latency complexity | Bandwidth complexity  |
 | :-------------: |:-------------:| :-----:|
 | Allreduce (Ring)      | $\mathcal{O}(n)$ | $\mathcal{O}(1)$ |
 | Parameter Server      | $\mathcal{O}(1)$ | $\mathcal{O}(n)$ |
-| Decentralized SGD in Bagua | $\mathcal{O}(1)$ | $\mathcal{O}(1)$ |
+| Decentralized Algorithms in Bagua | $\mathcal{O}(k)$ | $\mathcal{O}(k)$ |
+
+Since $k$ is much smaller than $n$, we can show that decentralized algorithms can greatly outperform its centralized counterparts.
 
 ## Benchmark
 
@@ -74,7 +76,7 @@ from bagua.torch_api.algorithms import decentralized
 algorithm = decentralized.LowPrecisionDecentralizedAlgorithm()  
 ```
 
-Others keep the same with the example using Decentralized SGD.
+Others are the same with the example using Decentralized SGD.
 
 More examples can be found at [Bagua examples](https://github.com/BaguaSys/examples) with  `--algorithm low_precision_decentralized`.
 
