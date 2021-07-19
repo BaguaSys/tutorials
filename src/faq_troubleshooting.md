@@ -16,6 +16,14 @@ If you see some error like the message below, just clean the original installati
 error: could not rename component file from '/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '/root/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'error: caused by: other os error.
 ```
 
+## Error when compiling bagua_core
+
+If some of the error messages below are issued during your compiling bagua_core, make sure `CUDA_LIBRARY_PATH` environment variable is correctly set, and the CUDA library path is added to `LD_LIBRARY_PATH` environment variable as well. You should also make sure that these environment variables are set before you installing MPI and hwloc.
+
+```
+error: empty search path given via `-L`
+error: could not compile `bagua-core-internal`
+```
 <!-- ## Out of memory when using the quantize algorithm -->
 
 <!-- The quantize algorithm compresses the communication content and requires a certain amount of additional memory. Reduce the batch size appropriately. -->
@@ -26,6 +34,9 @@ You can try to check whether the machine has multiple network interfaces, and
 use command `NCCL_SOCKET_IFNAME=network card name (such as eth01)` to specify
 the one you want to use (usually a physical one). Card information can be
 obtained by `ls /sys/class/net/`.
+
+Setting `NCCL_DEBUG` to “WARN” will make NCCL print an explicit warning message 
+before returning the error, which will help you idenfity the error.
 
 ## Model accuracy drops
 
