@@ -18,7 +18,7 @@ error: could not rename component file from '/root/.rustup/toolchains/stable-x86
 
 ## Error when compiling bagua_core
 
-If some of the error messages below are issued during your compiling bagua_core, make sure `CUDA_LIBRARY_PATH` environment variable is correctly set, and the CUDA library path is added to `LD_LIBRARY_PATH` environment variable as well. You should also make sure that these environment variables are set before you installing MPI and hwloc.
+If some of the error messages below are issued during your compiling bagua_core, make sure `CUDA_LIBRARY_PATH` environment variable is correctly set, and the CUDA library path is added to `LD_LIBRARY_PATH` environment variable as well. These environment variables should be correctly set before you installing MPI and hwloc.
 
 ```
 error: empty search path given via `-L`
