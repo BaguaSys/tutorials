@@ -27,8 +27,8 @@ The difference compression decentralized SGD follows the same assumptions with d
 1. Each worker $i$ calculate the local gradients of iteration $t$: $\bf g_t^{(i)}$.
 2. Update the local model using local stochastic gradient and the weighted average of its connected peers' replicas, ${\bf x_{t+\frac{1}{2}}^{(i)}} = \sum_{j=1}^{n} W_{ij} {\bf x_{t+1}^{(i)}} - \gamma {\bf g_t^{(i)}}$.
 3. Compute the difference ${\bf z_{t}^{(i)} = x_{t+\frac{1}{2}}^{(i)} - x_{t}^{(i)}}$, and quantize it into $Q( {\bf z_{t}^{(i)}})$ with a quantization function $Q( \cdot )$.
-4. Update the local model,  ${\bf x_{t+1}^{(i)} = x_{t}^{(i)} + Q(z_{t}^{(i)})}$.
-5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas, ${\bf \hat x_{t+1}^{(j)} =\hat x_{t}^{(j)} + Q(z_{t}^{(j)}) }$.
+4. Update the local model,  ${{\bf x_{t+1}^{(i)}} ={\bf x_{t}^{(i)}} + Q({\bf z_{t}^{(i)}})}$.
+5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas, ${{\bf \hat x_{t+1}^{(j)}} ={\bf \hat x_{t}^{(j)}} + Q({\bf z_{t}^{(j)}}) }$.
 
 
 Since each worker need to store the model replicas of its connected peers, once the peers of a worker is determined, they should not be changed during the whole process.
@@ -43,7 +43,7 @@ The communication overhead of decentralized SGD is highly related to the degree 
 | Parameter Server      | $\mathcal{O}(1)$ | $\mathcal{O}(n)$ |
 | Decentralized Algorithms in Bagua | $\mathcal{O}(k)$ | $\mathcal{O}(k)$ |
 
-Since $k$ is much smaller than $n$, we can show that decentralized algorithms can greatly outperform its centralized counterparts.
+Since $k$ is much smaller than $n$, we have shown that decentralized algorithms can greatly outperform its centralized counterparts.
 
 ## Benchmark
 
