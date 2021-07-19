@@ -20,7 +20,7 @@ error: could not rename component file from '/root/.rustup/toolchains/stable-x86
 
 If you encounter the following error when compiling `bagua_core` or installing MPI/hwloc, make sure the `CUDA_LIBRARY_PATH` environment variable is pointing to your CUDA installation directory, and CUDA library path (something like `/usr/local/cuda/lib64`) is in the `LD_LIBRARY_PATH` environment variable.
 
-```
+```shell
 error: empty search path given via `-L`
 error: could not compile `bagua-core-internal`
 ```
