@@ -16,9 +16,9 @@ If you see some error like the message below, just clean the original installati
 error: could not rename component file from '/root/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/share/doc/cargo' to '/root/.rustup/tmp/m74fkrv0gv6708f6_dir/bk'error: caused by: other os error.
 ```
 
-## Error when compiling bagua_core
+## `bagua_core` compilation error
 
-If some of the error messages below are issued during your compiling bagua_core, make sure `CUDA_LIBRARY_PATH` environment variable is correctly set, and the CUDA library path is added to `LD_LIBRARY_PATH` environment variable as well. These environment variables should be correctly set before you installing MPI and hwloc.
+If you found the following error when compiling `bagua_core`, make sure the `CUDA_LIBRARY_PATH` environment variable is pointing to your CUDA installation directory, and CUDA library path (something like `/usr/local/cuda/lib64`) is in the `LD_LIBRARY_PATH` environment variable.
 
 ```
 error: empty search path given via `-L`
@@ -35,8 +35,8 @@ use command `NCCL_SOCKET_IFNAME=network card name (such as eth01)` to specify
 the one you want to use (usually a physical one). Card information can be
 obtained by `ls /sys/class/net/`.
 
-Setting `NCCL_DEBUG` to “WARN” will make NCCL print an explicit warning message 
-before returning the error, which will help you idenfity the error.
+With environment variable `NCCL_DEBUG=WARN`, NCCL will print more helpful warning message,
+which sometimes can help you idenfity the root cause.
 
 ## Model accuracy drops
 
