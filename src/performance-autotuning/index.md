@@ -4,10 +4,10 @@ Bagua comes with several adjustable hyperparameters for communication that can a
 
 Determining the best combination of these hyperparameters to maximize system performance can be a process of a lot of trial-and-error, as many factors including model complexity, network bandwidth, and GPU hardware can all affect the best parameter to choose.
 
-Bagua provides a mechanism to automate this process of choosing the best values for these hyperparameters. The Bagua autotuning system uses Bayesian optimization to efficiently search through the space of hyperparameters. This feature can be enabled by providing the `--autotune_level=1` flag to `bagua.distributed.run`:
+Bagua provides a mechanism to automate this process of choosing the best values for these hyperparameters. The Bagua autotuning system uses Bayesian optimization to efficiently search through the space of hyperparameters. This feature can be enabled by providing the `--autotune_level 1` flag to `bagua.distributed.run`:
 
 ```bash
-python -m bagua.distributed.run --nproc_per_node ... --auotune_level=1 python train.py
+python -m bagua.distributed.run --nproc_per_node ... --autotune_level 1 python train.py
 ```
 
 The main process of autotune is simple. The autotune system finds $N$ groups of hyperparameters through Bayesian optimization, and the hyperparameters are brought into the training to verify the performance, each group of hyperparameters takes $T$ seconds to verify. 
