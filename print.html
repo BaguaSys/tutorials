@@ -150,14 +150,20 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-<p>Bagua is a distributed training utility developed by <a href="https://www.kuaishou.com/en">AI Platform@Kuaishou Technology</a> and <a href="https://ds3lab.inf.ethz.ch/">DS3 Lab@ETH</a>. Users can extend the training on a single GPU to multi-GPUs (may across multiple machines), with excellent speedup guarantee, by simply adding a few lines of code. Bagua also provides a flexible system abstraction that supports state-of-the-art system relaxation techniques of distributed training. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. Researchers can easily develop new distributed training algorithms based on bagua, without sacrificing system performance.</p>
+<p>Bagua is a distributed training utility developed by <a href="https://www.kuaishou.com/en">AI Platform@Kuaishou Technology</a> and <a href="https://ds3lab.inf.ethz.ch/">DS3 Lab@ETH</a>. Users can extend the training on a single GPU to multi-GPUs (maybe across multiple machines), with excellent speedup guarantee, by simply adding a few lines of code. Bagua also provides a flexible system abstraction that supports state-of-the-art system relaxation techniques of distributed training. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. Researchers can easily develop new distributed training algorithms based on bagua, without sacrificing system performance.</p>
 <p>So far, Bagua has integrated primitives including</p>
 <ul>
 <li>Centralized Synchronous Communication (AllReduce)</li>
 <li>Decentralized Synchronous Communication</li>
 <li>Low Precision Communication</li>
 </ul>
-<p>Its effectiveness has been verified in various scenarios, including VGG and ResNet on ImageNet, Bert Large and many industrial applications at Kuaishou.</p>
+<p>Its effectiveness has been validated in various scenarios and models, including VGG and ResNet on ImageNet, Bert Large, and multiple huge scale industrial applications at Kuaishou such as </p>
+<ul>
+<li>the recommendation system supporting model training with dozens of TB parameters,</li>
+<li>video/image understanding with &gt;1 billion images/videos,</li>
+<li>ASR with TB level datasets,</li>
+<li>etc.</li>
+</ul>
 <h2 id="performance"><a class="header" href="#performance">Performance</a></h2>
 <center>
     <img src="./benchmark/figures/scalability_vgg16.png" width="350"/>
