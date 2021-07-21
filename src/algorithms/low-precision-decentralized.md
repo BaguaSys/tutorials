@@ -2,9 +2,9 @@
 
 ## Overview
 
-As the name suggests, low precision decentralized SGD combines decentralized training and quantized training together. It follows the framework of [decentralized SGD](./decentralized.md) that each worker does not need to aggreate data globally, but to exchange data with few workers, more specifically, its peers. Thus this algorithm has similar communicatation overhead with decentralized SGD. The latency complexity and bandwidth complexity of low precentralized decentralized SGD are both $O(k)$, where $k$ is the number of peers. This is consistent with our analysis for decentralized SGD, where we consider a special case that each worker has only one peer.
+As the name suggests, low precision decentralized SGD combines decentralized training and quantized training together. It follows the framework of [decentralized SGD](./decentralized.md) that each worker does not need to aggregate data globally, but to exchange data with few workers, more specifically, its peers. Thus this algorithm has similar communication overhead with decentralized SGD. The latency complexity and bandwidth complexity of low precision decentralized SGD are both $O(k)$, where $k$ is the number of peers. This is consistent with our analysis in decentralized SGD, where we consider a special case that each worker has only one peer.
 
-With communication compression, low precision decentralized SGD can reduce communication overhead further. It should be noted that data exchanged between workers are not compressed local models, but the compressed differences of local models between two successive iterations. In this way, the low precision decentralized SGD algorithm can achieve the same convergence rate with decentralized SGD, as well as full precension centralized ones. Detailed proof can be found in our [paper](https://arxiv.org/abs/1803.06443).
+With communication compression, low precision decentralized SGD can reduce communication overhead further. It should be noted that data exchanged between workers are not compressed local models, but the compressed differences of local models between two successive iterations. In this way, the low precision decentralized SGD algorithm can achieve the same convergence rate with decentralized SGD, as well as full precision centralized ones. Detailed proof can be found in our [paper](https://arxiv.org/abs/1803.06443).
 
 Having benefited both from decentralization and communication compression, low precision decentralized SGD is particular useful in high communication latency and low network bandwidth scenarios.
 
@@ -17,7 +17,7 @@ Assume the number of workers is $n$, the model parameters on worker $i$ is $\bf 
          ${\bf x_{t+\frac{1}{2}}^{(i)}} = \sum_{j=1}^{n} W_{ij} {\bf x_{t+1}^{(i)}} - \gamma {\bf g_t^{(i)}}$.
 3. Compute the difference ${\bf z_{t}^{(i)} = x_{t+\frac{1}{2}}^{(i)} - x_{t}^{(i)}}$, and quantize it into $Q( {\bf z_{t}^{(i)}})$ with a quantization function $Q( \cdot )$.
 4. Update the local model with compressed difference,  ${{\bf x_{t+1}^{(i)}} ={\bf x_{t}^{(i)}} + Q({\bf z_{t}^{(i)}})}$.
-5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas with compressed difference received, ${{\bf \hat x_{t+1}^{(j)}} ={\bf \hat x_{t}^{(j)}} + Q({\bf z_{t}^{(j)}}) }$.
+5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas with compressed differences it received, ${{\bf \hat x_{t+1}^{(j)}} ={\bf \hat x_{t}^{(j)}} + Q({\bf z_{t}^{(j)}}) }$.
 
 
 The quantization function $Q(\cdot)$ calculates the minimum value $x$ and maximum value $y$ of its input, and the split $[x, y]$ into evenly spaced 256 intervals. Then represent each element of its input by a 8bit integer representing which interval the original element is in.
