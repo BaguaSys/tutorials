@@ -88,3 +88,15 @@ python -m bagua.distributed.launch --nproc_per_node=8 --nnodes=2 --node_rank=1 -
 > ``` shell
 > python -m bagua.distributed.launch --no_python --nproc_per_node=8 bash your_bash_script.sh
 > ```
+
+### Distributed launch job on one node
+
+If the ssh service is deployed on your nodes, and the trust relationship is configured between each other. You can launch job distributed on one node.
+
+You need to use a built-in tool of bagua, named `baguarun`. Similar to mpirun, but but no additional installation is required. For the example of multi-node training example above, the command to start through bagurun is as follows:
+
+```shell
+baguarun --host_list NODE_1_HOST:NODE_1_SSH_PORT,NODE_2_HOST:NODE_2_SSH_PORT \
+                --nproc_per_node=NUM_GPUS_YOU_HAVE --master_port=1234 \
+                YOUR_TRAINING_SCRIPT.py (--arg1 --arg2 --arg3 and all other arguments of your training script)
+```
