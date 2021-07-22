@@ -7,6 +7,7 @@
     * [Gradient AllReduce](./algorithms/gradient-allreduce.md)
     * [ByteGrad](./algorithms/bytegrad.md)
     * [Decentralized SGD](./algorithms/decentralized.md)
+    * [Low Precision Decentralized SGD](./algorithms/low-precision-decentralized.md)
     * [QAdam](./algorithms/q-adam.md)
 * [Benchmark Results](./benchmark/index.md)
 * [How to Create a New Algorithm](./how-to-create-a-new-algorithm/index.md)
