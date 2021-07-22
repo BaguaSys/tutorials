@@ -10,7 +10,7 @@ Benefiting from both decentralization and communication compression, low precisi
 
 ## Algorithm
 
-Assume the number of workers is $n$, and the model parameters on worker $i$ is $\bf x^{(i)}$, $i \in \left \{0,...,n-1 \right \}$. Each worker stores model replicas of its connected peers $\left \{ {\bf \hat x^{(j)}}: j \text{ is worker }i \text{'s peer} \right \}$ and is able to send data to or receive data from its peers. At each iteration $t$, the algorithm repeats as follows:
+Assume the number of workers is $n$, and the model parameters on worker $i$ is $\bf x^{(i)}$, $i \in \left \{0,...,n-1 \right \}$. Each worker stores model replicas of its connected peers $\left \{ {\bf \hat x^{(j)}}: j \text{ is worker }i \text{'s peer} \right \}$ and is able to send data to or receive data from its peers. At each iteration $t$, the algorithm repeats the following steps on each worker $i$:
 
 1. Calculate the gradient on worker $i$: $\bf g_t^{(i)}$.
 2. Update the local model using local stochastic gradient and the weighted average of its connected peers' replicas:
