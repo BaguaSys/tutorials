@@ -20,9 +20,9 @@ You can adjust $N$ with the `--autotune_max_samples` flag and adjust $T$ with th
 
 ## Debugging
 
-The autotuning system dumps the tuning process in a file. The file path is specified by the parameter `--autotune_logfile`, and the default value is `/tmp/bagua_autotune.log`.
+With `--is_output_autotune_log` argument, Bagua will write autotuning log in `/tmp/bagua_autotune_${RANDOM_STR}.log`
 
-The file format is csv, each row is the hyperparameters and scoring of a round of iteration:
+The file is in csv format, each row is the hyperparameters and score of a single tuning step:
 
 ```csv
 bucket_size_2p,is_hierarchical_reduce,score,train_iter
