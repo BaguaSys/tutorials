@@ -30,7 +30,7 @@ Its effectiveness has been validated in various scenarios and models, including 
     <figcaption>Epoch time of BERT-Large Finetune under different network conditions for different systems.</figcaption>
 </center>
 
-For more comprehensive and up to date results, refer to [Bagua benchmark page](https://baguasys.github.io/tutorials/benchmark/index.html).
+For more comprehensive and up to date results, refer to [Bagua benchmark page](benchmark/index.html).
 
 ## Cite Bagua
 
