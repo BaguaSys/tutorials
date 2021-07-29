@@ -31,7 +31,7 @@ bucket_size_2p,is_hierarchical_reduce,score,train_iter
 29,True,1.0463204022477832,500
 ```
 
-`bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p=23` means bucket_size is 8388608 bytes ($2^{23}$).
+`bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p=23` means bucket_size is 8388608 bytes 2^23.
 
 ## Case study
 
