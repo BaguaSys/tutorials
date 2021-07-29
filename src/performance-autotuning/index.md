@@ -20,7 +20,7 @@ You can adjust $N$ with the `--autotune_max_samples` flag and adjust $T$ with th
 
 ## Debugging
 
-With `--is_output_autotune_log` argument, Bagua will write autotuning log in `/tmp/bagua_autotune_${RANDOM_STR}.log`
+With `--is_output_autotune_log` argument, Bagua will write autotuning log in `/tmp/bagua_autotune_\${RANDOM_STR}.log`
 
 The file is in csv format, each row is the hyperparameters and score of a single tuning step:
 
@@ -31,7 +31,7 @@ bucket_size_2p,is_hierarchical_reduce,score,train_iter
 29,True,1.0463204022477832,500
 ```
 
-`bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p=23` means bucket_size is 8388608 bytes 2^23.
+`bucket_size_2p` is the power of 2 of the bucket size, for example `bucket_size_2p=23` means bucket_size is 8388608 bytes ($2^23$).
 
 ## Case study
 
