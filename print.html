@@ -726,14 +726,14 @@ node in your training cluster, but ideally you should pick a node that has a hig
 <p>In addition, the autotune system skips the first <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span> seconds to warmup.</p>
 <p>You can adjust <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">N</span></span></span></span> with the <code>--autotune_max_samples</code> flag and adjust <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span></span></span></span> with the <code>--autotune_sampling_confidence_time</code> flag, adjust <span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">W</span></span></span></span> with the <code>--autotune_warmup_time</code>.</p>
 <h2 id="debugging"><a class="header" href="#debugging">Debugging</a></h2>
-<p>With <code>--is_output_autotune_log</code> argument, Bagua will write autotuning log in <code>/tmp/bagua_autotune_{RANDOM_STR}.log</code></p>
+<p>With <code>--is_output_autotune_log</code> argument, Bagua will write autotuning log in <code>/tmp/bagua_autotune_${RANDOM_STR}.log</code></p>
 <p>The file is in csv format, each row is the hyperparameters and score of a single tuning step:</p>
 <pre><code class="language-csv">bucket_size_2p,is_hierarchical_reduce,score,train_iter
 23,False,1.4117491757441083,300
 15,True,1.1258082798810858,400
 29,True,1.0463204022477832,500
 </code></pre>
-<p><code>bucket_size_2p</code> is the power of 2 of the bucket size, for example <code>bucket_size_2p=23</code> means bucket_size is 8388608 bytes 2^23.</p>
+<p><code>bucket_size_2p</code> is the power of 2 of the bucket size, for example <code>bucket_size_2p=23</code> means bucket_size is 8388608 bytes (<span class="katex"><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord">3</span></span></span></span>).</p>
 <h2 id="case-study"><a class="header" href="#case-study">Case study</a></h2>
 <p>For example, on a popular speech recognition task (aishell2), training with autotune increased the throughput by 8.26%.</p>
 <center>
