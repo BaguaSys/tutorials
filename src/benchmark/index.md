@@ -10,7 +10,12 @@ We use up to 16 servers for benchmarks, each of which is equipped with 8 NVIDIA 
     <img src="./figures/e2e_vgg16.png" width="251"/><img src="./figures/e2e_bert-large.png" width="250"/><img src="./figures/e2e_transformer.png" width="241"/>
 </center>
 
-The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use 128 GPUs (on 16 servers) to train VGG16 and BERT-Large, and 64 GPUs (on 8 servers) to train Transformer. Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.
+The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use up to 128 GPUs (on 16 servers) to train three tasks:
+- VGG16 on ImageNet with 128 GPUs; batch size per GPU is 32; Bagua algorithm is ByteGrad 8-bit.
+- BERT-Large Finetune on SQuAD with 128 GPUs; batch size per GPU is 6; Bagua algorithm is QAdam 1-bit.
+- Transformer on AISHELL-2 with 64 GPUs; batch size per GPU is 32; Bagua algorithm is Decentralized 32-bit.
+
+Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.
 
 
 ## Scalability
