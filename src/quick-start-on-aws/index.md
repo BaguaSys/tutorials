@@ -5,9 +5,9 @@ We provide Bagua image with [Amazon Machine Image (AMI)](https://docs.aws.amazon
 ## How to Use Bagua AMI
 
 
-| Bagua version  | AMI ID | Published Time |
-|---|---|---|
-| 0.6.3 | ami-07d61b187eb536338 | July 30, 2021 |
+| Bagua version  | AMI ID |  Region |Published Time |
+|---|---|---|---|
+| 0.6.3 | ami-07d61b187eb536338 | eu-central-1 |July 30, 2021 |
 
 If you want to use one instance with multiple GPUs, you can simply search and choose our AMI as your image in the first step of "launch instances". The Bagua AMI can be found with a unique AMI ID provided in this page.
 
