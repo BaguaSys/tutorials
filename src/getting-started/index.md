@@ -53,7 +53,7 @@ def main():
     )
 
     # train the model over the dataset
-    for epoch in rage(args.epochs):
+    for epoch in range(args.epochs):
         for b_idx, (inputs, targets) in enumerate(train_loader):
             outputs = model(inputs)
             loss = torch.nn.CrossEntropyLoss(outputs, targets)
