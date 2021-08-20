@@ -1,6 +1,6 @@
 # Getting Started
 
-Let’s start our Bagua journey!
+Using Bagua is similar to using other distributed training libraries like PyTorch DDP and Horovod.
 
 ## Migrate from your existing single GPU training code
 
