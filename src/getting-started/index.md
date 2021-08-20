@@ -41,18 +41,25 @@ test_loader = torch.utils.data.DataLoader(test_dataset, ...)
 Finally, wrap you model and optimizer with bagua by adding one line of code to your original script:
 
 ```python
-# define your model and optimizer
-model = ...
-model = model.cuda()
-optimizer = ...
+def main():
+    args = parse_args()
+    # define your model and optimizer
+    model = MyNet().to(args.device)
+    optimizer = torch.optim.SGD(model.parameters(), lr=args.lr)
+    # transform to Bagua wrapper
+    from bagua.torch_api.algorithms import gradient_allreduce
+    model = model.with_bagua(
+        [optimizer], gradient_allreduce.GradientAllReduceAlgorithm()
+    )
 
-# select your Bagua algorithm to use
-from bagua.torch_api.algorithms import gradient_allreduce
-
-# wrap your model and optimizer with Bagua
-model = model.with_bagua(
-    [optimizer], gradient_allreduce.GradientAllReduceAlgorithm()
-)
+    # train the model over the dataset
+    for epoch in rage(args.epochs):
+        for b_idx, (inputs, targets) in enumerate(train_loader):
+            outputs = model(inputs)
+            loss = torch.nn.CrossEntropyLoss(outputs, targets)
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
 ```
 
 More examples can be found [here](https://github.com/BaguaSys/examples).
