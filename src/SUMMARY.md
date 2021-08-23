@@ -3,7 +3,6 @@
 * [Introduction](./introduction.md)
 * [Installation](./installation.md)
 * [Getting Started](./getting-started/index.md)
-* [Quick-start on AWS](./quick-start-on-aws/index.md)
 * [Algorithms](./algorithms/index.md)
     * [Gradient AllReduce](./algorithms/gradient-allreduce.md)
     * [ByteGrad](./algorithms/bytegrad.md)
