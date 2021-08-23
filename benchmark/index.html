@@ -155,7 +155,13 @@
 <center>
     <img src="./figures/e2e_vgg16.png" width="251"/><img src="./figures/e2e_bert-large.png" width="250"/><img src="./figures/e2e_transformer.png" width="241"/>
 </center>
-<p>The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use 128 GPUs (on 16 servers) to train VGG16 and BERT-Large, and 64 GPUs (on 8 servers) to train Transformer. Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.</p>
+<p>The figure above demonstrates the end-to-end training performance of three tasks. For each task, we select the best algorithm (according to the training efficiency and accuracy) from Bagua to compare with other systems. We use up to 128 GPUs (on 16 servers) to train three tasks:</p>
+<ul>
+<li>VGG16 on ImageNet with 128 GPUs; batch size per GPU: 32; Bagua algorithm: ByteGrad.</li>
+<li>BERT-Large Finetune on SQuAD with 128 GPUs; batch size per GPU: 6; Bagua algorithm: QAdam 1-bit.</li>
+<li>Transformer on AISHELL-2 with 64 GPUs; batch size per GPU: 32; Bagua algorithm: Decentralized.</li>
+</ul>
+<p>Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.</p>
 <h2 id="scalability"><a class="header" href="#scalability">Scalability</a></h2>
 <p>VGG16 is known as a task that is difficult to scale because of its high ratio of communication and computation. This figure shows the scalability of four systems on VGG16 with up to 128 GPUs. We can see that Bagua achieves obviously higher scaling efficiency than other systems.</p>
 <center>
