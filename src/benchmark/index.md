@@ -15,8 +15,13 @@ The figure above demonstrates the end-to-end training performance of three tasks
 - BERT-Large Finetune on SQuAD with 128 GPUs; batch size per GPU: 6; Bagua algorithm: QAdam 1-bit.
 - Transformer on AISHELL-2 with 64 GPUs; batch size per GPU: 32; Bagua algorithm: Decentralized.
 
-Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.
+The following figure shows the end-to-end training performance for VGG16 on ImageNet with 128 GPUs under different network bandwidth. It also lists the performance of different built-in algorithms in Bagua.
 
+<center>
+    <img src="./figures/e2e_vgg16_128.png" width="400"/>
+</center>
+
+Results show that Bagua can achieve 1.3 - 2 times of speedup compared with other systems.
 
 ## Scalability
 
