@@ -15,14 +15,6 @@ The figure above demonstrates the end-to-end training performance of three tasks
 - BERT-Large Finetune on SQuAD with 128 GPUs; batch size per GPU: 6; Bagua algorithm: QAdam 1-bit.
 - Transformer on AISHELL-2 with 64 GPUs; batch size per GPU: 32; Bagua algorithm: Decentralized.
 
-The following figure shows the training throughput for VGG16 on ImageNet with 128 GPUs under different network bandwidth. It also lists the performance of different built-in algorithms in Bagua.
-
-<center>
-    <img src="./figures/e2e_vgg16_128.png" width="400"/>
-</center>
-
-Results show that Bagua can achieve multiple times of speedup compared with other systems.
-
 ## Scalability
 
 VGG16 is known as a task that is difficult to scale because of its high ratio of communication and computation. This figure shows the scalability of four systems on VGG16 with up to 128 GPUs. We can see that Bagua achieves obviously higher scaling efficiency than other systems.
@@ -31,6 +23,13 @@ VGG16 is known as a task that is difficult to scale because of its high ratio of
     <img src="./figures/scalability_vgg16.png" width="400"/>
 </center>
 
+The following figure shows the training throughput for VGG16 on ImageNet with 128 GPUs under different network bandwidth. It also lists the performance of different built-in algorithms in Bagua.
+
+<center>
+    <img src="./figures/e2e_vgg16_128.png" width="400"/>
+</center>
+
+Results show that Bagua can achieve multiple times of speedup compared with other systems.
 
 ## Trade-off of algorithms regarding network conditions
 
