@@ -22,6 +22,9 @@ Its effectiveness has been validated in various scenarios and models, including 
     <figcaption>The scalability of different systems on VGG16 with up to 128 GPUs.</figcaption>
 </center>
 
+<br/>
+<br/>
+
 <center>
     <img src="./benchmark/figures/e2e_vgg16_128.png" width="600"/> 
     <figcaption>The performance of different systems and algorithms in Bagua on VGG16 with 128 GPUs and different network bandwidth.</figcaption> 
