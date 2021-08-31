@@ -26,7 +26,7 @@ VGG16 is known as a task that is difficult to scale because of its high ratio of
 The following figure shows the training throughput for VGG16 on ImageNet with 128 GPUs under different network bandwidth. It also lists the performance of different built-in algorithms in Bagua.
 
 <center>
-    <img src="./figures/e2e_vgg16_128.png" width="400"/>
+    <img src="./figures/e2e_vgg16_128.png" width="600"/>
 </center>
 
 Results show that Bagua can achieve multiple times of speedup compared with other systems.
