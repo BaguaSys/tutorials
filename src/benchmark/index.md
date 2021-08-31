@@ -17,11 +17,13 @@ The figure above demonstrates the end-to-end training performance of three tasks
 
 ## Scalability
 
-VGG16 is known as a task that is difficult to scale because of its high ratio of communication and computation. This figure shows the scalability of four systems on VGG16 with up to 128 GPUs. We can see that Bagua achieves obviously higher scaling efficiency than other systems.
+VGG16 is known as a task that is difficult to scale because of its high ratio of communication and computation.
+
+<!-- This figure shows the scalability of four systems on VGG16 with up to 128 GPUs. We can see that Bagua achieves obviously higher scaling efficiency than other systems.
 
 <center>
     <img src="./figures/scalability_vgg16.png" width="400"/>
-</center>
+</center> -->
 
 The following figure shows the training throughput for VGG16 on ImageNet with 128 GPUs under different network bandwidth. It also lists the performance of different built-in algorithms in Bagua.
 

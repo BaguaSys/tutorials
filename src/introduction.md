@@ -17,13 +17,13 @@ Its effectiveness has been validated in various scenarios and models, including 
 
 ## Performance
 
-<center>
+<!-- <center>
     <img src="./benchmark/figures/scalability_vgg16.png" width="350"/>
     <figcaption>The scalability of different systems on VGG16 with up to 128 GPUs.</figcaption>
 </center>
 
 <br/>
-<br/>
+<br/> -->
 
 <center>
     <img src="./benchmark/figures/e2e_vgg16_128.png" width="600"/> 
