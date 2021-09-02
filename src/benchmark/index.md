@@ -39,7 +39,7 @@ By supporting a diverse collection of algorithms, Bagua provides users the flexi
 
 
 <center>
-    <img src="./figures/tradeoff_network_bert-large-bandwidth.png" width="250"/> <img src="./figures/tradeoff_network_bert-large-latency.png" width="250"/> <img src="./figures/tradeoff_network_legend.png" width="260"/>
+    <img src="./figures/tradeoff_network_bert-large-bandwidth.png" width="250"/> <img src="./figures/tradeoff_network_bert-large-latency.png" width="250"/> <img src="./figures/tradeoff_network_legend.png" width="230"/>
     <figcaption>Epoch time of BERT-Large Finetune under different network conditions</figcaption>
 </center>
 
