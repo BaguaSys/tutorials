@@ -25,8 +25,8 @@ $\hat {\bf x}^{(i)}$ is read from the model in the local memory.
 2. **Gradient update**: Update the model in the local memory by
 ${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F(\hat {\bf x}^{(i)}) $, note that $\hat {\bf x}^{(i)}$ may not be the
 same with ${\bf x}^{(i)}$ as it can be modified in the **averaging** step.
-3. **Averaging**: Average local model ${\bf x}^{(i)}$ with all other workers' models. More specifically,
- $ {\bf x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')} $.
+3. **Averaging**: Average local model ${\bf x}^{(i)}$ with selected $m (m \leq n) $ workers by
+$ {\bf x}^{(i)} = \frac{1}{m} \sum_{i'=1}^{m} {\bf x}^{(i')} $, $n$ is the total number of workers.
 
 All workers run the procedure above simultaneously.
 
