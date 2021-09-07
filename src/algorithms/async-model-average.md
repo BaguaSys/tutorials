@@ -30,7 +30,7 @@ same with ${\bf x}^{(i)}$ as it can be modified in the **averaging** step.
 
 All workers run the procedure above simultaneously.
 
-**Gradient update** and **Averaging** can run in parallel and the averaging step needs to be atomic.
+**Gradient update** and **averaging** can run in parallel and the **averaging** step needs to be atomic.
 
 ## Example usage
 
