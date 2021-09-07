@@ -50,7 +50,7 @@ Then decorate your model with:
 model = model.with_bagua([optimizer], algorithm)
 ```
 
-Unlike other synchronous algorithms, you need to stop asynchronous communications at the end of your training by:
+Unlike running synchronous algorithms, you need to stop asynchronous communications explicitly at the end of your training by:
 
 ```python
 algorithm.abort(model)
