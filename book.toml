@@ -9,8 +9,6 @@ renderer = ["html"]
 
 [preprocessor.katex]
 
-[output.linkcheck]
-
 [output.html]
 follow-web-links = true
 traverse-parent-directories = false
