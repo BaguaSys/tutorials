@@ -12,23 +12,25 @@ stage it lies in, so as to perform communications simultaneously. Asynchronous a
 restrictions. Communications are done periodically by a looping thread in parallel with model computations. The number
 of iterations on each worker might be different. Faster workers run more and slower workers run less.
 
+Asynchronous algorithm is especially useful in heterogeneous environment, where stragglers are known to slow down the
+whole training process for synchronous algorithms.
+
 ## Algorithm
 
-The asynchronous algorithm can be described in the following: each worker maintains a local model $x$ in local memory
+The asynchronous algorithm can be described in the following: each worker maintains a local model ${\bf x}$ in local memory
 and repeats the following steps:
 
-1. **Compute gradients**: Each worker $i$ calculates its local gradients ${\bf g}^{(i)}(\hat {\bf x})$, where
-$\bf \hat x$ is read from the model in the local memory.
+1. **Compute gradients**: Each worker $i$ calculates its local gradients $\nabla F(\hat {\bf x}^{(i)})$, where
+$\hat {\bf x}^{(i)}$ is read from the model in the local memory.
 2. **Gradient update**: Update the model in the local memory by
-${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma {\bf g}^{(i)}(\hat {\bf x}) $, note that $\hat {\bf x}^{(i)}$ may not the
-same as ${\bf x}^{(i)}$ as it may be modified in the **averaging** step.
-3. **Averaging**: Average local model ${\bf x}^{(i)}$ with worker $i'$'s model ${\bf x}^{(i')}$. More specifically,
+${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F(\hat {\bf x}^{(i)}) $, note that $\hat {\bf x}^{(i)}$ may not be the
+same with ${\bf x}^{(i)}$ as it can be modified in the **averaging** step.
+3. **Averaging**: Average local model ${\bf x}^{(i)}$ with all other workers' models. More specifically,
  $ {\bf x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')} $.
 
-All workers run the procedure above simultaneously, and **Gradient update** and **Averaging** can run in parallel.
+All workers run the procedure above simultaneously.
 
-It should also be noted that the averaging step needs to be atomic, and model weights should keep integral throughout
-gradient computation.
+**Gradient update** and **Averaging** can run in parallel and the averaging step needs to be atomic.
 
 ## Example usage
 
@@ -48,7 +50,7 @@ Then decorate your model with:
 model = model.with_bagua([optimizer], algorithm)
 ```
 
-Unlike other synchronous algorithms, you need to stop asynchronous communications at the end of your training by either
+Unlike other synchronous algorithms, you need to stop asynchronous communications at the end of your training by:
 
 ```python
 algorithm.abort(model)
