@@ -14,19 +14,18 @@ The *Asynchronous Model Average* algorithm provided by Bagua is one of such algo
 
 The *Asynchronous Model Average* algorithm can be described as follows: 
 
-Every worker maintains a local model ${\bf x}$ and a model difference ${\bf d}$. The $i$-th worker maintains
-${\bf x}^{(i)}$ and ${\bf d}^{(i)}$.
+Every worker maintains a local model ${\bf x}$. The $i$-th worker maintains ${\bf x}^{(i)}$.
 
 Every worker repeats the following three steps, for the $i$-th worker:
 1. **Compute gradients**: Calculate a local gradient $\nabla F({\bf \hat x}^{(i)})$, where $\hat {\bf x}^{(i)}$ is a clone of $\mathbf{x}_i$.
-2. **Averaging**: Average local model ${\bf x}^{(i)}$ with all other workers' models and update model difference by
-${\bf d}^{(i)} =  \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')} - {\bf x}^{(i)} $.
-3. **Update model**: Update the model with local gradient and compensate model difference to local model,
-${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F(\hat {\bf x}^{(i)}) + {\bf d}^{(i)}$.
+2. **Averaging**: Average local model ${\bf x}^{(i)}$ with all other workers' models by
+${\bf x}^{(i)} =  \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')}$.
+3. **Gradients update**: Update the model with local gradient,
+${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F(\hat {\bf x}^{(i)})$.
 
 All workers run the procedure above simultaneously.
 
-**Update model** and **averaging** can run in parallel and the **averaging** step needs to be atomic.
+**Gradients update** and **averaging** can run in parallel and the **averaging** step needs to be atomic.
 
 
 ## Example usage
