@@ -29,8 +29,9 @@ The communication thread on the i-th worker repeats as follows:
  ${\bf \bar x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')}$.
 2. Calculate the difference and **store** it to shared buffer $w$, $w = w + {\bf \bar x} - {\bf x}^{(i)}$.
 
-The **load** and **store** operation on shared buffer $w$ must be mutually exclusive.
-The computation thread can continuously calculate new gradients regardless of whether there is averaging happening.
+Note that the **load** and **store** operation on shared buffer $w$ must be mutually exclusive. In this way,
+the computation thread can continuously calculate new gradients regardless of whether there is averaging happening,
+as long as it compensates the difference from shared buffer $w$ when it needed.
 
 
 ## Example usage
