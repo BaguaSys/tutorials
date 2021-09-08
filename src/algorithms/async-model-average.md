@@ -14,18 +14,20 @@ The *Asynchronous Model Average* algorithm provided by Bagua is one of such algo
 
 The *Asynchronous Model Average* algorithm can be described as follows: 
 
-Every worker maintains a local model ${\bf x}$. The $i$-th worker maintains $\mathbf{x}_i$.
-Every worker repeats the following three steps, for the $i$-th worker:
+Every worker maintains a local model ${\bf x}$. The $i$-th worker maintains $\hat {\bf x}^{(i)}$.
+Every worker runs two threads in parallel, one for computation and the other for communication.
+The two threads shares a buffer $w$ initialized by all $0$s.
 
-1. **Compute gradients**: Calculate a local gradient $\nabla F({\bf x}^{(i)})$, where $\hat {\bf x}^{(i)}$ is a clone of $\mathbf{x}_i$.
-2. **Gradient update**: Update the model with ${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F(\hat {\bf x}^{(i)}) $, note that $\hat {\bf x}^{(i)}$ may not be the
-same with ${\bf x}^{(i)}$ as it could be modified in the **averaging** step.
-3. **Average**: Average local model ${\bf x}^{(i)}$ with all other workers' models. More specifically,
- $ {\bf x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')} $.
+The computation thread on the $i$-th worker repeats the following three steps:
 
-All workers run the procedure above simultaneously.
+1. Calculate the local gradient $\nabla F({\bf x}^{(i)})$.
+2. Update the model with buffer $w$, ${\bf x}^{(i)} = {\bf x}^{(i)} + w$.
+3. Update the model using local gradient, ${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F({\bf x}^{(i)}) $.
 
-**Gradient update** and **averaging** can run in parallel and the **averaging** step needs to be atomic.
+The communication thread repeats as follows:
+1. Average local model ${\bf x}^{(i)}$ with all other workers' models,
+ ${\bf \bar x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')}$.
+2. Update shared buffer $w$, $w = w + {\bf \bar x} - {\bf x}^{(i)}$.
 
 ## Example usage
 
