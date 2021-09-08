@@ -14,24 +14,19 @@ The *Asynchronous Model Average* algorithm provided by Bagua is one of such algo
 
 The *Asynchronous Model Average* algorithm can be described as follows: 
 
-Every worker maintains a local model ${\bf x}$. The $i$-th worker maintains $\hat {\bf x}^{(i)}$.
-Every worker runs two threads in parallel, one for computation and the other for communication.
-The two threads shares a buffer $w$ initialized by all $0$s.
+Every worker maintains a local model ${\bf x}$ and a model difference ${\bf d}$. The $i$-th worker maintains
+${\bf x}^{(i)}$ and ${\bf d}^{(i)}$.
 
-The computation thread on the $i$-th worker repeats the following three steps:
+Every worker repeats the following three steps, for the $i$-th worker:
+1. **Compute gradients**: Calculate a local gradient $\nabla F({\bf \hat x}^{(i)})$, where $\hat {\bf x}^{(i)}$ is a clone of $\mathbf{x}_i$.
+2. **Averaging**: Average local model ${\bf x}^{(i)}$ with all other workers' models and update model difference by
+${\bf d}^{(i)} =  \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')} - {\bf x}^{(i)} $.
+3. **Update model**: Update the model with local gradient and compensate model difference to local model,
+${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F(\hat {\bf x}^{(i)}) + {\bf d}^{(i)}$.
 
-1. Calculate the local gradient $\nabla F({\bf x}^{(i)})$.
-2. **Load** the difference from shared buffer $w$ and compensate to the model, ${\bf x}^{(i)} = {\bf x}^{(i)} + w$.
-3. Update the model using local gradient, ${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F({\bf x}^{(i)}) $.
+All workers run the procedure above simultaneously.
 
-The communication thread on the i-th worker repeats as follows:
-1. Average local model ${\bf x}^{(i)}$ with all other workers' models,
- ${\bf \bar x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')}$.
-2. Calculate the difference and **store** it to shared buffer $w$, $w = w + {\bf \bar x} - {\bf x}^{(i)}$.
-
-Note that the **load** and **store** operation on shared buffer $w$ must be mutually exclusive. In this way,
-the computation thread can continuously calculate new gradients regardless of whether there is averaging happening,
-as long as it compensates the difference from shared buffer $w$ when it needed.
+**Update model** and **averaging** can run in parallel and the **averaging** step needs to be atomic.
 
 
 ## Example usage
