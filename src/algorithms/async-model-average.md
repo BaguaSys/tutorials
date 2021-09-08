@@ -21,13 +21,17 @@ The two threads shares a buffer $w$ initialized by all $0$s.
 The computation thread on the $i$-th worker repeats the following three steps:
 
 1. Calculate the local gradient $\nabla F({\bf x}^{(i)})$.
-2. Update the model with buffer $w$, ${\bf x}^{(i)} = {\bf x}^{(i)} + w$.
+2. **Load** the difference from shared buffer $w$ and compensate to the model, ${\bf x}^{(i)} = {\bf x}^{(i)} + w$.
 3. Update the model using local gradient, ${\bf x}^{(i)} = {\bf x}^{(i)} - \gamma \nabla F({\bf x}^{(i)}) $.
 
-The communication thread repeats as follows:
+The communication thread on the i-th worker repeats as follows:
 1. Average local model ${\bf x}^{(i)}$ with all other workers' models,
  ${\bf \bar x}^{(i)} = \frac{1}{n} \sum_{i'=1}^{n} {\bf x}^{(i')}$.
-2. Update shared buffer $w$, $w = w + {\bf \bar x} - {\bf x}^{(i)}$.
+2. Calculate the difference and **store** it to shared buffer $w$, $w = w + {\bf \bar x} - {\bf x}^{(i)}$.
+
+The **load** and **store** operation on shared buffer $w$ must be mutually exclusive.
+The computation thread can continuously calculate new gradients regardless of whether there is averaging happening.
+
 
 ## Example usage
 
