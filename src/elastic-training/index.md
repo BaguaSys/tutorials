@@ -14,7 +14,7 @@ Jobs that run on preemptible resources that can be taken away at any time (e.g. 
 
 ## Quickstart
 
-You can find a complete example at [Bagua examples](https://github.com/BaguaSys/examples/tree/main/elastic_training).
+You can find a complete example at [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/elastic_training).
 
 ### 1. Make your program recoverable
 
