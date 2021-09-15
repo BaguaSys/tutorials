@@ -38,7 +38,7 @@ Given the optimal communication complexity of Decentralized SGD, it can be much 
 
 ## Example usage
 
-A complete example of running Decentralized SGD can be found at [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
+A complete example of running Decentralized SGD can be found at [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)
 with `--algorithm decentralized` command line argument.
 
 You need to initialize the Bagua algorithm with (see [API documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/decentralized/index.html) for what parameters you can customize):
