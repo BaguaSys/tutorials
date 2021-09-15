@@ -23,7 +23,7 @@ If you already have dependencies installed on your system, you can install the b
 python3 -m pip install bagua
 
 # develop version (git master)
-python3 -m pip install git+https://github.com/BaguaSys/bagua.git
+python3 -m pip install --pre bagua
 ```
 
 ## Use Docker image
