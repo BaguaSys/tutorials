@@ -24,7 +24,7 @@ when the inter-machine network is a bottleneck.
 
 ## Example usage
 
-A complete example of running Gradient AllReduce can be found at [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples)
+A complete example of running Gradient AllReduce can be found at [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)
 with `--algorithm gradient_allreduce` command line argument.
 
 You need to initialize the Bagua algorithm with (see [API documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/gradient_allreduce/index.html) for what parameters you can customize):
