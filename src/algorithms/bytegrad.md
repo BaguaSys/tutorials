@@ -50,7 +50,7 @@ representing which interval the original element is in.
 
 ## Example usage
 
-A complete example of running ByteGrad can be found at [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
+A complete example of running ByteGrad can be found at [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)
 with `--algorithm bytegrad` command line argument.
 
 You need to initialize the Bagua algorithm with (see [API documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/bytegrad/index.html) for what parameters you can customize):
