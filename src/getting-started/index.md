@@ -62,7 +62,7 @@ def main():
             optimizer.step()
 ```
 
-More examples can be found [here](https://github.com/BaguaSys/examples).
+More examples can be found [here](https://github.com/BaguaSys/bagua/tree/master/examples/).
 
 ## Launch job
 
