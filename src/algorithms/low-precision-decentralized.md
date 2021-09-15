@@ -25,7 +25,7 @@ Each worker stores model replicas of its connected peers, once the peers of a wo
 
 ## Example usage
 
-A complete example of running Decentralized SGD can be found at [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
+A complete example of running Decentralized SGD can be found at [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)
 with `--algorithm low_precision_decentralized` command line argument.
 
 You need to initialize the Bagua algorithm with (see [API documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/decentralized/index.html) for further customization):
