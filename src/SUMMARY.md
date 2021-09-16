@@ -15,6 +15,7 @@
     * [Generic Fused Optimizer](./more-optimizations/generic-fused-optimizer.md)
     * [Load Balanced Data Loader](./more-optimizations/load-balanced-data-loader.md)
     * [Performance Autotuning](./performance-autotuning/index.md)
+    * [Bagua-Net](./more-optimizations/bagua-net.md)
 * [Benchmark Results](./benchmark/index.md)
 * [Elastic Training](./elastic-training/index.md)
 * [Kubernetes Integration](./kubernetes-integration/index.md)

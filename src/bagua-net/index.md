@@ -1,15 +1,10 @@
----
-modified: 2021-09-15T10:53:52.711Z
-title: Bagua-Net
----
-
 # Bagua-Net
 
-In order to further optimize the communication performance, improve the efficiency of NCCL on a specific network. We provide the NCCL plug-in bagua-net.
+For further optimize the communication performance, improve the efficiency of NCCL on a specific network. We provide the NCCL plug-in bagua-net.
 
-We found that under a 100G TCP network, some of the throughput bound model training efficiency is not good, and the bandwidth utilization rate is low. For example, the 100G bandwidth utilization rate of VGG16 in a 32 V100 environment is only about 36%. In talk with the NCCL, I found that fairness between streams will restrict bandwidth utilization. So we developed this plug-in bagua-net to solve this problem.
+We found that under a 100G TCP network, some of the network I/O bound model have very low expansion efficiency, and even the bandwidth utilization is also very low. For example, run VGG16 benchmark on 4-machine(32 V100), the network bandwidth utilization rate is only about 36%. In talk with the NCCL, I found that fairness between streams will restrict bandwidth utilization. So we developed Bagua-Net to solve this problem.
 
-The actual effect is good. The bandwidth utilization of [the above example](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py) can be increased to 83%, and the throughput can be increased by 30%+:
+The actual effect is good. The bandwidth utilization of [the above example](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py) can be increased up to 83%, and the throughput can be increased by 35%:
 
 ```
 # VGG16 on 4x8xV100 Bagua-Net
@@ -49,10 +44,52 @@ Total img/sec on 32 GPU(s): 2744.9 +-122.3
 
 ![](source/img/nccl-test_Bagua-Net_vs_NCCL-TCP.png)
 
-Thanks to the tensor fusion of the communication library. The actual communication packets will be larger than 10MB. In this range, Bagua-Net has better performance than NCCL-TCP. I have also done some experiments. When training a small network, Bagua-Net is no worse than NCCL-TCP.
+> Thanks to the tensor fusion of the communication library. The actual communication packets will be larger than 10MB. In this range, Bagua-Net has better performance than NCCL-TCP. I have also done some experiments. When training a small network, Bagua-Net is no worse than NCCL-TCP.
 
 ### 2. Bagua-Net's acceleration effect on Bagua's different algorithms
 
 ![](source/img/bagua-net_accelerate_bagua_algorithms.png)
 
-> The data comes from the real 128 V100 ImageNet training.
+> The data comes from the real 128 V100 ImageNet training. The throughput increase brought by Bagua-Net is 11% to 68%.
+
+# Quick Start
+
+To enable bagua-net, you only need to switch on the `--enable-bagua-net` switch in `bagua.distributed.launch` or `bagua.distributed.run`.
+
+
+If you want to use bagua-net alone, you can refer to the following usage example:
+
+```bash
+# Install Bagua-Net
+git clone https://github.com/BaguaSys/bagua.git
+cd bagua/rust/bagua-net/cc && make
+export BAGUA_NET_LIBRARY_PATH=$(readlink -f .)
+
+# Install nccl and nccl-test
+git clone https://github.com/NVIDIA/nccl.git && cd nccl && git checkout v2.10.3-1
+make -j src.build && make install
+git clone https://github.com/NVIDIA/nccl-tests.git
+cd nccl-tests
+make MPI=1
+
+# Run nccl-test NCCL-TCP
+mpirun \
+  --allow-run-as-root \
+  -H ${HOST1}:1,${HOST2}:1 --np 2 \
+    -mca pml ob1 -mca btl ^openib \
+    -mca btl_tcp_if_include eth01 \
+    -x NCCL_DEBUG=INFO \
+    -x LD_LIBRARY_PATH \
+    ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 1
+
+# Run nccl-test with bagua-net
+mpirun \
+  --allow-run-as-root \
+  -H ${HOST1}:1,${HOST2}:1 --np 2 \
+    -mca pml ob1 -mca btl ^openib \
+    -mca btl_tcp_if_include eth01 \
+    -x NCCL_DEBUG=INFO \
+    -x LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$BAGUA_NET_LIBRARY_PATH \
+    ./build/all_reduce_perf -b 8 -e 128M -f 2 -g 1
+# If the installation is successful, there will be a log like this `NCCL INFO Using network BaguaNet`.
+```
