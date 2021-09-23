@@ -20,10 +20,10 @@ If you already have dependencies installed on your system, you can install the b
 
 ```bash
 # release version
-python3 -m pip install bagua
+python3 -m pip install bagua --upgrade
 
 # develop version (git master)
-python3 -m pip install --pre bagua
+python3 -m pip install --pre bagua --upgrade
 ```
 
 ## Use Docker image
