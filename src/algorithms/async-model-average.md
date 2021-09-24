@@ -53,11 +53,12 @@ model = model.with_bagua([optimizer], algorithm)
 Unlike running synchronous algorithms, you need to stop asynchronous communications explicitly when the training process is done with:
 
 ```python
-algorithm.abort(model)
-```
-or
-```python
 model.bagua_algorithm.abort(model)
+```
+
+To resume asynchronous communications, use:
+```python
+model.bagua_algorithm.resume(model)
 ```
 
 A complete example of running the *Asynchronous Model Average* algorithm can be found in [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
