@@ -56,6 +56,6 @@ To resume the communication thread when you start training again, do:
 model.bagua_algorithm.resume(model)
 ```
 
-A complete example of running the *Asynchronous Model Average* algorithm can be found in [Bagua examples](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py)
+A complete example of running the *Asynchronous Model Average* algorithm can be found in [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)
 with `--algorithm async` command line argument.
 
