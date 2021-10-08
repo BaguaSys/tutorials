@@ -1,12 +1,15 @@
 # Introduction
 
-Bagua is a distributed training utility developed by [AI Platform@Kuaishou Technology](https://www.kuaishou.com/en) and [DS3 Lab@ETH](https://ds3lab.inf.ethz.ch/). Users can extend the training on a single GPU to multi-GPUs (maybe across multiple machines), with excellent speedup guarantee, by simply adding a few lines of code. Bagua also provides a flexible system abstraction that supports state-of-the-art system relaxation techniques of distributed training. Powered by the new system design, Bagua has a great ability to implement and extend various state-of-the-art distributed learning algorithms. Researchers can easily develop new distributed training algorithms based on Bagua, without sacrificing system performance.
+Bagua is a deep learning training acceleration framework for PyTorch developed by [AI platform@Kuaishou Technology](https://www.kuaishou.com/en) and [DS3 Lab@ETH](https://ds3lab.inf.ethz.ch/). Bagua currently supports:
 
-So far, Bagua has integrated primitives including
-
-- Centralized Synchronous Communication (AllReduce)
-- Decentralized Synchronous Communication
-- Low Precision Communication
+- **Advanced Distributed Training Algorithms**: Users can extend the training on a single GPU to multi-GPUs (may across multiple machines) by simply adding a few lines of code (optionally in [elastic mode](https://bagua-tutorials.kwai-seattle.com/elastic-training/)). One prominent feature of Bagua is to provide a flexible system abstraction that supports state-of-the-art system relaxation techniques of distributed training. So far, Bagua has integrated communication primitives including
+  - Centralized Synchronous Communication (e.g. [Gradient AllReduce](https://bagua-tutorials.kwai-seattle.com/algorithms/gradient-allreduce))
+  - Decentralized Synchronous Communication (e.g. [Decentralized SGD](https://bagua-tutorials.kwai-seattle.com/algorithms/decentralized))
+  - Low Precision Communication (e.g. [ByteGrad](https://bagua-tutorials.kwai-seattle.com/algorithms/bytegrad))
+  - Asynchronous Communication (e.g. [Async Model Average](https://bagua-tutorials.kwai-seattle.com/algorithms/async-model-average))
+- [**Performance Autotuning**](https://bagua-tutorials.kwai-seattle.com/performance-autotuning/): Bagua can automatically tune system parameters to achieve the highest throughput.
+- [**Generic Fused Optimizer**](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/fused_optimizer/index.html): Bagua provides generic fused optimizer which improve the performance of optimizers by fusing the optimizer `.step()` operation on multiple layers. It can be applied to arbitrary PyTorch optimizer, in contrast to [NVIDIA Apex](https://nvidia.github.io/apex/optimizers.html)'s approach, where only some specific optimizers are implemented.
+- [**Load Balanced Data Loader**](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/load_balancing_data_loader/index.html): When the computation complexity of samples in training data are different, for example in NLP and speech tasks, where each sample have different lengths, distributed training throughput can be greatly improved by using Bagua's load balanced data loader, which distributes samples in a way that each worker's workload are similar.
 
 Its effectiveness has been validated in various scenarios and models, including VGG and ResNet on ImageNet, Bert Large, and multiple huge scale industrial applications at Kuaishou such as 
 
