@@ -12,8 +12,8 @@
     * [Asynchronous Model Average](./algorithms/async-model-average.md)
     * [How to Create a New Algorithm](./how-to-create-a-new-algorithm/index.md)
 * [System Optimizations](./more-optimizations/index.md)
-    * <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/fused_optimizer/index.html">Generic Fused Optimizer</a>
-    * <a href="https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/load_balancing_data_loader/index.html">Load Balanced Data Loader</a>
+    * [Generic Fused Optimizer](./more-optimizations/generic-fused-optimizer.md)
+    * [Load Balanced Data Loader](./more-optimizations/load-balanced-data-loader.md)
     * [Performance Autotuning](./performance-autotuning/index.md)
 * [Benchmark Results](./benchmark/index.md)
 * [Elastic Training](./elastic-training/index.md)
