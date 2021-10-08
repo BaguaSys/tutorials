@@ -1,12 +1,8 @@
-# More Optimizations
+# System Optimizations
 
-Besides communication algorithms, Bagua supports many convenient tools to
-further accelerate your training workload. Currently we support:
+Besides distributed communication algorithms, Bagua supports many features to
+further accelerate your training workload.
 
-## Generic fused optimizer
-
-[Generic fused optimizer](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/fused_optimizer/index.html), which fuses optimizer step operations for multiple layers, and it is generic because it can be applied to arbitrary PyTorch optimizer, in contrast to [NVIDIA Apex](https://nvidia.github.io/apex/optimizers.html)'s approach, where only some specific optimizers are implemented.
-
-## Load balanced data loader
-
-[Load balanced data loader](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/load_balancing_data_loader/index.html), which accelerates workloads such as NLP and speech training samples in a way that each worker receives samples of similar length, so that they finish a batch in similar time, mitigating the straggler problem in distributed setups.
+- [**Performance Autotuning**](https://bagua-tutorials.kwai-seattle.com/performance-autotuning/): Bagua can automatically tune system parameters to achieve the highest throughput.
+- [**Generic Fused Optimizer**](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/fused_optimizer/index.html): Bagua provides generic fused optimizer which improve the performance of optimizers by fusing the optimizer `.step()` operation on multiple layers. It can be applied to arbitrary PyTorch optimizer, in contrast to [NVIDIA Apex](https://nvidia.github.io/apex/optimizers.html)'s approach, where only some specific optimizers are implemented.
+- [**Load Balanced Data Loader**](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/load_balancing_data_loader/index.html): When the computation complexity of samples in training data are different, for example in NLP and speech tasks, where each sample have different lengths, distributed training throughput can be greatly improved by using Bagua's load balanced data loader, which distributes samples in a way that each worker's workload are similar.
