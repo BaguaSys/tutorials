@@ -14,10 +14,12 @@ Assume the number of workers is $n$, and the model parameters on worker $i$ is $
 
 1. Calculate the gradient on worker $i$: ${\bf g}_t^{(i)}$.
 2. Update the local model using local stochastic gradient and the weighted average of its connected peers' replicas:
-         ${\bf x}_{t+\frac{1}{2}}^{(i)} = \sum_{j=1}^{n} W_{ij} \hat {\bf x}_{t}^{(j)} - \gamma {\bf g}_t^{(i)}$.
+         $${\bf x}_{t+\frac{1}{2}}^{(i)} = \sum_{j=1}^{n} W_{ij} \hat {\bf x}_{t}^{(j)} - \gamma {\bf g}_t^{(i)}.$$
 3. Compute the difference ${\bf z}_{t}^{(i)} = {\bf x}_{t+\frac{1}{2}}^{(i)} - {\bf x}_{t}^{(i)}$, and quantize it into ${\bf Q}( {\bf z}_{t}^{(i)})$ with a quantization function ${\bf Q}( \cdot )$.
-4. Update the local model with compressed difference,  ${{\bf x}_{t+1}^{(i)} ={\bf x}_{t}^{(i)} + {\bf Q}({\bf z}_{t}^{(i)})}$.
-5. Send ${\bf Q} ( {\bf z}_{t}^{(i)} )$ to its connected peers, and update its connected peers' replicas with compressed differences it received, ${\hat {\bf x}_{t+1}^{(j)} =\hat {\bf x}_{t}^{(j)} + {\bf Q}({\bf z}_{t}^{(j)})}$.
+4. Update the local model with compressed difference,
+         $${{\bf x}_{t+1}^{(i)} ={\bf x}_{t}^{(i)} + {\bf Q}({\bf z}_{t}^{(i)})}.$$
+5. Send ${\bf Q} ( {\bf z}_{t}^{(i)} )$ to its connected peers, and update its connected peers' replicas with compressed differences it received,
+         $${\hat {\bf x}_{t+1}^{(j)} =\hat {\bf x}_{t}^{(j)} + {\bf Q}({\bf z}_{t}^{(j)})}.$$
 
 The quantization function ${\bf Q}(\cdot)$ calculates the minimum value $x$ and maximum value $y$ of its input, and the split $[x, y]$ into evenly spaced 256 intervals. Then represent each element of its input by a 8bit integer representing which interval the original element is in.
 
