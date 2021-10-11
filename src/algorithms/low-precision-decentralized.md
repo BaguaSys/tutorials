@@ -10,16 +10,16 @@ Benefiting from both decentralization and communication compression, low precisi
 
 ## Algorithm
 
-Assume the number of workers is $n$, and the model parameters on worker $i$ is $\bf x^{(i)}$, $i \in \left \{0,...,n-1 \right \}$. Each worker stores model replicas of its connected peers $\left \{ {\bf \hat x^{(j)}}: j \text{ is worker }i \text{'s peer} \right \}$ and is able to send data to or receive data from its peers. At each iteration $t$, the algorithm repeats the following steps on each worker $i$:
+Assume the number of workers is $n$, and the model parameters on worker $i$ is ${\bf x}^{(i)}$, $i \in \left \{0,...,n-1 \right \}$. Each worker stores model replicas of its connected peers $\left \{ \hat {\bf x}^{(j)}: j \text{ is worker }i \text{'s peer} \right \}$ and is able to send data to or receive data from its peers. At each iteration $t$, the algorithm repeats the following steps on each worker $i$:
 
-1. Calculate the gradient on worker $i$: $\bf g_t^{(i)}$.
+1. Calculate the gradient on worker $i$: ${\bf g}_t^{(i)}$.
 2. Update the local model using local stochastic gradient and the weighted average of its connected peers' replicas:
-         ${\bf x_{t+\frac{1}{2}}^{(i)}} = \sum_{j=1}^{n} W_{ij} {\bf x_{t+1}^{(i)}} - \gamma {\bf g_t^{(i)}}$.
-3. Compute the difference ${\bf z_{t}^{(i)} = x_{t+\frac{1}{2}}^{(i)} - x_{t}^{(i)}}$, and quantize it into $Q( {\bf z_{t}^{(i)}})$ with a quantization function $Q( \cdot )$.
-4. Update the local model with compressed difference,  ${{\bf x_{t+1}^{(i)}} ={\bf x_{t}^{(i)}} + Q({\bf z_{t}^{(i)}})}$.
-5. Send $Q ( {\bf z_{t}^{(i)}} )$ to its connected peers, and update its connected peers' replicas with compressed differences it received, ${{\bf \hat x_{t+1}^{(j)}} ={\bf \hat x_{t}^{(j)}} + Q({\bf z_{t}^{(j)}}) }$.
+         ${\bf x}_{t+\frac{1}{2}}^{(i)} = \sum_{j=1}^{n} W_{ij} \hat {\bf x}_{t}^{(j)} - \gamma {\bf g}_t^{(i)}$.
+3. Compute the difference ${\bf z}_{t}^{(i)} = {\bf x}_{t+\frac{1}{2}}^{(i)} - {\bf x}_{t}^{(i)}$, and quantize it into ${\bf Q}( {\bf z}_{t}^{(i)})$ with a quantization function ${\bf Q}( \cdot )$.
+4. Update the local model with compressed difference,  ${{\bf x}_{t+1}^{(i)} ={\bf x}_{t}^{(i)} + {\bf Q}({\bf z}_{t}^{(i)})}$.
+5. Send ${\bf Q} ( {\bf z}_{t}^{(i)} )$ to its connected peers, and update its connected peers' replicas with compressed differences it received, ${\hat {\bf x}_{t+1}^{(j)} =\hat {\bf x}_{t}^{(j)} + {\bf Q}({\bf z}_{t}^{(j)})}$.
 
-The quantization function $Q(\cdot)$ calculates the minimum value $x$ and maximum value $y$ of its input, and the split $[x, y]$ into evenly spaced 256 intervals. Then represent each element of its input by a 8bit integer representing which interval the original element is in.
+The quantization function ${\bf Q}(\cdot)$ calculates the minimum value $x$ and maximum value $y$ of its input, and the split $[x, y]$ into evenly spaced 256 intervals. Then represent each element of its input by a 8bit integer representing which interval the original element is in.
 
 Each worker stores model replicas of its connected peers, once the peers of a worker is determined, they should not be changed during the whole process.
 
