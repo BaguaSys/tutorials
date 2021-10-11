@@ -12,11 +12,11 @@ Currently, there are lots of decentralized training algorithms being proposed ev
 
 ## Decentralized SGD
 
-Now we are going to describe the decentralized SGD algorithm implemented in Bagua. Let's assume the number of workers is $n$, the model parameters on worker $i$ is $\bf x^{(i)}, i \in \{0,...,n-1\}$. Each worker is able to send or receive data directly from any other workers. In each iteration $t$, the algorithm repeats the following steps:
+Now we are going to describe the decentralized SGD algorithm implemented in Bagua. Let's assume the number of workers is $n$, the model parameters on worker $i$ is ${\bf x}^{(i)}, i \in \{0,...,n-1\}$. Each worker is able to send or receive data directly from any other workers. In each iteration $t$, the algorithm repeats the following steps:
 
-1. Each worker $i$ calculate the local gradients of iteration $t$: $\bf g_t^{(i)}$.
-2. Average the local model with its selected peer's model (denote as $\bf x_t^{(j)}$), i.e., $\bf x_{t+\frac{1}{2}}^{(i)} = \frac{\bf x_t^{(i)} + \bf x_t^{(j)}}{2}$.
-3. Update the averaged model with the local gradients. $\bf x_{t+1}^{(i)} = \bf x_{t+\frac{1}{2}}^{(i)} - \gamma \bf g_t^{(i)}$.
+1. Each worker $i$ calculate the local gradients of iteration $t$: ${\bf g}_t^{(i)}$.
+2. Average the local model with its selected peer's model (denote as ${\bf x}_t^{(j)}$), i.e., ${\bf x}_{t+\frac{1}{2}}^{(i)} = \frac{{\bf x}_t^{(i)} + {\bf x}_t^{(j)}}{2}$.
+3. Update the averaged model with the local gradients. ${\bf x}_{t+1}^{(i)} = {\bf x}_{t+\frac{1}{2}}^{(i)} - \gamma {\bf g}_t^{(i)}$.
 
 In step 2, we adopt a strategy to select a peer for each worker in each iteration, such that all workers are properly paired and the data exchanging is efficient in the sense that each worker could exchange data with a different peer between iterations. In short, our strategy evenly split workers into two groups, and dynamically pair workers between two groups, varying from iteration to iteration.
 
