@@ -4,7 +4,7 @@ Bagua-Net is a low level communication acceleration feature provided by Bagua. I
 
 Technically, Bagua-Net is a plugin for NVIDIA NCCL communication library, the fastest generally avaiable GPU communication implementation now (2021). It replaces the TCP communication related logic in NCCL to futher improve the performance by a wide margin.
 
-By enabling Bagua-Net, the communication efficiency can be increased by 83% ([code](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py), and the end2end training throughput can be increased by 35%:
+By enabling Bagua-Net, the communication efficiency can be increased by 83% ([code](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark), and the end2end training throughput can be increased by 35%:
 
 ```
 # VGG16 on 4x8xV100 NCCL default implementation
@@ -55,6 +55,13 @@ Total img/sec on 32 GPU(s): 4046.6 +-205.2
 -->
 
 To enable Bagua-Net, you only need to pass the `--enable-bagua-net` argument in `bagua.distributed.launch` or `bagua.distributed.run`. No code change in your training script.
+
+For example, with [this](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py) distributed training example, you can launch the job with
+
+```
+python3 -m bagua.distributed.launch --enable-bagua-net \
+    --nproc_per_node=8 synthetic_benchmark.py --algorithm gradient_allreduce
+```
 
 > It worth noting that you can even use `bagua.distributed.launch` or `bagua.distributed.run` with `--enable-bagua-net` argument to launch PyTorch-DDP jobs to improve the training throughput without migrating your code to Bagua.
 
