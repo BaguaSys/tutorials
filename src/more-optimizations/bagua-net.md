@@ -56,7 +56,7 @@ Total img/sec on 32 GPU(s): 4046.6 +-205.2
 
 To enable Bagua-Net, you only need to pass the `--enable-bagua-net` argument in `bagua.distributed.launch` or `bagua.distributed.run`. No code change in your training script.
 
-For example, with [this](https://github.com/BaguaSys/examples/blob/main/benchmark/synthetic_benchmark.py) distributed training example, you can launch the job with
+For example, with [this](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark) distributed training example, you can launch the job with
 
 ```
 python3 -m bagua.distributed.launch --enable-bagua-net \
