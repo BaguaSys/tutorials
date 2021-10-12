@@ -12,6 +12,7 @@
     * [Asynchronous Model Average](./algorithms/async-model-average.md)
     * [How to Create a New Algorithm](./how-to-create-a-new-algorithm/index.md)
 * [System Optimizations](./more-optimizations/index.md)
+    * [Bagua-Net](./more-optimizations/bagua-net.md)
     * [Generic Fused Optimizer](./more-optimizations/generic-fused-optimizer.md)
     * [Load Balanced Data Loader](./more-optimizations/load-balanced-data-loader.md)
     * [Performance Autotuning](./performance-autotuning/index.md)
