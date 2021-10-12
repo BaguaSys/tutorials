@@ -4,7 +4,7 @@ Bagua-Net is a low level communication acceleration feature provided by Bagua. I
 
 Technically, Bagua-Net is a plugin for [NVIDIA NCCL communication library](https://developer.nvidia.com/nccl), the fastest generally avaiable GPU communication implementation now (2021). It replaces the TCP communication related logic in NCCL to greatly improve the communication performance, by improving the fairness between different streams and reducing the contentions between sockets.
 
-**By enabling Bagua-Net, the communication efficiency can be increased by 83% ([code](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark), and the end2end training throughput can be increased by 35%:**
+**By enabling Bagua-Net, the communication efficiency can be increased by 83% ([code](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)), and the end2end training throughput can be increased by 35%:**
 
 ```python
 # VGG16 on 4x8xV100 NCCL default implementation
