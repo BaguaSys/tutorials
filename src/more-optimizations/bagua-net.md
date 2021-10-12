@@ -54,7 +54,9 @@ Total img/sec on 32 GPU(s): 4046.6 +-205.2
 > The data comes from the real 128 V100 ImageNet training. The throughput increase brought by Bagua-Net is 11% to 68%.
 -->
 
-To enable bagua-net, you only need to pass the `--enable-bagua-net` argument in `bagua.distributed.launch` or `bagua.distributed.run`. No code change in your training script.
+To enable Bagua-Net, you only need to pass the `--enable-bagua-net` argument in `bagua.distributed.launch` or `bagua.distributed.run`. No code change in your training script.
+
+> It worth noting that you can even use `bagua.distributed.launch` or `bagua.distributed.run` with `--enable-bagua-net` argument to launch PyTorch-DDP jobs to improve the training throughput without migrating your code to Bagua.
 
 <!-- 
 ## Enable Bagua-Net
