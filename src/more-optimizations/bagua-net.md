@@ -1,8 +1,8 @@
 # Bagua-Net
 
-Bagua-Net is a low level communication acceleration feature provided by Bagua. It can greatly improve the throughput of AllReduce on TCP network.
+Bagua-Net is a low level communication acceleration feature provided by Bagua. It can greatly improve the throughput of AllReduce on TCP network .
 
-Technically, Bagua-Net is a plugin for [NVIDIA NCCL communication library](https://developer.nvidia.com/nccl), the fastest generally avaiable GPU communication implementation now (2021). It replaces the TCP communication related logic in NCCL to futher improve the performance by a wide margin.
+Technically, Bagua-Net is a plugin for [NVIDIA NCCL communication library](https://developer.nvidia.com/nccl), the fastest generally avaiable GPU communication implementation now (2021). It replaces the TCP communication related logic in NCCL to greatly improve the communication performance, by improving the fairness between different streams and reducing the contentions between sockets.
 
 **By enabling Bagua-Net, the communication efficiency can be increased by 83% ([code](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark), and the end2end training throughput can be increased by 35%:**
 
