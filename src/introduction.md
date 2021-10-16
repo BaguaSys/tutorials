@@ -1,5 +1,9 @@
 # Introduction
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/18649508/137567125-e949ae92-8c72-41ba-9a8e-6108e33005fc.png"/>
+</p>
+
 Bagua is a deep learning training acceleration framework for PyTorch developed by [AI platform@Kuaishou Technology](https://www.kuaishou.com/en) and [DS3 Lab@ETH](https://ds3lab.inf.ethz.ch/). Bagua currently supports:
 
 - **Advanced Distributed Training Algorithms**: Users can extend the training on a single GPU to multi-GPUs (may across multiple machines) by simply adding a few lines of code (optionally in [elastic mode](https://bagua-tutorials.kwai-seattle.com/elastic-training/)). One prominent feature of Bagua is to provide a flexible system abstraction that supports state-of-the-art system relaxation techniques of distributed training. So far, Bagua has integrated communication primitives including
