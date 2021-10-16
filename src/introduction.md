@@ -1,5 +1,3 @@
-# Introduction
-
 <p align="center">
 <img src="https://user-images.githubusercontent.com/18649508/137567125-e949ae92-8c72-41ba-9a8e-6108e33005fc.png"/>
 </p>
