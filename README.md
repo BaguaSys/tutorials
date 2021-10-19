@@ -1,7 +1,7 @@
 Bagua Tutorials
 ======
 
-Website: https://bagua-tutorials.kwai-seattle.com/.
+Website: https://tutorials.baguasys.com/.
 
 ## How to contribute
 
