@@ -29,7 +29,32 @@ Let's first summarize the updating rule of Q-Adam algorithm as follows: ($w$ is 
 
 To implement such an advanced distributed learning algorithm in any other popular ML system is far from trivial. Basically, the developer has to hack deeply into the source code and break their fine-grained communication optimizations. As the result, it is likely that one cannot observe any speedup compared with the basic Allreduce operation, actually in most cases it's even slower. 
 
-Bagua provides a class called ``` Algorithm```. All a developer needs to do is to override pre-defined functions of this class as she wishes. (see [API document](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/index.html#bagua.torch_api.algorithms.Algorithm) for more detailed information). In this example of Q-Adam, we need to override six functions as follows:
+Bagua provides two base classes: `Algorithm` and `AlgorithmImpl`. The former is used to declare an algorithm, including all parameters an algorithm needs. The latter is used to actually implement the algorithm. When an end user uses an algorithm, she provides the algorithm declaration to Bagua, and Bagua will reify the algorithm implementation instance to actually run the algorithm[^1]. In this example of Q-Adam, we implement the algorithm as follows:
+
+[^1]: In this way, an end user can pass a single algorithm declaration to multiple models, in order to run the same algorithm on multiple models.
+
+**Create a `QAdamAlgorithm` class that inherits `Algorithm`:**
+
+1. `__init__()`: Define the parameters that  `QAdamAlgorithm` needs.
+
+```python
+class QAdamAlgorithm(Algorithm):
+    def __init__(self, q_adam_optimizer: QAdamOptimizer, hierarchical: bool = True):
+        self.hierarchical = hierarchical
+        self.optimizer = q_adam_optimizer
+```
+
+2. `reify()`:  Create and return a  ``` QAdamAlgorithmImpl```  instance.
+
+```python
+def reify(self) -> QAdamAlgorithmImpl:
+    return QAdamAlgorithmImpl(
+            q_adam_optimizer=self.optimizer,
+            hierarchical=self.hierarchical
+        )
+```
+
+**Create a ``` QAdamAlgorithmImpl``` class that inherits ``` AlgorithmImpl```:**
 
 1. `__init__()`: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called `QAdamOptimizer`, which is a specifically customized optimizer based on the Adam optimizer in order to meet the special updating rule of Q-Adam algorithm. Compared with the original Adam optimizer, the main difference of `QAdamOptimizer` is that, in the compression stage, communicating and updating $\textbf{m}$ are conducted by the Bagua backend, instead of the optimizer. Like all other optimizers in PyTorch, `QAdamOptimizer` needs to be initialized with model parameters. Besides, an extra argument `warmup_steps` decides how many steps of the warm-up stage. `QAdamAlgorithm` can be initialized simply by the `QAdamOptimizer`. 
 
@@ -44,13 +69,14 @@ optimizer = q_adam.QAdamOptimizer(
 
 
 ```python
-class QAdamAlgorithm(Algorithm):
-    def __init__(self, q_adam_optimizer):
+class QAdamAlgorithmImpl(AlgorithmImpl):
+    def __init__(self, q_adam_optimizer: QAdamOptimizer, hierarchical: bool = True):
+        self.hierarchical = hierarchical
         self.optimizer = q_adam_optimizer
         self.warmup_steps = self.optimizer.warmup_steps
 ```
 
-1. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
+2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
 
 ```python
 def need_reset(self):
