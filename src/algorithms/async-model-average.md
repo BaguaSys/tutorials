@@ -5,7 +5,7 @@ every worker needs to be in the same iteration in a lock-step style. When there 
 in the system, such synchronous algorithms are reasonably efficient, and gives deterministic training results
 that are easier to reason about. However, when there are stragglers in the system, with synchronous algorithms
 faster workers have to wait for the slowest worker in each iteration, which can dramatically harm
-the performance of the whole system. To deal with stragglers, we can use asynchronous 
+the performance of the whole system[^1]. To deal with stragglers, we can use asynchronous 
 algorithms where workers are not required to be synchronized. The *Asynchronous Model Average* algorithm provided by Bagua is one of such algorithms.
 
 ## Algorithm
@@ -59,3 +59,4 @@ model.bagua_algorithm.resume(model)
 A complete example of running the *Asynchronous Model Average* algorithm can be found in [Bagua examples](https://github.com/BaguaSys/bagua/tree/master/examples/benchmark)
 with `--algorithm async` command line argument.
 
+[^1]: See [Lian, X., Huang, Y., Li, Y., & Liu, J. (2015). Asynchronous parallel stochastic gradient for nonconvex optimization. Advances in Neural Information Processing Systems, 28, 2737-2745](https://proceedings.neurips.cc/paper/2015/file/452bf208bf901322968557227b8f6efe-Paper.pdf) for more detailed explanation and theoretical results on this topic.
