@@ -44,17 +44,18 @@ class QAdamAlgorithm(Algorithm):
         self.optimizer = q_adam_optimizer
 ```
 
-2. `reify()`:  Create and return a  ``` QAdamAlgorithmImpl```  instance.
+2. `reify()`:  Create and return a  ``` QAdamAlgorithmImpl``` instance.
 
 ```python
-def reify(self) -> QAdamAlgorithmImpl:
-    return QAdamAlgorithmImpl(
+ def reify(self, process_group: BaguaProcessGroup) -> QAdamAlgorithmImpl:
+        return QAdamAlgorithmImpl(
+            process_group,
             q_adam_optimizer=self.optimizer,
-            hierarchical=self.hierarchical
+            hierarchical=self.hierarchical,
         )
 ```
 
-**Create a ``` QAdamAlgorithmImpl``` class that inherits ``` AlgorithmImpl```:**
+**Create a ``` QAdamAlgorithmImpl``` class that inherits ``` AlgorithmImpl```  [^2]:**
 
 1. `__init__()`: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called `QAdamOptimizer`, which is a specifically customized optimizer based on the Adam optimizer in order to meet the special updating rule of Q-Adam algorithm. Compared with the original Adam optimizer, the main difference of `QAdamOptimizer` is that, in the compression stage, communicating and updating $\textbf{m}$ are conducted by the Bagua backend, instead of the optimizer. Like all other optimizers in PyTorch, `QAdamOptimizer` needs to be initialized with model parameters. Besides, an extra argument `warmup_steps` decides how many steps of the warm-up stage. `QAdamAlgorithm` can be initialized simply by the `QAdamOptimizer`. 
 
@@ -69,12 +70,20 @@ optimizer = q_adam.QAdamOptimizer(
 
 
 ```python
-class QAdamAlgorithmImpl(AlgorithmImpl):
-    def __init__(self, q_adam_optimizer: QAdamOptimizer, hierarchical: bool = True):
+def __init__(
+        self,
+        process_group: BaguaProcessGroup,
+        q_adam_optimizer: QAdamOptimizer,
+        hierarchical: bool = True,
+    ):
+        super(QAdamAlgorithmImpl, self).__init__(process_group)
         self.hierarchical = hierarchical
         self.optimizer = q_adam_optimizer
         self.warmup_steps = self.optimizer.warmup_steps
 ```
+
+
+[^2]: All ```AlgorithmImpl``` instances must initialize the ```process_group``` to work on on initialization. See [Bagua API Documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html) for details.
 
 2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
 
