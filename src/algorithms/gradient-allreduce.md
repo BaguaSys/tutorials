@@ -19,7 +19,7 @@ class. The performance of the `GradientAllReduce` implementation in Bagua
 should be faster than PyTorch DDP and Horovod in most cases.
 Bagua supports additional optimizations such as hierarchical communication that
 can be configured when instantiating the `GradientAllReduce` class. They can
-make Bagua faster in certain scenarios, for example
+further speeds up Bagua in certain scenarios, for example
 when the inter-machine network is a bottleneck.
 
 ## Example usage
