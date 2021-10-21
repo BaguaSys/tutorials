@@ -1,10 +1,15 @@
 # How to Create a New Algorithm
 
-Thanks to the innovative design of Bagua, algorithm developers now can easily create, test and benchmark their distributed learning algorithms in a realistic system. Within Bagua, developers have the freedom to manipulate almost all the details regarding the data-parallel distributed training, including What to communicate, When to communicate, How to update the model and so on. Besides, algorithms incorporated in Bagua automatically benefit from our system optimizations, like memory management, execution management, communication/computation overlapping and so on, so that developers could take full advantage of the algorithm without a compromise caused by an inefficient implementation.
+Thanks to the innovative design of Bagua, algorithm developers now can easily create, test and benchmark their
+distributed learning algorithms in a realistic system. Within Bagua, developers have the freedom to manipulate
+almost all the details regarding the data-parallel distributed training, including *What to communicate*,
+*When to communicate*, *How to update the model* and so on. Besides, algorithms incorporated in Bagua automatically
+benefit from our system optimizations, like memory management, execution management, communication-computation overlap
+and so on, so that developers could take full advantage of the algorithm without a compromise caused by an inefficient implementation.
 
-In this tutorial, we take Quantized Adam (Q-Adam) algorithm, inspired by this [paper](https://arxiv.org/pdf/2102.02888.pdf), as an example to describe how to create a new algorithm with Bagua. The complete code can be found [here](https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py). We also welcome contributions to add more built-in algorithms!
+In this tutorial, we take [Quantized Adam (QAdam)](../algorithms/q-adam.md) algorithm, inspired by this [paper](https://arxiv.org/pdf/2102.02888.pdf), as an example to describe how to create a new algorithm with Bagua. The complete code can be found [here](https://github.com/BaguaSys/bagua/blob/master/bagua/torch_api/algorithms/q_adam.py). We also welcome contributions to add more built-in algorithms!
 
-Let's first summarize the updating rule of Q-Adam algorithm as follows: ($w$ is the warm-up steps)
+Let's first summarize the updating rule of QAdam algorithm as follows: ($w$ is the warm-up steps)
 
 - Warm up stage: ($t < w$ )
   1. Calculating gradients $\textbf{g}_t^{(i)}$.
@@ -27,10 +32,10 @@ Let's first summarize the updating rule of Q-Adam algorithm as follows: ($w$ is 
       - $\textbf{x}_t = \textbf{x}_{t-1} - \gamma \frac{\textbf{m}_t}{\sqrt \textbf{v}_w+\epsilon}$
 
 
-To implement such an advanced distributed learning algorithm in any other popular ML system is far from trivial. Basically, the developer has to hack deeply into the source code and break their fine-grained communication optimizations. As the result, it is likely that one cannot observe any speedup compared with the basic Allreduce operation, actually in most cases it's even slower. 
+To implement such an advanced distributed learning algorithm in any other popular ML system is far from trivial. Basically, the developer has to hack deeply into the source code and break their fine-grained communication optimizations. As the result, it is likely that one cannot observe any speedup compared with the basic AllReduce operation, actually in most cases it's even slower.
 
 Bagua provides two base classes: [`Algorithm`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html#bagua.torch_api.algorithms.base.Algorithm)
-and [`AlgorithmImpl`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html#bagua.torch_api.algorithms.base.AlgorithmImpl). The former is used to declare an algorithm, including all parameters an algorithm needs. The latter is used to actually implement the algorithm. When an end user uses an algorithm, she provides the algorithm declaration to Bagua, and Bagua will reify the algorithm implementation instance to actually run the algorithm[^1]. In this example of Q-Adam, we implement the algorithm as follows:
+and [`AlgorithmImpl`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html#bagua.torch_api.algorithms.base.AlgorithmImpl). The former is used to declare an algorithm, including all parameters an algorithm needs. The latter is used to actually implement the algorithm. When an end user uses an algorithm, she provides the algorithm declaration to Bagua, and Bagua will reify the algorithm implementation instance to actually run the algorithm[^1]. In this example of QAdam, we implement the algorithm as follows:
 
 [^1]: In this way, an end user can pass a single algorithm declaration to multiple models, in order to run the same algorithm on multiple models.
 
@@ -58,7 +63,7 @@ class QAdamAlgorithm(Algorithm):
 
 **Create a ``` QAdamAlgorithmImpl``` class that inherits ``` AlgorithmImpl```  [^2]:**
 
-1. `__init__()`: Initializing the algorithm. Here Q-Adam algorithm requires an optimizer called `QAdamOptimizer`, which is a specifically customized optimizer based on the Adam optimizer in order to meet the special updating rule of Q-Adam algorithm. Compared with the original Adam optimizer, the main difference of `QAdamOptimizer` is that, in the compression stage, communicating and updating $\textbf{m}$ are conducted by the Bagua backend, instead of the optimizer. Like all other optimizers in PyTorch, `QAdamOptimizer` needs to be initialized with model parameters. Besides, an extra argument `warmup_steps` decides how many steps of the warm-up stage. `QAdamAlgorithm` can be initialized simply by the `QAdamOptimizer`. 
+1. `__init__()`: Initializing the algorithm. Here QAdam algorithm requires an optimizer called `QAdamOptimizer`, which is a specifically customized optimizer based on the Adam optimizer in order to meet the special updating rule of QAdam algorithm. Compared with the original Adam optimizer, the main difference of `QAdamOptimizer` is that, in the compression stage, communicating and updating $\textbf{m}$ are conducted by the Bagua backend, instead of the optimizer. Like all other optimizers in PyTorch, `QAdamOptimizer` needs to be initialized with model parameters. Besides, an extra argument `warmup_steps` decides how many steps of the warm-up stage. `QAdamAlgorithm` can be initialized simply by the `QAdamOptimizer`.
 
 ```python
 from bagua.torch_api.algorithms import q_adam 
@@ -84,17 +89,17 @@ def __init__(
 ```
 
 
-[^2]: Classes that inherits ```AlgorithmImpl``` should initialize the ```process_group``` in ```___init__(...)``` with `super().__init__(process_group)`.
+[^2]: Classes that inherit ```AlgorithmImpl``` should initialize the ```process_group``` in ```___init__(...)``` with `super().__init__(process_group)`.
  See [API Documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html) for details.
 
-2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
+2. ```need_reset()```: As we can see, QAdam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
 
 ```python
 def need_reset(self):
     return self.optimizer.step_id == self.warmup_steps
 ```
 
-3. ```init_tensors()```: This function defines what needs to be communicated by registering intended tensors into the Bagua backend. Note that a developer can register any tensors as she wants. Q-Adam needs to communicate gradients or momentums, therefore, we register them according to the current stage.
+3. ```init_tensors()```: This function defines what needs to be communicated by registering intended tensors into the Bagua backend. Note that a developer can register any tensors as she wants. QAdam needs to communicate gradients or momentums, therefore, we register them according to the current stage.
 
 ```python
 tensors = []
