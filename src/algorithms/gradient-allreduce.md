@@ -15,11 +15,11 @@ With this algorithm, each worker does the following steps in each iteration.
 3. Update the model with the averaged gradient.
 
 In Bagua, this algorithm is supported via the `GradientAllReduce` algorithm
-class. The performance of the `GradientAllReduce` implementation in Bagua by
-default should be on par with PyTorch DDP and faster than Horovod in most cases.
+class. The performance of the `GradientAllReduce` implementation in Bagua
+should be faster than PyTorch DDP and Horovod in most cases.
 Bagua supports additional optimizations such as hierarchical communication that
 can be configured when instantiating the `GradientAllReduce` class. They can
-make Bagua faster than other implementations in certain scenarios, for example
+make Bagua faster in certain scenarios, for example
 when the inter-machine network is a bottleneck.
 
 ## Example usage
