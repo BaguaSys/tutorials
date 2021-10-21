@@ -29,7 +29,8 @@ Let's first summarize the updating rule of Q-Adam algorithm as follows: ($w$ is 
 
 To implement such an advanced distributed learning algorithm in any other popular ML system is far from trivial. Basically, the developer has to hack deeply into the source code and break their fine-grained communication optimizations. As the result, it is likely that one cannot observe any speedup compared with the basic Allreduce operation, actually in most cases it's even slower. 
 
-Bagua provides two base classes: `Algorithm` and `AlgorithmImpl`. The former is used to declare an algorithm, including all parameters an algorithm needs. The latter is used to actually implement the algorithm. When an end user uses an algorithm, she provides the algorithm declaration to Bagua, and Bagua will reify the algorithm implementation instance to actually run the algorithm[^1]. In this example of Q-Adam, we implement the algorithm as follows:
+Bagua provides two base classes: [`Algorithm`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html#bagua.torch_api.algorithms.base.Algorithm)
+and [`AlgorithmImpl`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html#bagua.torch_api.algorithms.base.AlgorithmImpl). The former is used to declare an algorithm, including all parameters an algorithm needs. The latter is used to actually implement the algorithm. When an end user uses an algorithm, she provides the algorithm declaration to Bagua, and Bagua will reify the algorithm implementation instance to actually run the algorithm[^1]. In this example of Q-Adam, we implement the algorithm as follows:
 
 [^1]: In this way, an end user can pass a single algorithm declaration to multiple models, in order to run the same algorithm on multiple models.
 
@@ -83,7 +84,8 @@ def __init__(
 ```
 
 
-[^2]: All ```AlgorithmImpl``` instances must initialize the ```process_group``` to work on on initialization. See [Bagua API Documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html) for details.
+[^2]: ```AlgorithmImpl``` and its derived classes must explicitly initialize the ```process_group``` to work on in the```___init__()``` method.
+ See [Bagua API Documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html) for details.
 
 2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
 
