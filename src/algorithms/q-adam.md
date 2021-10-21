@@ -41,8 +41,8 @@ To use QAdam algorithm, you first need to initialize a QAdam optimizer, which is
 ```python
 from bagua.torch_api.algorithms.q_adam import QAdamAlgorithm, QAdamOptimizer
 
-optimizer = QAdamOptimizer(model.parameters(), warmup_steps = 100)
-algorithm = QAdamAlgorithm(optimizer, hierarchical_reduce=True)
+optimizer = QAdamOptimizer(model.parameters(), warmup_steps=100)
+algorithm = QAdamAlgorithm(optimizer, hierarchical=True)
 ```
 
 Then decorate your model with:
