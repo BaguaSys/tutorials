@@ -85,7 +85,7 @@ def __init__(
 
 
 [^2]: ```AlgorithmImpl``` and its derived classes must explicitly initialize the ```process_group``` to work on in the```___init__()``` method.
- See [Bagua API Documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html) for details.
+ See [API Documentation](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/algorithms/base/index.html) for details.
 
 2. ```need_reset()```: As we can see, Q-Adam algorithm has two stages, which have very different logic regarding the communication contents and updating rules. ```need_reset()``` compares the current iteration with the warm-up steps, such that it can tell the `Bagua` backend to reset the algorithm. This function is checked by the Bagua engine for every iteration.
 
