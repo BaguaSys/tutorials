@@ -27,6 +27,12 @@ use command `NCCL_SOCKET_IFNAME=network card name (such as eth01)` to specify
 the one you want to use (usually a physical one). Card information can be
 obtained by `ls /sys/class/net/`.
 
+## `NCCL WARN Reduce: invalid reduction operation 4`
+
+Bagua requires NCCL version >= 2.10 to support `AVG` reduction operation. If you encounter error `NCCL WARN Reduce: invalid reduction operation 4` during training, you can run `import bagua_core; bagua_core.install_deps()` in your Python interpreter or the `bagua_install_deps.py` script to install latest libraries.
+
+To check the NCCL version Bagua is using, run `import bagua_core; bagua_core.show_version()`.
+
 ## Model accuracy drops
 
 Using a different algorithm or using more GPUs has similar effect as using a
