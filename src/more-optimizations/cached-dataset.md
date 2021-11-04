@@ -7,16 +7,16 @@ that these samples after the first time can be much faster.
 ## Usage
 
 [`CachedDataset`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CachedDataset) is
-a customized dataset, (see [Creating a Custom Dataset for your files](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html#creating-a-custom-dataset-for-your-files)).
+a customized dataset (see [Creating a Custom Dataset for your files](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html#creating-a-custom-dataset-for-your-files)).
 It wraps a Pytorch dataset and caches its samples into a distributed key-value store. We can specify the backend to
 use on the initialization of a cached dataset. Currently [Redis](https://redis.io/) is supported, which is a **in-memory** data store.
 
 By default, cached dataset will spawn a new Redis instance on each worker node, and data is sharded across all
-Redis instances on all nodes in this Bagua job. We can specify the maximum memory limit to use for each node, by passing
+Redis instances on all nodes in the Bagua job. We can specify the maximum memory limit to use for each node, by passing
 `capacity_per_node` to `CachedDataset`.
 
 The following is an example to use a Redis-backend cached dataset, the maximum memory limit on each node is `400GB`. A
-4-node Bagua job will have a maximum memory limit of `1.6TB`.
+4-node Bagua job can have a maximum memory limit of `1.6TB`.
 
 ```python
 from bagua.torch_api.contrib import CachedDataset
@@ -45,7 +45,7 @@ cache_dataset = CachedDataset(
 )
 ```
 
-We can also use existing Redis servers as the backend store.
+We can also use existing Redis servers as the backend store by passing a list of host information of redis servers to `hosts`.
 
 ```python
 hosts = [
