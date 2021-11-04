@@ -35,7 +35,7 @@ for i, (input, target) in enumerate(dataloader):
 
 By setting `cluster_mode=False`, we can restrict each training node using its local Redis instance.
 
-```
+```python
 cache_dataset = CachedDataset(
  dataset,
  backend="redis",
@@ -45,10 +45,25 @@ cache_dataset = CachedDataset(
 )
 ```
 
-### Multiple Cached Dataset
+We can also use an existing Redis cluster as the backend store.
+
+```python
+hosts = [
+    {"host": "192.168.1.0", "port": "7000"},
+    {"host": "192.168.1.1", "port": "7000"},
+]
+cache_dataset = CachedDataset(
+    dataset,
+    backend="redis",
+    dataset_name="ds",
+    hosts=hosts,
+)
+```
+
+### Multiple cached dataset
 
 Multiple cached dataset shares the same backend store, thus we need to specify a unique name for each dataset to avoid
-overwrite dataset samples from each other.
+overwriting dataset samples from each other.
 
 ```python
 from bagua.torch_api.contrib import CachedDataset
@@ -71,10 +86,10 @@ cache_dataset1 = CachedDataset(
 )
 ```
 
-It should be noted that the total memory for on each node is `400GB`, cached dataset will reuse the same Redis instance
+It should be noted that the maximum memory for on each node is `400GB`, cached dataset will reuse the same Redis instance
 on each node.
 
-### Dataset with Augmentation
+### Dataset with augmentation
 
 For dataset with augmentation, we can not use cached dataset directly. Instead, we can define our own custom dataset
 using [CachedLoader](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CacheLoader).
@@ -116,6 +131,6 @@ class PanoHand(data.Dataset):
 
 ```
 
-## Benchmark Result
+## Benchmark result
 
 
