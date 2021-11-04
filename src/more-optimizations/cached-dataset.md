@@ -92,7 +92,7 @@ on each node. Only parameters to spawn the first Redis instance will take effect
 ### Dataset with augmentation
 
 For dataset with augmentation, we can not use cached dataset directly. Instead, we can define our own custom dataset
-using [CachedLoader](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CacheLoader).
+using [CachedLoader](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CacheLoader)[^1].
 Here is an example.
 
 ```python
@@ -131,6 +131,17 @@ class PanoHand(data.Dataset):
 
 ```
 
+[^1]: `CachedDataset` is built upon `CacheLoader` as well.
+
 ## Benchmark result
 
+On a 3D mesh dataset proprietary to Kuaishou, with one NVIDIA Tesla V100 GPU, **using cached loader can reduce the
+end-to-end training time by more than 60%, only incurring a small overhead to write to the key-value store
+at the first epoch**.
+
+|                     | w/o Cached Loader   | w. Cached Loader    |
+|---------------------|---------------------|---------------------|
+| Epoch #1 Time (s)   |     6375            |     6473            |
+| Epoch #2 Time (s)   |     6306            |     2264            |
+| Epoch #3 Time (s)   |     6321            |     2240            |
 
