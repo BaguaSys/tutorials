@@ -7,7 +7,7 @@ that these samples after the first time can be much faster.
 ## Usage
 
 [`CachedDataset`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CachedDataset) is
-a customized dataset, (see [Pytorch tutorials](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html#creating-a-custom-dataset-for-your-files) how to create a custom dataset).
+a customized dataset, (see [Creating a Custom Dataset for your files](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html#creating-a-custom-dataset-for-your-files)).
 It wraps a Pytorch dataset and caches its samples into a distributed key-value store. We can specify the backend to
 use on the initialization of a cached dataset. Currently [Redis](https://redis.io/) is supported, which is a **in-memory** data store.
 
@@ -45,7 +45,7 @@ cache_dataset = CachedDataset(
 )
 ```
 
-We can also use an existing Redis cluster as the backend store.
+We can also use existing Redis servers as the backend store.
 
 ```python
 hosts = [
@@ -63,7 +63,7 @@ cache_dataset = CachedDataset(
 ### Multiple cached dataset
 
 Multiple cached dataset shares the same backend store, thus we need to specify a unique name for each dataset to avoid
-overwriting dataset samples from each other.
+overwriting samples from each other.
 
 ```python
 from bagua.torch_api.contrib import CachedDataset
@@ -87,7 +87,7 @@ cache_dataset1 = CachedDataset(
 ```
 
 It should be noted that the maximum memory for on each node is `400GB`, cached dataset will reuse the same Redis instance
-on each node.
+on each node. Only parameters to spawn the first Redis instance will take effect.
 
 ### Dataset with augmentation
 
