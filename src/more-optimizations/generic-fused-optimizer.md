@@ -38,7 +38,7 @@ by setting its `do_flatten` parameter to `False`:
 model = model.with_bagua([optimizer], do_flatten=False)
 ```
 
-## Benchmark result
+## Benchmark
 
 On BERT base model, with 8 NVIDIA Tesla
 V100 GPUs. The benchmark result shows that **by enabling generic fused optimizer, the end-to-end training time can be reduced by 8%**.
