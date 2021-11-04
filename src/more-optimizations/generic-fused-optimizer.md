@@ -40,7 +40,7 @@ model = model.with_bagua([optimizer], do_flatten=False)
 ## Benchmark Result
 
 We tested on a Kwai proprietary natural language processing dataset and BERT-BASE model, with 8 NVIDIA Tesla
-V100 GPUs. The result shows that **by enabling generic fused optimizer, the end-to-end training performance can be increased by 10%**.
+V100 GPUs. The result shows that **by enabling generic fused optimizer, the end-to-end training time can be reduced by 8%**.
 
 |                     | w/o Fused Optimizer | w. Fused Optimizer  |
 |---------------------|---------------------|---------------------|
