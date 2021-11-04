@@ -5,11 +5,11 @@ operation on multiple layers. It can be applied to arbitrary PyTorch optimizer.
 
 ## Usage
 
-To use fused optimizer, we need:
-* convert the optimizer to a fused optimizer
-* perform fused parameter update
+To use fused optimizer, we need to:
+* convert the optimizer to a fused optimizer,
+* perform fused parameter update.
 
-Here is an example of how to use fused optimizer with [`BertAdam`](https://huggingface.co/transformers/main_classes/optimizer_schedules.html?highlight=adamw#transformers.AdamW).
+Here is an example of how to use fused optimizer with `BertAdam`.
 
 ```python
 from pytorch_pretrained_bert.optimization import BertAdam
@@ -39,5 +39,10 @@ model = model.with_bagua([optimizer], do_flatten=False)
 
 ## Benchmark Result
 
-We tested on a Kwai proprietary natural language processing dataset and BERT-BASE finetune model, with 8 NVIDIA Tesla
+We tested on a Kwai proprietary natural language processing dataset and BERT-BASE model, with 8 NVIDIA Tesla
 V100 GPUs. The result shows that **by enabling generic fused optimizer, the end-to-end training performance can be increased by 10%**.
+
+|                     | w/o Fused Optimizer | w. Fused Optimizer  |
+|---------------------|---------------------|---------------------|
+| Epoch Time (s)      |   3324              |     3055            |
+| Accuracy            |   0.9254            |     0.9260          |
