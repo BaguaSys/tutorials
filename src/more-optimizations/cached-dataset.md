@@ -1,15 +1,13 @@
 # Cached Dataset
 
-When samples need tedious preprocessing to produce, or reading the dataset itself is slow, which could slow down the
-whole training process. Bagua provides cached dataset to speedup this process by caching data samples in memory, so
-that these samples after the first time can be much faster.
+When data loading is slow or data preprocessing is tedious, they could be the bottleneck of the whole training process. Bagua provides cached dataset to speedup this process by caching data samples in memory, so that reading these samples after the first time can be much faster.
 
 ## Usage
 
 [`CachedDataset`](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CachedDataset) is
-a customized dataset (see [Creating a Custom Dataset for your files](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html#creating-a-custom-dataset-for-your-files)).
+a Pytorch custom dataset (see [Creating a Custom Dataset for your files](https://pytorch.org/tutorials/beginner/basics/data_tutorial.html#creating-a-custom-dataset-for-your-files)).
 It wraps a Pytorch dataset and caches its samples into a distributed key-value store. We can specify the backend to
-use on the initialization of a cached dataset. Currently [Redis](https://redis.io/) is supported, which is a **in-memory** data store.
+use on the initialization of a cached dataset. Currently [Redis](https://redis.io/) is supported, which is an **in-memory** data store.
 
 By default, cached dataset will spawn a new Redis instance on each worker node, and data is sharded across all
 Redis instances on all nodes in the Bagua job. We can specify the maximum memory limit to use for each node, by passing
@@ -33,7 +31,7 @@ for i, (input, target) in enumerate(dataloader):
     ...
 ```
 
-By setting `cluster_mode=False`, we can restrict each training node using its local Redis instance.
+By setting `cluster_mode=False`, we can restrict each training node to use only its local Redis instance.
 
 ```python
 cache_dataset = CachedDataset(
@@ -86,7 +84,7 @@ cache_dataset1 = CachedDataset(
 )
 ```
 
-It should be noted that the maximum memory for on each node is `400GB`, cached dataset will reuse the same Redis instance
+It should be noted that the maximum memory for on each node is `400GB`. Cached dataset will reuse the same Redis instance
 on each node. Only parameters to spawn the first Redis instance will take effect.
 
 ### Dataset with augmentation
