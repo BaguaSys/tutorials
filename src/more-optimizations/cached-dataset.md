@@ -60,7 +60,7 @@ cache_dataset = CachedDataset(
 
 ### Multiple cached dataset
 
-Multiple cached dataset shares the same backend store, thus we need to specify a unique name for each dataset to avoid
+Multiple cached datasets share the same backend store, thus we need to specify a unique name for each dataset to avoid
 overwriting samples from each other.
 
 ```python
@@ -76,7 +76,7 @@ cache_dataset1 = CachedDataset(
  capacity_per_node=400 * 1024 * 1024 * 1024,
 )
 
-cache_dataset1 = CachedDataset(
+cache_dataset2 = CachedDataset(
  dataset2,
  backend="redis",
  dataset_name="ds2",
@@ -84,8 +84,7 @@ cache_dataset1 = CachedDataset(
 )
 ```
 
-It should be noted that the maximum memory for on each node is `400GB`. Cached dataset will reuse the same Redis instance
-on each node. Only parameters[^1] to spawn the first Redis instance will take effect.
+It should be noted that Redis instance will only be spawned once on each node, and the other cached datasets will reuse the existing Redis instance. Only parameters[^1] to spawn the first Redis instance will take effect. In the example above, the maximum memory for on each node will be `400GB` even if we set `capacity_per_node` to a different number when initializing `cache_dataset2`. 
 
 [^1]: `cluster_mode` and `capacity_per_node` are used to spawn new Redis instances when `hosts=None`. See [RedisStore](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/utils/redis_store/index.html#bagua.torch_api.contrib.utils.redis_store.RedisStore)
 for more information.
