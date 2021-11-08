@@ -85,12 +85,15 @@ cache_dataset1 = CachedDataset(
 ```
 
 It should be noted that the maximum memory for on each node is `400GB`. Cached dataset will reuse the same Redis instance
-on each node. Only parameters to spawn the first Redis instance will take effect.
+on each node. Only parameters[^1] to spawn the first Redis instance will take effect.
+
+[^1]: `cluster_mode` and `capacity_per_node` are used to spawn new Redis instances when `hosts=None`. See [RedisStore](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/utils/redis_store/index.html#bagua.torch_api.contrib.utils.redis_store.RedisStore)
+for more information.
 
 ### Dataset with augmentation
 
 For dataset with augmentation, we can not use cached dataset directly. Instead, we can define our own custom dataset
-using [CachedLoader](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CacheLoader)[^1].
+using [CachedLoader](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/index.html#bagua.torch_api.contrib.CacheLoader)[^2].
 Here is an example.
 
 ```python
@@ -129,7 +132,7 @@ class PanoHand(data.Dataset):
 
 ```
 
-[^1]: `CachedDataset` is built upon `CacheLoader` as well.
+[^2]: `CachedDataset` is built upon `CacheLoader` as well.
 
 ## Benchmark result
 
