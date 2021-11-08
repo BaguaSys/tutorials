@@ -135,7 +135,7 @@ class PanoHand(data.Dataset):
 
 ## Benchmark result
 
-On a 3D mesh dataset proprietary to Kuaishou, with one NVIDIA Tesla V100 GPU, **using cached loader can reduce the
+On an important internal 3D mesh training task, where the data preprocessing becomes the major bottleneck, with one NVIDIA Tesla V100 GPU, **using cached loader can reduce the
 end-to-end training time by more than 60%, only incurring a small overhead to write to the key-value store
 at the first epoch**.
 
