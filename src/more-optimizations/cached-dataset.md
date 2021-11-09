@@ -1,6 +1,6 @@
 # Cached Dataset
 
-When data loading is slow or data preprocessing is tedious, they could be the bottleneck of the whole training process. Bagua provides cached dataset to speedup this process by caching data samples in memory, so that reading these samples after the first time can be much faster.
+When samples in a dataset need tedious preprocessing, or reading the dataset itself is slow, they could become the bottleneck of the whole training process. Bagua provides cached dataset to speedup this process by caching data samples in memory, so that reading these samples after the first time can be much faster.
 
 ## Usage
 
@@ -84,7 +84,7 @@ cache_dataset2 = CachedDataset(
 )
 ```
 
-It should be noted that Redis instance will only be spawned once on each node, and the other cached dataset will reuse the existing Redis instance. Only parameters[^1] to spawn the first Redis instance will take effect. In the example above, the maximum memory for on each node will be `400GB` even if we set `capacity_per_node` to a different number when initializing `cache_dataset2`. 
+It should be noted that Redis instance will only be spawned once on each node, and the other cached dataset will reuse the existing Redis instance. Only parameters[^1] to spawn the first Redis instance will take effect. In the example above, the maximum memory limit on each node will be `400GB` even if we set `capacity_per_node` to a different number when initializing `cache_dataset2`.
 
 [^1]: `cluster_mode` and `capacity_per_node` are used to spawn new Redis instances when `hosts=None`. See [RedisStore](https://bagua.readthedocs.io/en/latest/autoapi/bagua/torch_api/contrib/utils/redis_store/index.html#bagua.torch_api.contrib.utils.redis_store.RedisStore)
 for more information.
