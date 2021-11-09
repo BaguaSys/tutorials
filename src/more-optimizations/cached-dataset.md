@@ -1,6 +1,6 @@
 # Cached Dataset
 
-When dataset samples need tedious preprocessing to produce, or reading the dataset itself is slow, they could become the bottleneck of the whole training process. Bagua provides cached dataset to speedup this process by caching data samples in memory, so that reading these samples after the first time can be much faster.
+When dataset samples need tedious preprocessing to produce, or reading the dataset itself is slow, they could become a major bottleneck of the whole training process. Bagua provides cached dataset to speedup this process by caching data samples in memory, so that reading these samples after the first time can be much faster.
 
 ## Usage
 
