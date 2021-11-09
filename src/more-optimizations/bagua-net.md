@@ -63,7 +63,7 @@ python3 -m bagua.distributed.launch --enable_bagua_net \
     --nproc_per_node=8 synthetic_benchmark.py --algorithm gradient_allreduce
 ```
 
-If you do not need to modify the source code of bagua-core, it is strongly recommended that you install bagua with bagua-core in the pre-released version according to [installation guide](https://github.com/BaguaSys/bagua#installation).   
+> Note that if you do not need to modify the source code of `bagua-core` and recompile, it is strongly recommended that you install `bagua` with `bagua-core` included in the pre-released version according to [installation guide](https://github.com/BaguaSys/bagua#installation).   
 
 > It worth noting that you can even use `bagua.distributed.launch` or `bagua.distributed.run` with `--enable_bagua_net` argument to launch PyTorch-DDP jobs to improve the training throughput without migrating your code to Bagua.
 
