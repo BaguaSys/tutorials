@@ -61,12 +61,7 @@ torch.save(
 #### Load
 ```python
 optimizer = TheOptimizerClass(*args, **kwargs)
-
-# load optimizer state first
 optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
-
-# convert to a fused optimizer before training
-optimizer = bagua.contrib.fuse_optimizer(optimizer, do_flatten=True)
 ```
 
 
