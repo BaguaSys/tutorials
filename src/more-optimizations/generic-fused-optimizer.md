@@ -39,8 +39,8 @@ model = model.with_bagua([optimizer], do_flatten=False)
 ```
 ### Saving and loading optimizer `state_dict`
 
-A fused optimizer behaves just like an ordinary optimizer except that it is enabled to perform fused parameter updates with `.fuse_step()` method.
-We can store and load its `state_dict` in the original ways (see [Saving & Loading a General Checkpoint for Inference and/or Resuming Training](https://pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-a-general-checkpoint-for-inference-and-or-resuming-training)).
+A fused optimizer behaves just like an ordinary optimizer except that it performs fused parameter updates with `.fuse_step()` method.
+We can store and load its `state_dict` as normal (see [Saving & Loading a General Checkpoint for Inference and/or Resuming Training](https://pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-a-general-checkpoint-for-inference-and-or-resuming-training)).
 
 #### Save
 ```python
