@@ -37,13 +37,40 @@ by setting its `do_flatten` parameter to `False`:
 ```python
 model = model.with_bagua([optimizer], do_flatten=False)
 ```
+### Saving and loading optimizer `state_dict`
+
+A fused optimizer behaves just like an ordinary optimizer except that it performs fused parameter updates with `.fuse_step()` method.
+We can store and load its `state_dict` as normal (see [Saving & Loading a General Checkpoint for Inference and/or Resuming Training](https://pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-a-general-checkpoint-for-inference-and-or-resuming-training)).
+
+#### Save
+```python
+optimizer = bagua.contrib.fuse_optimizer(optimizer, do_flatten=True)
+
+torch.save(
+    {
+        "epoch": epoch,
+        "model_state_dict": model.state_dict(),
+        "optimizer_state_dict": optimizer.state_dict(),
+        "loss": loss,
+    },
+    ...
+    PATH,
+)
+```
+
+#### Load
+```python
+optimizer = TheOptimizerClass(*args, **kwargs)
+optimizer.load_state_dict(checkpoint['optimizer_state_dict'])
+```
+
 
 ## Benchmark
 
 On BERT base model, with 8 NVIDIA Tesla
-V100 GPUs. The benchmark result shows that **by enabling generic fused optimizer, the end-to-end training time can be reduced by 8%**.
+V100 GPUs. The benchmark result shows that **by enabling generic fused optimizer, the end-to-end training time can be reduced by 17%**.
 
 |                     | w/o Fused Optimizer | w. Fused Optimizer  |
 |---------------------|---------------------|---------------------|
-| Epoch Time (s)      |   3324              |     3055            |
+| Epoch Time (s)      |   3252              |     2767            |
 | Accuracy            |   0.9254            |     0.9260          |
