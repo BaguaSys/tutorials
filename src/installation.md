@@ -22,6 +22,7 @@ To install Bagua by compiling from source code on your machine, you need the fol
 * MPI >= 3.0, for example [Open MPI](https://www.open-mpi.org/)
 * [hwloc](https://www.open-mpi.org/projects/hwloc/) >= 2.0
 * [CMake](https://cmake.org/) >= 3.17
+* [Python](https://www.python.org/) >= 3.7
 
 We provide an automatic installation script for Ubuntu. Just run the following command to install Bagua and above libraries (except for CUDA, you should always install CUDA by yourself):
 
