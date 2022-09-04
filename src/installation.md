@@ -10,6 +10,7 @@ Wheels (precompiled binary packages) are available for Linux (x86_64). Package n
 | >= v11.1             | `pip install bagua-cuda111` |
 | >= v11.3             | `pip install bagua-cuda113` |
 | >= v11.5             | `pip install bagua-cuda115` |
+| >= v11.6             | `pip install bagua-cuda116` |
 
 Add `--pre` to `pip install` commands to install pre-release (development) versions.
 
