@@ -38,21 +38,7 @@ Img/sec per GPU: 126.5 +-6.4
 Total img/sec on 32 GPU(s): 4046.6 +-205.2
 ```
 
-<!--
-## Some test results
-
-### 1. Performance comparison of Bagua-Net and NCCL-TCP under 100G TCP network
-
-![](source/img/nccl-test_Bagua-Net_vs_NCCL-TCP.png)
-
-> Thanks to the tensor fusion of the communication library. The actual communication packets will be larger than 10MB. In this range, Bagua-Net has better performance than NCCL-TCP. I have also done some experiments. When training a small network, Bagua-Net is no worse than NCCL-TCP.
-
-### 2. Bagua-Net's acceleration effect on Bagua's different algorithms
-
-![](source/img/bagua-net_accelerate_bagua_algorithms.png)
-
-> The data comes from the real 128 V100 ImageNet training. The throughput increase brought by Bagua-Net is 11% to 68%.
--->
+## Quick Start
 
 To enable Bagua-Net, you only need to pass the `--enable_bagua_net` argument in `bagua.distributed.launch` or `bagua.distributed.run`. No code change in your training script.
 
@@ -66,6 +52,20 @@ python3 -m bagua.distributed.launch --enable_bagua_net \
 > Note that if you do not need to modify the source code of `bagua-core` and recompile, it is strongly recommended that you install `bagua` with `bagua-core` included in the pre-released version according to [installation guide](https://github.com/BaguaSys/bagua#installation).   
 
 > It worth noting that you can even use `bagua.distributed.launch` or `bagua.distributed.run` with `--enable_bagua_net` argument to launch PyTorch-DDP jobs to improve the training throughput without migrating your code to Bagua.
+
+## Benchmark
+
+### 100G TCP network performance comparison with NCCL native implementation
+
+![](bagua-net/source/img/nccl-test_Bagua-Net_vs_NCCL-TCP.png)
+
+> Thanks to the tensor fusion of the communication library. The actual communication packets will be larger than 10MB. In this range, Bagua-Net has better performance than NCCL-TCP. I have also done some experiments. And when training a small module, Bagua-Net is no obvious worse than NCCL-TCP.
+
+### Effect on bagua algorithm
+
+![](bagua-net/source/img/bagua-net_accelerate_bagua_algorithms.png)
+
+> The data comes from the real 128 V100 ImageNet training. The throughput increase brought by Bagua-Net is 11% to 68%.
 
 <!-- 
 ## Enable Bagua-Net
